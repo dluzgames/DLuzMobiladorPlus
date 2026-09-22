@@ -1,0 +1,41 @@
+{
+  "device_resolution": "auto",
+  "toggle_key": "F1",
+  "exit_key": "Escape",
+  "overlay_opacity": 0.85,
+  "joystick": {
+    "center_x": 320,
+    "center_y": 860,
+    "radius": 160,
+    "keys": {
+      "w": [0, -1],
+      "s": [0, 1],
+      "a": [-1, 0],
+      "d": [1, 0]
+    }
+  },
+  "camera": {
+    "zone_x": 1100,
+    "zone_y": 540,
+    "sensitivity": 3.2,
+    "sensitivity_x": 3.2,
+    "sensitivity_y": 2.6,
+    "acceleration": 0.5,
+    "exponent_y": 1.2,
+    "invert_x": false,
+    "invert_y": false,
+    "free_mouse_key": "alt"
+  },
+  "buttons": [
+    {"label": "Atirar", "key": "mouse_left", "x": 1800, "y": 700, "mode": "hold"},
+    {"label": "Mira (ADS)", "key": "mouse_right", "x": 1600, "y": 840, "mode": "hold"},
+    {"label": "Pular/Escalar", "key": "space", "x": 1660, "y": 940, "mode": "tap"},
+    {"label": "Agachar/Deitar", "key": "c", "x": 1510, "y": 940, "mode": "tap"},
+    {"label": "Recarregar", "key": "r", "x": 1800, "y": 820, "mode": "tap"},
+    {"label": "Faca", "key": "e", "x": 1700, "y": 760, "mode": "tap"},
+    {"label": "Arma 1", "key": "1", "x": 1680, "y": 200, "mode": "tap"},
+    {"label": "Arma 2", "key": "2", "x": 1780, "y": 200, "mode": "tap"},
+    {"label": "Granada", "key": "g", "x": 1580, "y": 200, "mode": "tap"},
+    {"label": "Scorestreak", "key": "q", "x": 1800, "y": 150, "mode": "tap"}
+  ]
+}

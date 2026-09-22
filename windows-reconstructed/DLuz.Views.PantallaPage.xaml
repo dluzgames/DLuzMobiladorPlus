@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="DLuz.Views.PantallaPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:ctl="clr-namespace:DLuz.Controls" xmlns:helpers="clr-namespace:DLuz.Helpers" Title="Tela do celular" xmlns:views="clr-namespace:DLuz.Views">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Padding="32,24,32,32" helpers:ScrollReset.ResetOnShow="True">
+      <StackPanel>
+      <TextBlock Text="Tela do celular" Style="{StaticResource Stex.PageTitle}" />
+      <TextBlock Text="Resolução, proporção, recorte, DPI e tela cheia." Margin="0,4,0,16" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+      <ctl:KofiCta Text="Precisa de uma configuração personalizada? Disponível no Ko-fi" />
+        <Border Margin="0,0,0,16" Padding="12,10" CornerRadius="8" Background="{DynamicResource Stex.WarningSoftBrush}" BorderBrush="{DynamicResource Stex.WarningTextBrush}" BorderThickness="1" Visibility="{Binding PantallaBloqueadaPorDexVisible, Converter={StaticResource BoolToVis}}">
+          <StackPanel Orientation="Horizontal">
+            <ui:SymbolIcon Symbol="Info24" VerticalAlignment="Center" Foreground="{DynamicResource Stex.WarningTextBrush}" />
+                <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextPrimaryBrush}" Text="A tela virtual (modo DeX) está ativa: estas opções afetam a tela física e não a tela virtual. Desative-a em Vídeo e Áudio para usar estas opções." />
+          </StackPanel>
+        </Border>
+        <ui:Card Margin="0,0,0,16" Padding="20,18" IsEnabled="{Binding PantallaControlesHabilitados}">
+          <StackPanel>
+            <Grid>
+              <StackPanel Width="420" HorizontalAlignment="Left">
+            <TextBlock Text="Iniciar em tela cheia" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <TextBlock Text="Você também pode alternar com F11 ou MOD+F durante a sessão." FontSize="12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+              </StackPanel>
+              <ui:ToggleSwitch HorizontalAlignment="Right" IsChecked="{Binding S.Fullscreen, Mode=TwoWay}" />
+            </Grid>
+            <TextBlock Text="Tamanho da janela (0 = automático)" Margin="0,14,0,6" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <StackPanel Orientation="Horizontal">
+              <ui:NumberBox Width="120" Minimum="0" Maximum="3840" SmallChange="10" Value="{Binding S.WindowWidth, Mode=TwoWay}" />
+              <TextBlock Text="×" Margin="10,0" VerticalAlignment="Center" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+              <ui:NumberBox Width="120" Minimum="0" Maximum="2160" SmallChange="10" Value="{Binding S.WindowHeight, Mode=TwoWay}" />
+            </StackPanel>
+          </StackPanel>
+        </ui:Card>
+        <ui:Card Margin="0,0,0,16" Padding="20,18" IsEnabled="{Binding PantallaControlesHabilitados}">
+          <StackPanel>
+            <TextBlock Text="Resolução nativa do aparelho" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Center">
+              <TextBlock Text="Largura:" VerticalAlignment="Center" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+              <TextBlock Margin="6,0" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource Stex.AccentLightBrush}" Text="{Binding ResAncho}" />
+              <TextBlock Text="×" Margin="6,0" VerticalAlignment="Center" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+              <TextBlock Margin="6,0" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource Stex.AccentLightBrush}" Text="{Binding ResAlto}" />
+              <ui:Button Margin="16,0,0,0" ToolTip="Detectar" Icon="{ui:SymbolIcon ArrowSync24}" Command="{Binding DetectarResolucionCommand}" />
+            </StackPanel>
+            <TextBlock Margin="0,8,0,0" FontSize="12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Text="{Binding ResStatus}" />
+            <Border Margin="0,12,0,0" Padding="12,10" CornerRadius="8" Background="{DynamicResource Stex.WarningSoftBrush}" BorderBrush="{DynamicResource Stex.WarningTextBrush}" BorderThickness="1" Visibility="{Binding RequiereResolucionVisible, Converter={StaticResource BoolToVis}}">
+              <StackPanel Orientation="Horizontal">
+                <ui:SymbolIcon Symbol="Info24" VerticalAlignment="Center" Foreground="{DynamicResource Stex.WarningTextBrush}" />
+                <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextPrimaryBrush}" Text="Primeiro detecte a resolução nativa do aparelho para habilitar o recorte, a resolução ADB e a resolução personalizada." />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </ui:Card>
+        <ui:Card Margin="0,0,0,16" Padding="20,18" IsEnabled="{Binding PantallaControlesHabilitados}">
+          <StackPanel>
+            <TextBlock Text="Recorte de imagem (opção 1 · recomendado)" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+                    <TextBlock Text="Elimina as bordas recortando parte do conteúdo. É normal perder uma pequena parte da imagem." Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+                    <TextBlock Text="Primeiro detecte a resolução nativa do aparelho para usar esta opção." Margin="0,8,0,0" FontSize="12" TextWrapping="Wrap" FontWeight="SemiBold" Foreground="{DynamicResource Stex.WarningTextBrush}" Visibility="{Binding RequiereResolucionVisible, Converter={StaticResource BoolToVis}}" />
+                    <TextBlock Text="A resolução ADB está ativa. Redefina a resolução para usar o recorte." Margin="0,8,0,0" FontWeight="SemiBold" Foreground="{DynamicResource Stex.WarningBrush}" Visibility="{Binding AdbActivaWarningVisible, Converter={StaticResource BoolToVis}}" />
+            <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+              <TextBlock Text="Aspect Ratio:" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+              <ComboBox Width="130" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding S.AspectRatio, Mode=TwoWay}" />
+              <ui:NumberBox Width="64" Margin="10,0,0,0" Minimum="1" Maximum="99" Value="{Binding S.CustomRatioW, Mode=TwoWay}" Visibility="{Binding CustomVisible, Converter={StaticResource BoolToVis}}" />
+              <TextBlock Text=":" Margin="6,0" VerticalAlignment="Center" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Visibility="{Binding CustomVisible, Converter={StaticResource BoolToVis}}" />
+              <ui:NumberBox Width="64" Minimum="1" Maximum="99" Value="{Binding S.CustomRatioH, Mode=TwoWay}" Visibility="{Binding CustomVisible, Converter={StaticResource BoolToVis}}" />
+            </StackPanel>
+            <TextBlock Margin="0,10,0,0" FontStyle="Italic" FontSize="12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Text="{Binding CropAplicadoTexto}" />
+            <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+            <ui:Button Content="Calcular recorte" Appearance="Primary" Icon="{ui:SymbolIcon Crop24}" Command="{Binding CalcularCropCommand}" IsEnabled="{Binding CalcularCropHabilitado}" />
+            <ui:Button Content="Restaurar" Margin="10,0,0,0" Icon="{ui:SymbolIcon ArrowReset24}" Command="{Binding RestablecerCropCommand}" IsEnabled="{Binding RestablecerCropHabilitado}" />
+            </StackPanel>
+          </StackPanel>
+        </ui:Card>
+        <ui:Card Margin="0,0,0,16" Padding="20,18" IsEnabled="{Binding PantallaControlesHabilitados}">
+          <StackPanel>
+            <TextBlock Text="Modificar resolução ADB (opção 2 · recomendado)" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+                    <TextBlock Text="Sincroniza a renderização com o monitor alterando a resolução via ADB. Em alguns aparelhos, pode causar latência ou queda de FPS." Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+                    <TextBlock Text="Primeiro detecte a resolução nativa do aparelho para usar esta opção." Margin="0,8,0,0" FontSize="12" TextWrapping="Wrap" FontWeight="SemiBold" Foreground="{DynamicResource Stex.WarningTextBrush}" Visibility="{Binding RequiereResolucionVisible, Converter={StaticResource BoolToVis}}" />
+                    <TextBlock Text="Há um recorte ativo. Restaure-o para usar esta opção." Margin="0,8,0,0" FontWeight="SemiBold" Foreground="{DynamicResource Stex.WarningBrush}" Visibility="{Binding CropActivoWarningVisible, Converter={StaticResource BoolToVis}}" />
+            <TextBlock Margin="0,8,0,0" FontStyle="Italic" FontSize="12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Text="{Binding AdbStatus}" />
+            <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+              <ui:Button Content="Aplicar resolução" Appearance="Primary" Icon="{ui:SymbolIcon Checkmark24}" Command="{Binding AplicarResolucionCommand}" IsEnabled="{Binding AplicarResHabilitado}" />
+              <ui:Button Content="Redefinir" Margin="10,0,0,0" Icon="{ui:SymbolIcon ArrowReset24}" Command="{Binding ResetearResolucionCommand}" IsEnabled="{Binding ResetearResHabilitado}" />
+            </StackPanel>
+          </StackPanel>
+        </ui:Card>
+        <ui:Card Margin="0,0,0,16" Padding="20,18" IsEnabled="{Binding PantallaControlesHabilitados}">
+          <StackPanel>
+            <TextBlock Text="Resolução personalizada (opção 3 · experimental)" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+                    <TextBlock Text="Força uma resolução personalizada via ADB. É útil, mas não garante que os cliques coincidam com a posição visual." Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+                    <TextBlock Text="Primeiro detecte a resolução nativa do aparelho para usar esta opção." Margin="0,8,0,0" FontSize="12" TextWrapping="Wrap" FontWeight="SemiBold" Foreground="{DynamicResource Stex.WarningTextBrush}" Visibility="{Binding RequiereResolucionVisible, Converter={StaticResource BoolToVis}}" />
+            <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+              <ui:TextBox Width="180" PlaceholderText="ej. 1280x720" Text="{Binding S.WmSizeValor, UpdateSourceTrigger=PropertyChanged}" />
+              <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" FontStyle="Italic" Foreground="{DynamicResource Stex.SuccessBrush}" Text="{Binding WmStatus}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+              <ui:Button Content="Aplicar" Appearance="Primary" Icon="{ui:SymbolIcon Checkmark24}" Command="{Binding AplicarWmCommand}" IsEnabled="{Binding AplicarWmHabilitado}" />
+              <ui:Button Content="Revertir" Margin="10,0,0,0" Icon="{ui:SymbolIcon ArrowReset24}" Command="{Binding RevertirWmCommand}" IsEnabled="{Binding RevertirWmHabilitado}" />
+            </StackPanel>
+          </StackPanel>
+        </ui:Card>
+        <ui:Card Margin="0,0,0,16" Padding="20,18" IsEnabled="{Binding PantallaControlesHabilitados}">
+          <StackPanel>
+            <TextBlock Text="Controle de DPI (opção 4 · avançado)" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+              <TextBlock VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" Text="{Binding DpiActualTexto}" />
+              <ui:Button Margin="16,0,0,0" ToolTip="Detectar DPI" Icon="{ui:SymbolIcon ArrowSync24}" Command="{Binding DetectarDpiCommand}" />
+            </StackPanel>
+            <TextBlock Text="Novo DPI personalizado:" Margin="0,12,0,4" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <ui:NumberBox Width="180" HorizontalAlignment="Left" Minimum="1" Maximum="9999" MaxDecimalPlaces="0" SmallChange="10" Value="{Binding S.Dpi, Mode=TwoWay}" />
+                    <TextBlock Margin="0,6,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Text="Use o valor adequado para seu celular; um valor incorreto pode afetar a escala da tela." />
+            <TextBlock Margin="0,8,0,0" FontStyle="Italic" FontSize="12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Text="{Binding DpiStatus}" />
+            <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+              <ui:Button Content="Aplicar DPI" Appearance="Primary" Icon="{ui:SymbolIcon Checkmark24}" Command="{Binding AplicarDpiCommand}" />
+              <ui:Button Content="Redefinir DPI" Margin="10,0,0,0" Icon="{ui:SymbolIcon ArrowReset24}" Command="{Binding ResetearDpiCommand}" />
+            </StackPanel>
+            <TextBlock Margin="0,8,0,0" FontSize="12" FontStyle="Italic" Foreground="{DynamicResource Stex.AccentLightBrush}" Text="{Binding UltimoDpiTexto}" Visibility="{Binding UltimoDpiVisible, Converter={StaticResource BoolToVis}}" />
+          </StackPanel>
+        </ui:Card>
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
+</Page>
+
+

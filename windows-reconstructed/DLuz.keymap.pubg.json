@@ -1,0 +1,43 @@
+{
+  "device_resolution": "auto",
+  "toggle_key": "F1",
+  "exit_key": "Escape",
+  "overlay_opacity": 0.85,
+  "joystick": {
+    "center_x": 340,
+    "center_y": 870,
+    "radius": 165,
+    "keys": {
+      "w": [0, -1],
+      "s": [0, 1],
+      "a": [-1, 0],
+      "d": [1, 0]
+    }
+  },
+  "camera": {
+    "zone_x": 1120,
+    "zone_y": 540,
+    "sensitivity": 2.6,
+    "sensitivity_x": 2.6,
+    "sensitivity_y": 2.0,
+    "acceleration": 0.4,
+    "exponent_y": 1.15,
+    "invert_x": false,
+    "invert_y": false,
+    "free_mouse_key": "alt"
+  },
+  "buttons": [
+    {"label": "Atirar", "key": "mouse_left", "x": 1780, "y": 720, "mode": "hold"},
+    {"label": "Mira", "key": "mouse_right", "x": 1580, "y": 840, "mode": "hold"},
+    {"label": "Pular", "key": "space", "x": 1640, "y": 940, "mode": "tap"},
+    {"label": "Agachar", "key": "c", "x": 1490, "y": 940, "mode": "tap"},
+    {"label": "Deitar", "key": "z", "x": 1490, "y": 870, "mode": "tap"},
+    {"label": "Recarregar", "key": "r", "x": 1780, "y": 840, "mode": "tap"},
+    {"label": "Mapa", "key": "m", "x": 1840, "y": 60, "mode": "tap"},
+    {"label": "Arma 1", "key": "1", "x": 1680, "y": 200, "mode": "tap"},
+    {"label": "Arma 2", "key": "2", "x": 1780, "y": 200, "mode": "tap"},
+    {"label": "Granada", "key": "g", "x": 1580, "y": 200, "mode": "tap"},
+    {"label": "Inventário", "key": "tab", "x": 1840, "y": 120, "mode": "tap"},
+    {"label": "Trocar arma", "key": "mouse_wheel_down", "x": 1440, "y": 840, "mode": "tap"}
+  ]
+}

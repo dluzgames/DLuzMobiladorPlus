@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="DLuz.Controls.SettingRow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="Root" xmlns:controls="clr-namespace:DLuz.Controls;assembly=DLuzMobiladorPlus">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
+    <Border Grid.Column="0" Width="3" Margin="0,2,14,2" CornerRadius="2" Background="{DynamicResource Stex.AccentLightBrush}" Visibility="{Binding IsSubOption, ElementName=Root, Converter={StaticResource BoolToVis}}" />
+    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,16,0">
+      <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextPrimaryBrush}" Text="{Binding Title, ElementName=Root}" />
+      <TextBlock Margin="0,3,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Text="{Binding Description, ElementName=Root}">
+        <FrameworkElement.Style>
+          <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Visibility" Value="Visible" />
+            <Style.Triggers>
+              <DataTrigger Value="" Binding="{Binding Description, ElementName=Root}">
+                <Setter Property="Visibility" Value="Collapsed" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding Description, ElementName=Root}" Value="{x:Null}">
+                <Setter Property="Visibility" Value="Collapsed" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </FrameworkElement.Style>
+      </TextBlock>
+    </StackPanel>
+    <ContentPresenter Grid.Column="2" VerticalAlignment="Center" Content="{Binding Action, ElementName=Root}" />
+  </Grid>
+</UserControl>

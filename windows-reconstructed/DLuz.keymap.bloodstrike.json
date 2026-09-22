@@ -1,0 +1,40 @@
+{
+  "device_resolution": "auto",
+  "toggle_key": "F1",
+  "exit_key": "Escape",
+  "overlay_opacity": 0.85,
+  "joystick": {
+    "center_x": 340,
+    "center_y": 880,
+    "radius": 170,
+    "keys": {
+      "w": [0, -1],
+      "s": [0, 1],
+      "a": [-1, 0],
+      "d": [1, 0]
+    }
+  },
+  "camera": {
+    "zone_x": 1150,
+    "zone_y": 540,
+    "sensitivity": 3.0,
+    "sensitivity_x": 3.0,
+    "sensitivity_y": 2.4,
+    "acceleration": 0.7,
+    "exponent_y": 1.3,
+    "invert_x": false,
+    "invert_y": false,
+    "free_mouse_key": "alt"
+  },
+  "buttons": [
+    {"label": "Atirar", "key": "mouse_left", "x": 1780, "y": 680, "mode": "hold"},
+    {"label": "Mira (ADS)", "key": "mouse_right", "x": 1580, "y": 820, "mode": "hold"},
+    {"label": "Pular", "key": "space", "x": 1650, "y": 940, "mode": "tap"},
+    {"label": "Agachar", "key": "c", "x": 1500, "y": 940, "mode": "tap"},
+    {"label": "Recarregar", "key": "r", "x": 1780, "y": 820, "mode": "tap"},
+    {"label": "Arma 1", "key": "1", "x": 1680, "y": 200, "mode": "tap"},
+    {"label": "Arma 2", "key": "2", "x": 1780, "y": 200, "mode": "tap"},
+    {"label": "Habilidade", "key": "q", "x": 1680, "y": 700, "mode": "tap"},
+    {"label": "Trocar arma", "key": "mouse_wheel_down", "x": 1440, "y": 820, "mode": "double_tap"}
+  ]
+}

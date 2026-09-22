@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="DLuz.Views.MapeadorOverlayWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Mapeador DLuzMObi v2 (Editor)" Icon="pack://application:,,,/Assets/logo.png" WindowStyle="None" AllowsTransparency="True" Background="#00FFFFFF" Topmost="True" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="Manual" Focusable="True" xmlns:views="clr-namespace:DLuz.Views;assembly=DLuzMobiladorPlus">
+  <Grid Background="{DynamicResource Stex.OverlayScrimBrush}">
+    <Canvas Name="MarkerCanvas" />
+    <Border Name="PanelProps" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="16,0,0,0" Width="250" Visibility="Collapsed" Background="{DynamicResource Stex.BgCardBrush}" BorderBrush="{DynamicResource Stex.BorderSecondaryBrush}" BorderThickness="1" CornerRadius="10" Padding="16,14">
+      <StackPanel>
+        <Grid Margin="0,0,0,10">
+          <TextBlock Name="PropTitulo" Text="Control" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center" Foreground="{DynamicResource Stex.AccentLightBrush}" />
+          <ui:Button Name="BtnCerrarProps" HorizontalAlignment="Right" Padding="6,2" Background="#00FFFFFF" BorderThickness="0" Icon="{ui:SymbolIcon Dismiss24}" />
+        </Grid>
+        <StackPanel Name="FilaEtiqueta" Margin="0,0,0,8">
+          <TextBlock Text="Etiqueta" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+          <ui:TextBox Name="PropEtiqueta" Margin="0,2,0,0" />
+        </StackPanel>
+        <StackPanel Name="FilaTecla" Margin="0,0,0,8">
+          <TextBlock Text="Tecla" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+          <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+            <Border Name="BorderTecla" Background="{DynamicResource Stex.BgDarkMid2Brush}" BorderBrush="#3C4775" BorderThickness="1" CornerRadius="6" Padding="10,4" MinWidth="60">
+              <TextBlock Name="PropTecla" Text="—" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            </Border>
+            <ui:Button Name="BtnCapturar" Content="Atribuir" Margin="6,0,0,0" FontWeight="SemiBold" />
+          </StackPanel>
+          <TextBlock Name="TxtAvisoTecla" Text="⏳ Pressione qualquer tecla ou botão do mouse..." FontSize="10.5" Foreground="#FFD700" FontWeight="SemiBold" Visibility="Collapsed" Margin="0,4,0,0" TextWrapping="Wrap" />
+          <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+            <ui:Button Name="BtnClicIzq" Content="Clique esq." Margin="0,0,6,0" />
+            <ui:Button Name="BtnClicDer" Content="Clique dir." Margin="0,0,6,0" />
+            <ui:Button Name="BtnClicMedio" Content="Meio" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+            <ui:Button Name="BtnLateral1" Content="Lateral 1" Margin="0,0,6,0" />
+            <ui:Button Name="BtnLateral2" Content="Lateral 2" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+            <ui:Button Name="BtnRodaCima" Content="Roda ↑" Margin="0,0,6,0" />
+            <ui:Button Name="BtnRodaBaixo" Content="Roda ↓" />
+          </StackPanel>
+        </StackPanel>
+        <StackPanel Name="FilaModo" Margin="0,0,0,8">
+          <TextBlock Text="Modo" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+          <ComboBox Name="PropModo" Margin="0,2,0,0">
+            <ComboBoxItem Content="Manter pressionado" />
+            <ComboBoxItem Content="Tap" />
+            <ComboBoxItem Content="Repetido" />
+          </ComboBox>
+        </StackPanel>
+        <StackPanel Name="FilaIntervalo" Margin="0,0,0,8">
+          <Grid>
+            <TextBlock Text="Intervalo (ms)" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+            <TextBlock Name="TxtIntervalo" HorizontalAlignment="Right" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+          </Grid>
+          <Slider Name="PropIntervalo" Minimum="60" Maximum="1000" TickFrequency="10" IsSnapToTickEnabled="True" Margin="0,2,0,0" />
+        </StackPanel>
+        <StackPanel Name="FilaRadio" Margin="0,0,0,8">
+          <TextBlock Text="Raio" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+          <Slider Name="PropRadio" Minimum="40" Maximum="320" Margin="0,2,0,0" />
+        </StackPanel>
+        <StackPanel Name="FilaJoyTeclas" Margin="0,0,0,8">
+          <TextBlock Text="Teclas de movimiento" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Margin="0,0,0,4" />
+          <UniformGrid Columns="2">
+            <ui:Button Name="BtnJoyArriba" Margin="0,0,4,4" HorizontalAlignment="Stretch" />
+            <ui:Button Name="BtnJoyAbajo" Margin="0,0,0,4" HorizontalAlignment="Stretch" />
+            <ui:Button Name="BtnJoyIzquierda" Margin="0,0,4,0" HorizontalAlignment="Stretch" />
+            <ui:Button Name="BtnJoyDerecha" HorizontalAlignment="Stretch" />
+          </UniformGrid>
+          <TextBlock Name="TxtJoyCaptura" FontSize="11" TextWrapping="Wrap" Margin="0,4,0,0" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+        </StackPanel>
+        <StackPanel Name="FilaSens" Margin="0,0,0,8">
+          <Grid Margin="0,0,0,4">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Ajuste principal" VerticalAlignment="Center" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <ui:NumberBox Name="NumMouseSensFutura" Grid.Column="1" Width="120" Value="16450" SmallChange="50" LargeChange="500" Minimum="1" Maximum="100000" MaxDecimalPlaces="0" ClearButtonEnabled="False" SpinButtonPlacementMode="Compact" />
+          </Grid>
+          <TextBlock Text="Padrão: 16450 · ainda sem efeito" FontSize="10" Margin="0,0,0,8" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+          <Grid Margin="0,0,0,6">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Sensibilidade X" VerticalAlignment="Center" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+            <ui:NumberBox Name="NumMouseSensX" Grid.Column="1" Width="120" SmallChange="0.05" LargeChange="0.25" Minimum="0.01" Maximum="20" MaxDecimalPlaces="2" ClearButtonEnabled="False" SpinButtonPlacementMode="Compact" />
+          </Grid>
+          <Grid Margin="0,0,0,6">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Sensibilidade Y" VerticalAlignment="Center" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+            <ui:NumberBox Name="NumMouseSensY" Grid.Column="1" Width="120" SmallChange="0.05" LargeChange="0.25" Minimum="0.01" Maximum="20" MaxDecimalPlaces="2" ClearButtonEnabled="False" SpinButtonPlacementMode="Compact" />
+          </Grid>
+          <TextBlock Text="Pausar e retomar a captura (pressionar)" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+          <StackPanel Orientation="Horizontal" Margin="0,2,0,6">
+            <Border Background="{DynamicResource Stex.BgDarkMid2Brush}" CornerRadius="6" Padding="10,4" MinWidth="60">
+              <TextBlock Name="TxtTeclaLibre" Text="—" VerticalAlignment="Center" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            </Border>
+            <ui:Button Name="BtnTeclaLibre" Content="Atribuir" Margin="6,0,0,0" />
+          </StackPanel>
+          <TextBlock Text="Liberar o cursor enquanto mantém pressionado" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+          <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+            <Border Background="{DynamicResource Stex.BgDarkMid2Brush}" CornerRadius="6" Padding="10,4" MinWidth="60">
+              <TextBlock Name="TxtTeclaFree" Text="—" VerticalAlignment="Center" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            </Border>
+            <ui:Button Name="BtnTeclaFree" Content="Atribuir" Margin="6,0,0,0" />
+          </StackPanel>
+          <TextBlock Name="TxtMouseMsg" FontSize="11" TextWrapping="Wrap" Margin="0,4,0,0" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+        </StackPanel>
+        <StackPanel Name="FilaTamano" Margin="0,0,0,8">
+          <TextBlock Text="Tamanho" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+          <Slider Name="PropTamano" Minimum="34" Maximum="140" Margin="0,2,0,0" />
+        </StackPanel>
+        <ui:Button Name="BtnEliminar" Content="Excluir" Margin="0,6,0,0" HorizontalAlignment="Stretch" Icon="{ui:SymbolIcon Delete24}" />
+      </StackPanel>
+    </Border>
+    <ContentPresenter Name="HostDialogos" />
+  </Grid>
+</Window>

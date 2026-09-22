@@ -1,0 +1,43 @@
+{
+  "device_resolution": "auto",
+  "toggle_key": "F1",
+  "exit_key": "Escape",
+  "overlay_opacity": 0.85,
+  "joystick": {
+    "center_x": 280,
+    "center_y": 820,
+    "radius": 140,
+    "keys": {
+      "w": [0, -1],
+      "s": [0, 1],
+      "a": [-1, 0],
+      "d": [1, 0]
+    }
+  },
+  "camera": {
+    "zone_x": 980,
+    "zone_y": 480,
+    "sensitivity": 2.2,
+    "sensitivity_x": 2.2,
+    "sensitivity_y": 1.9,
+    "acceleration": 0.3,
+    "exponent_y": 1.05,
+    "invert_x": false,
+    "invert_y": false,
+    "free_mouse_key": "alt"
+  },
+  "buttons": [
+    {"label": "Quebrar/Atacar", "key": "mouse_left", "x": 1750, "y": 700, "mode": "hold"},
+    {"label": "Usar/Colocar", "key": "mouse_right", "x": 1550, "y": 820, "mode": "tap"},
+    {"label": "Pular", "key": "space", "x": 1700, "y": 900, "mode": "tap"},
+    {"label": "Agachar", "key": "lshift", "x": 1550, "y": 900, "mode": "hold"},
+    {"label": "Inventário", "key": "e", "x": 1840, "y": 120, "mode": "tap"},
+    {"label": "Largar item", "key": "q", "x": 1840, "y": 60, "mode": "tap"},
+    {"label": "Slot 1", "key": "1", "x": 540, "y": 1000, "mode": "tap"},
+    {"label": "Slot 2", "key": "2", "x": 640, "y": 1000, "mode": "tap"},
+    {"label": "Slot 3", "key": "3", "x": 740, "y": 1000, "mode": "tap"},
+    {"label": "Slot 4", "key": "4", "x": 840, "y": 1000, "mode": "tap"},
+    {"label": "Slot 5", "key": "5", "x": 940, "y": 1000, "mode": "tap"},
+    {"label": "Próx. slot", "key": "mouse_wheel_down", "x": 740, "y": 1000, "mode": "tap"}
+  ]
+}

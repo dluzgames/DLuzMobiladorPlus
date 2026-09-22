@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="DLuz.Controls.DirtyBar" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:controls="clr-namespace:DLuz.Controls;assembly=DLuzMobiladorPlus">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <Border Background="{DynamicResource Stex.BgCardBrush}" BorderBrush="{DynamicResource Stex.AccentBrush}" BorderThickness="1" CornerRadius="8" Padding="16,10" Visibility="{Binding MostrarBarraCambios, Converter={StaticResource BoolToVis}, FallbackValue=Collapsed, TargetNullValue=Collapsed}">
+    <UIElement.Effect>
+      <DropShadowEffect Color="#99000000" BlurRadius="18" ShadowDepth="0" Opacity="0.45" />
+    </UIElement.Effect>
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <Ellipse Grid.Column="0" Width="9" Height="9" VerticalAlignment="Center" Fill="{DynamicResource Stex.AccentLightBrush}" />
+      <TextBlock Grid.Column="1" Margin="10,0,12,0" VerticalAlignment="Center" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource Stex.TextPrimaryBrush}" ToolTip="{Binding NombreSeccion, Mode=OneWay, StringFormat=Cambios en {0}}">
+        <Run Text="Cambios en " /> <Run FontWeight="Bold" Foreground="{DynamicResource Stex.AccentLightBrush}" Text="{Binding NombreSeccion, Mode=OneWay}" /></TextBlock>
+      <StackPanel Grid.Column="2" Orientation="Horizontal">
+            <ui:Button Content="Salvar" Appearance="Primary" Margin="0,0,8,0" Icon="{ui:SymbolIcon Save24}" Command="{Binding GuardarCambiosCommand}" />
+            <ui:Button Content="Descartar" Margin="0,0,8,0" Icon="{ui:SymbolIcon ArrowUndo24}" Command="{Binding RevertirSeccionCommand}" />
+            <ui:Button Content="Restaurar" Margin="0,0,8,0" Icon="{ui:SymbolIcon ArrowReset24}" Command="{Binding RestaurarPredeterminadoCommand}" />
+            <ui:Button ToolTip="Ocultar" Icon="{ui:SymbolIcon Dismiss24}" Command="{Binding CerrarAvisoCommand}" />
+      </StackPanel>
+    </Grid>
+  </Border>
+</UserControl>
+

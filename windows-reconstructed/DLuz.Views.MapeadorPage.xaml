@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="DLuz.Views.MapeadorPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:vm="clr-namespace:DLuz.ViewModels" xmlns:helpers="clr-namespace:DLuz.Helpers" Title="Modo DLuzStacks" xmlns:views="clr-namespace:DLuz.Views">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="32,24,32,32" helpers:ScrollReset.ResetOnShow="True">
+    <StackPanel>
+      <Grid Margin="0,0,0,18">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+        <StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Modo DLuzStacks" FontSize="30" FontWeight="Bold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <Border Background="{DynamicResource Stex.AccentBrush}" CornerRadius="12" Padding="9,3" Margin="12,7,0,0" VerticalAlignment="Top">
+              <TextBlock Text="BETA" FontSize="11" FontWeight="Bold" Foreground="White" />
+            </Border>
+            <Border Background="#141E38" BorderBrush="#38EF7D" BorderThickness="1" CornerRadius="6" Padding="8,3" Margin="12,6,0,0" VerticalAlignment="Top">
+              <StackPanel Orientation="Horizontal">
+                <ui:SymbolIcon Symbol="Flash24" FontSize="12" Foreground="#38EF7D" VerticalAlignment="Center" Margin="0,0,4,0" />
+                <TextBlock Text="Latência Mínima: 1ms Input (1000Hz) • &lt; 15ms Total" FontSize="11" FontWeight="Bold" Foreground="#38EF7D" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+          <TextBlock Text="Mapeamento completo no PC com 120 FPS USB, overlay de teclas e latência mínima de 1ms." Margin="0,5,0,0" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+        </StackPanel>
+        <Border Grid.Column="1" Background="{DynamicResource Stex.BgDarkMidBrush}" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" CornerRadius="8" Padding="12,7" VerticalAlignment="Center">
+          <StackPanel Orientation="Horizontal"><ui:SymbolIcon Symbol="Desktop24" Foreground="{DynamicResource Stex.AccentLightBrush}" /><TextBlock Text=" Teclado + mouse" Margin="6,0,0,0" FontSize="12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" /></StackPanel>
+        </Border>
+      </Grid>
+      <Border Margin="0,0,0,14" Padding="15,12" CornerRadius="8" Background="#4A3510" BorderBrush="#6D5017" BorderThickness="1">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+          <ui:SymbolIcon Symbol="Warning24" VerticalAlignment="Top" Foreground="#FFD84D" />
+          <StackPanel Grid.Column="1" Margin="10,0,0,0">
+            <TextBlock Text="Função em fase beta" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <TextBlock Text="O editor abre sem capturar teclado e mouse. Pressione Iniciar ou F1 para ativar o HID e ajuste os controles conforme o jogo." Margin="0,3,0,0" TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+          </StackPanel>
+        </Grid>
+      </Border>
+      <ui:InfoBar Severity="Warning" IsOpen="True" IsClosable="False" Margin="0,0,0,8" Title="Nenhum aparelho" Message="Conecte o celular por USB com a depuração ativa para começar." Visibility="{Binding SinDispositivoVisible, Converter={StaticResource BoolToVis}}" />
+      <ui:InfoBar Severity="Informational" IsOpen="True" IsClosable="False" Margin="0,0,0,8" Title="Espelhamento em andamento" Message="Já existe uma sessão de espelhamento. Pare-a na página Espelhar para usar o Modo DLuzStacks." Visibility="{Binding EspejoNormalVisible, Converter={StaticResource BoolToVis}}" />
+      <!-- Card: Seleção de Aparelho USB -->
+      <ui:Card Margin="0,0,0,16" Padding="20,16">
+        <StackPanel>
+          <TextBlock Text="Aparelho USB:" FontWeight="SemiBold" FontSize="13" Foreground="{DynamicResource Stex.TextPrimaryBrush}" Margin="0,0,0,6" />
+          <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Seriales}" SelectedItem="{Binding SelectedSerial, Mode=TwoWay}" />
+          <Border Background="{DynamicResource Stex.BgDarkMidBrush}" CornerRadius="6" Padding="10,8" Margin="0,8,0,10">
+            <TextBlock TextWrapping="Wrap" FontFamily="Cascadia Mono, Consolas" FontSize="12" Foreground="{DynamicResource Stex.SuccessBrightBrush}" Text="{Binding ConsolaAparelhoTexto}" />
+          </Border>
+          <Grid Margin="0,4,0,0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="10" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ui:Button Grid.Column="0" Content="Detectar aparelhos" Appearance="Secondary" Command="{Binding DetectarAparelhosCommand}" Icon="{ui:SymbolIcon ArrowSync24}" />
+            <ui:Button Grid.Column="2" Content="⚡ Auto Configurar Celular (Melhor Desempenho)" Appearance="Primary" FontWeight="Bold" Command="{Binding AutoConfigurarCommand}" Icon="{ui:SymbolIcon Flash24}" HorizontalAlignment="Left" />
+          </Grid>
+        </StackPanel>
+      </ui:Card>
+
+      <!-- Card: Setup Rápido (Perfis, Encoder & Presets) -->
+      <ui:Card Margin="0,0,0,16" Padding="20,18" Background="#221016" BorderBrush="{DynamicResource Stex.BorderSecondaryBrush}" BorderThickness="1">
+        <StackPanel>
+          <Grid Margin="0,0,0,12">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+              <ui:SymbolIcon Symbol="Flash24" VerticalAlignment="Center" Foreground="{DynamicResource Stex.AccentLightBrush}" />
+              <TextBlock Text="Setup Rápido: Escolha e Jogue" Margin="8,0,0,0" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" VerticalAlignment="Center" />
+              <Border Margin="10,0,0,0" Padding="8,2" CornerRadius="10" Background="{DynamicResource Stex.AccentBrush}" VerticalAlignment="Center">
+                <TextBlock Text="PRONTO PRA JOGAR" FontSize="10" FontWeight="Bold" Foreground="White" />
+              </Border>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+              <ui:SymbolIcon Symbol="Speaker224" Foreground="{DynamicResource Stex.AccentLightBrush}" VerticalAlignment="Center" Margin="0,0,6,0" />
+              <TextBlock Text="Áudio do Celular:" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="12" Foreground="{DynamicResource Stex.TextPrimaryBrush}" Margin="0,0,8,0" />
+              <ui:ToggleSwitch IsChecked="{Binding AudioAtivo, Mode=TwoWay}" VerticalAlignment="Center" />
+            </StackPanel>
+          </Grid>
+
+          <!-- Grid de 3 Colunas: Jogo / Perfil USB / Encoder -->
+          <Grid Margin="0,4,0,4">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="14" />
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="14" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Coluna 1: Preset de Mapeamento do Jogo -->
+            <Border Grid.Column="0" Background="#181D33" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" CornerRadius="10" Padding="14,12">
+              <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                  <ui:SymbolIcon Symbol="Games24" Foreground="{DynamicResource Stex.AccentLightBrush}" VerticalAlignment="Center" />
+                  <TextBlock Text="1. Preset de Teclas" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource Stex.TextPrimaryBrush}" Margin="6,0,0,0" />
+                </StackPanel>
+                <ComboBox Margin="0,2,0,6" HorizontalAlignment="Stretch" ItemsSource="{Binding PresetsDisponiveis}" SelectedItem="{Binding SelectedPreset, Mode=TwoWay}" />
+                <ui:Button Content="Carregar Mapeamento" HorizontalAlignment="Stretch" Appearance="Secondary" Icon="{ui:SymbolIcon ArrowDownload24}" Command="{Binding AplicarPresetCommand}" Margin="0,0,0,8" />
+                
+                <!-- Detalhes do Preset -->
+                <Border Background="#101426" CornerRadius="6" Padding="10,8" BorderBrush="#2A3052" BorderThickness="1">
+                  <TextBlock Text="{Binding PresetDetalhesTexto}" FontSize="11" Foreground="#FFCAD4E8" TextWrapping="Wrap" />
+                </Border>
+              </StackPanel>
+            </Border>
+
+            <!-- Coluna 2: Perfil de Conexão USB (FPS e Resolução) -->
+            <Border Grid.Column="2" Background="#181D33" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" CornerRadius="10" Padding="14,12">
+              <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                  <ui:SymbolIcon Symbol="DesktopPulse24" Foreground="{DynamicResource Stex.AccentLightBrush}" VerticalAlignment="Center" />
+                  <TextBlock Text="2. Perfil de Transmissão" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource Stex.TextPrimaryBrush}" Margin="6,0,0,0" />
+                </StackPanel>
+                <ComboBox Margin="0,2,0,6" HorizontalAlignment="Stretch" ItemsSource="{Binding PerfilesDisponibles}" SelectedItem="{Binding PerfilActivoNombre, Mode=TwoWay}" />
+                
+                <!-- Botões de Atalho dos 3 Perfis Prontos -->
+                <Grid Margin="0,0,0,8">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="4" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="4" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+                  <ui:Button Grid.Column="0" Content="120 FPS" HorizontalAlignment="Stretch" Padding="2,4" FontSize="11" ToolTip="Competitivo USB (120 FPS, 720p, 0ms Delay)" Command="{Binding SelecionarCompetitivoCommand}" />
+                  <ui:Button Grid.Column="2" Content="90 FPS" HorizontalAlignment="Stretch" Padding="2,4" FontSize="11" ToolTip="Equilibrado USB (90 FPS, 900p)" Command="{Binding SelecionarEquilibradoCommand}" />
+                  <ui:Button Grid.Column="4" Content="1080p" HorizontalAlignment="Stretch" Padding="2,4" FontSize="11" ToolTip="Qualidade USB (60 FPS, 1080p)" Command="{Binding SelecionarQualidadeCommand}" />
+                </Grid>
+                
+                <!-- Detalhes do Perfil Selecionado -->
+                <Border Background="#101426" CornerRadius="6" Padding="10,6" BorderBrush="#2A3052" BorderThickness="1">
+                  <Grid>
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                      <TextBlock Text="FPS: " FontSize="10.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+                      <TextBlock Text="{Binding PerfilFpsTexto}" FontSize="10.5" FontWeight="Bold" Foreground="#38EF7D" />
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                      <TextBlock Text="Res: " FontSize="10.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+                      <TextBlock Text="{Binding PerfilResolucaoTexto}" FontSize="10.5" FontWeight="Bold" Foreground="#58A6FF" />
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,3,0,0" Orientation="Horizontal">
+                      <TextBlock Text="Bitrate: " FontSize="10.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+                      <TextBlock Text="{Binding PerfilBitrateTexto}" FontSize="10.5" FontWeight="Bold" Foreground="#FFA657" />
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,3,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                      <TextBlock Text="Buf: " FontSize="10.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+                      <TextBlock Text="{Binding PerfilBufferTexto}" FontSize="10.5" FontWeight="Bold" Foreground="#FF7B72" />
+                    </StackPanel>
+                  </Grid>
+                </Border>
+              </StackPanel>
+            </Border>
+
+            <!-- Coluna 3: Encoder do Processador (Zero Delay) -->
+            <Border Grid.Column="4" Background="#181D33" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" CornerRadius="10" Padding="14,12">
+              <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                  <ui:SymbolIcon Symbol="DeveloperBoard24" Foreground="{DynamicResource Stex.AccentLightBrush}" VerticalAlignment="Center" />
+                  <TextBlock Text="3. Encoder de Hardware" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource Stex.TextPrimaryBrush}" Margin="6,0,0,0" />
+                </StackPanel>
+                
+                <ui:Button Content="🔍 Auto-Detectar do Celular" HorizontalAlignment="Stretch" Appearance="Primary" Icon="{ui:SymbolIcon ArrowSync24}" Command="{Binding DetectarEncoderCommand}" Margin="0,2,0,6" />
+                
+                <UniformGrid Columns="4" Margin="0,0,0,8">
+                  <ui:Button Content="Snap" Margin="0,0,2,0" Padding="2,3" FontSize="10" ToolTip="Qualcomm Snapdragon (c2.qti.avc.encoder)" Command="{Binding SetSnapdragonCommand}" />
+                  <ui:Button Content="MTK" Margin="2,0,2,0" Padding="2,3" FontSize="10" ToolTip="MediaTek Helio / Dimensity (c2.mtk.video.encoder.avc)" Command="{Binding SetMediaTekCommand}" />
+                  <ui:Button Content="Exynos" Margin="2,0,2,0" Padding="2,3" FontSize="10" ToolTip="Samsung Exynos (c2.exynos.h264.encoder)" Command="{Binding SetExynosCommand}" />
+                  <ui:Button Content="Unisoc" Margin="2,0,0,0" Padding="2,3" FontSize="10" ToolTip="Unisoc / Spreadtrum (c2.unisoc.avc.encoder)" Command="{Binding SetUnisocCommand}" />
+                </UniformGrid>
+                
+                <!-- Detalhes do Encoder Ativo -->
+                <Border Background="#101426" CornerRadius="6" Padding="10,6" BorderBrush="#2A3052" BorderThickness="1">
+                  <StackPanel>
+                    <TextBlock Text="{Binding EncoderChipNome}" FontWeight="Bold" FontSize="11" Foreground="#38EF7D" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Text="{Binding EncoderCodigoTexto}" FontSize="9.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Margin="0,1,0,1" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Text="{Binding EncoderStatusBadge}" FontSize="10" FontWeight="SemiBold" Foreground="#FFA657" />
+                  </StackPanel>
+                </Border>
+              </StackPanel>
+            </Border>
+          </Grid>
+        </StackPanel>
+      </ui:Card>
+
+            <!-- Card: Sensibilidade Avançada & Puxada de Capa (Eixo Y) -->
+      <ui:Card Margin="0,0,0,16" Padding="20,18" Background="#1B2141" BorderBrush="{DynamicResource Stex.BorderSecondaryBrush}" BorderThickness="1">
+        <StackPanel>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+              <StackPanel Orientation="Horizontal">
+                <ui:SymbolIcon Symbol="Target24" Foreground="#FF2A3A" VerticalAlignment="Center" Margin="0,0,8,0" />
+                <TextBlock Text="Sensibilidade Avançada &amp; Puxada de Capa (Eixo Y)" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+              </StackPanel>
+              <TextBlock Text="Ajuste o multiplicador de capa no Free Fire / FPS e a curva de aceleração sem poluição visual." FontSize="11.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Margin="0,4,0,0" />
+            </StackPanel>
+            <Border Grid.Column="1" Background="#141E38" BorderBrush="#38EF7D" BorderThickness="1" CornerRadius="6" Padding="10,4" VerticalAlignment="Center">
+              <StackPanel Orientation="Horizontal">
+                <ui:SymbolIcon Symbol="Flash24" FontSize="13" Foreground="#38EF7D" VerticalAlignment="Center" Margin="0,0,6,0" />
+                <TextBlock Text="1000Hz (1ms) Ativo" FontSize="11" FontWeight="Bold" Foreground="#38EF7D" VerticalAlignment="Center" />
+              </StackPanel>
+            </Border>
+          </Grid>
+
+          <!-- Sliders Compactos de Capa e Aceleração -->
+          <Grid Margin="0,14,0,4">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="20" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Coluna 1: Puxada de Capa Y -->
+            <StackPanel Grid.Column="0">
+              <Grid Margin="0,0,0,4">
+                <TextBlock Text="Puxada de Capa (Eixo Y):" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+                <TextBlock HorizontalAlignment="Right" FontWeight="Bold" Foreground="#FF2A3A" Text="{Binding Value, ElementName=SliderCapaDluz, StringFormat={}{0:F2}x}" />
+              </Grid>
+              <Slider x:Name="SliderCapaDluz" Minimum="1.0" Maximum="2.5" SmallChange="0.01" LargeChange="0.05"
+                      TickFrequency="0.01" IsSnapToTickEnabled="False" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="2"
+                      Value="{Binding PuxadaCapaY, Source={x:Static vm:AjustesViewModel.Instance}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+              <TextBlock Text="Multiplicador exponencial para subida de mira facilitada." FontSize="10.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Margin="0,2,0,0" />
+            </StackPanel>
+
+            <!-- Coluna 2: Aceleração Dinâmica -->
+            <StackPanel Grid.Column="2">
+              <Grid Margin="0,0,0,4">
+                <TextBlock Text="Aceleração de Câmera:" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+                <TextBlock HorizontalAlignment="Right" FontWeight="Bold" Foreground="{DynamicResource Stex.AccentLightBrush}" Text="{Binding Value, ElementName=SliderAcelDluz, StringFormat={}{0:F2}}" />
+              </Grid>
+              <Slider x:Name="SliderAcelDluz" Minimum="0.0" Maximum="1.5" SmallChange="0.01" LargeChange="0.05"
+                      TickFrequency="0.01" IsSnapToTickEnabled="False" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="2"
+                      Value="{Binding AceleracaoCamera, Source={x:Static vm:AjustesViewModel.Instance}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+              <TextBlock Text="Curva dinâmica de velocidade para giros rápidos de 360°." FontSize="10.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Margin="0,2,0,0" />
+            </StackPanel>
+          </Grid>
+        </StackPanel>
+      </ui:Card>
+
+      <!-- Card: Modo Latência Ultra USB (Zero Delay) -->
+      <ui:Card Margin="0,0,0,16" Padding="20,18" Background="#4A121A" BorderBrush="{DynamicResource Stex.AccentLightBrush}" BorderThickness="1">
+        <StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <ui:SymbolIcon Symbol="Flash24" VerticalAlignment="Center" Foreground="{DynamicResource Stex.AccentLightBrush}" />
+            <TextBlock Text="Modo Latência Ultra USB (Zero Delay)" Margin="10,0,0,0" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" VerticalAlignment="Center" />
+            <Border Margin="10,0,0,0" Padding="8,2" CornerRadius="10" Background="{DynamicResource Stex.AccentBrush}" VerticalAlignment="Center">
+              <TextBlock Text="RECOMENDADO" FontSize="10" FontWeight="Bold" Foreground="White" />
+            </Border>
+          </StackPanel>
+          <TextBlock Text="Configura automaticamente codec H.264 de baixa latência, buffer de vídeo 0ms, 120 FPS, resolução equilibrada e escalas de animação zeradas no Android para o menor tempo de resposta possível." Margin="0,8,0,14" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+          <WrapPanel>
+            <ui:Button Content="⚡ Ativar Latência Ultra USB" Appearance="Primary" Margin="0,0,12,8" Command="{Binding LatenciaUltraCommand}" Icon="{ui:SymbolIcon Flash24}" />
+            <ui:Button Content="🖥️ 🔍 Testar Encoders do Aparelho (Benchmark)" Margin="0,0,12,8" Command="{Binding TestarEncodersCommand}" Icon="{ui:SymbolIcon DesktopPulse24}" />
+          </WrapPanel>
+          <TextBlock Text="{Binding EncoderBenchmarkStatus}" Margin="0,4,0,0" FontWeight="SemiBold" FontSize="12" Foreground="{DynamicResource Stex.SuccessBrightBrush}" />
+        </StackPanel>
+      </ui:Card>
+
+      <Border Margin="0,0,0,16" Padding="24,20" CornerRadius="12" Background="#660007" BorderBrush="#FF2A3A" BorderThickness="1">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+          <StackPanel Grid.Column="0" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+              <Ellipse Width="11" Height="11" VerticalAlignment="Center" Fill="{Binding IndicadorBrush}" />
+              <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" FontSize="17" FontWeight="SemiBold" Foreground="White" Text="{Binding EstadoSesionTexto}" />
+              <Border Background="#4A121A" CornerRadius="10" Padding="9,3" Margin="12,0,0,0" VerticalAlignment="Center" Visibility="{Binding SesionActiva, Converter={StaticResource BoolToVis}}">
+                <TextBlock FontSize="11" Foreground="#FFD8DC" Text="{Binding ResolucionTexto}" />
+              </Border>
+            </StackPanel>
+            <TextBlock Text="Abra a sessão, edite o mapeamento e pressione F1 quando estiver pronto para jogar." Margin="0,7,0,0" FontSize="12" TextWrapping="Wrap" Foreground="#FFD3D7" />
+          </StackPanel>
+          <Button Grid.Column="1" Style="{StaticResource Stex.ActionButton}" Height="48" MinWidth="160" VerticalAlignment="Center" Command="{Binding PrincipalCommand}" IsEnabled="{Binding PuedePrincipal}" Background="#FFE50914" Foreground="White">
+            <StackPanel Orientation="Horizontal" TextElement.Foreground="{Binding PrincipalFore}">
+              <ui:SymbolIcon Symbol="Play24" VerticalAlignment="Center" />
+              <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" FontSize="15" Text="{Binding PrincipalTexto}" />
+            </StackPanel>
+          </Button>
+        </Grid>
+      </Border>
+      <ui:Card Margin="0,0,0,16" Padding="22,20">
+        <StackPanel>
+          <Grid>
+            <StackPanel Orientation="Horizontal">
+              <ui:SymbolIcon Symbol="Desktop24" VerticalAlignment="Center" Foreground="{DynamicResource Stex.AccentLightBrush}" />
+              <TextBlock Text="Modo de tela dedicada" Margin="9,0,0,0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+              <Border Margin="10,0,0,0" Padding="8,2" CornerRadius="10" VerticalAlignment="Center" Background="{DynamicResource Stex.BgDarkMid2Brush}" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1">
+                <TextBlock Text="Conforme o aparelho" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+              </Border>
+            </StackPanel>
+            <ui:ToggleSwitch HorizontalAlignment="Right" IsChecked="{Binding VdActivo, Mode=TwoWay}" IsEnabled="{Binding VdEditable}" />
+          </Grid>
+          <TextBlock Text="Abre o jogo em uma tela virtual própria, com resolução e DPI definidos. Disponível em aparelhos compatíveis." Margin="0,8,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+          <StackPanel Visibility="{Binding VdJuegoVisible, Converter={StaticResource BoolToVis}}">
+            <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+              <TextBlock Text="Jogo:" VerticalAlignment="Center" Margin="0,0,10,0" Width="80" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+              <ComboBox Width="180" DisplayMemberPath="Texto" ItemsSource="{Binding JuegosVd}" SelectedItem="{Binding SelectedJuegoVd, Mode=TwoWay}" IsEnabled="{Binding VdEditable}" />
+            </StackPanel>
+            <ui:TextBox Width="270" HorizontalAlignment="Left" Margin="90,8,0,0" PlaceholderText="ej. com.miempresa.mijuego" Text="{Binding VdJuegoPersonalizado, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding VdEditable}" Visibility="{Binding VdCustomVisible, Converter={StaticResource BoolToVis}}" />
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+              <TextBlock Text="Resolução:" VerticalAlignment="Center" Margin="0,0,10,0" Width="80" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+              <ComboBox Width="140" ItemsSource="{Binding ResolucionesVd}" SelectedItem="{Binding SelectedResolucionVd, Mode=TwoWay}" IsEnabled="{Binding VdEditable}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+              <TextBlock Text="DPI:" VerticalAlignment="Center" Margin="0,0,10,0" Width="80" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+              <RadioButton Content="160" GroupName="VdDpi" VerticalAlignment="Center" Margin="0,0,14,0" Foreground="{DynamicResource Stex.TextPrimaryBrush}" IsChecked="{Binding VdDpi160, Mode=TwoWay}" IsEnabled="{Binding VdEditable}" />
+              <RadioButton Content="240" GroupName="VdDpi" VerticalAlignment="Center" Margin="0,0,14,0" Foreground="{DynamicResource Stex.TextPrimaryBrush}" IsChecked="{Binding VdDpi240, Mode=TwoWay}" IsEnabled="{Binding VdEditable}" />
+              <RadioButton Content="320" GroupName="VdDpi" VerticalAlignment="Center" Margin="0,0,14,0" Foreground="{DynamicResource Stex.TextPrimaryBrush}" IsChecked="{Binding VdDpi320, Mode=TwoWay}" IsEnabled="{Binding VdEditable}" />
+              <RadioButton Content="Personalizado" GroupName="VdDpi" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{DynamicResource Stex.TextPrimaryBrush}" IsChecked="{Binding VdDpiEsCustom, Mode=TwoWay}" IsEnabled="{Binding VdEditable}" />
+              <ui:NumberBox Width="150" Minimum="80" Maximum="640" SmallChange="20" MaxDecimalPlaces="0" ClearButtonEnabled="False" SpinButtonPlacementMode="Inline" Value="{Binding VdDpiCustom, Mode=TwoWay}" IsEnabled="{Binding VdEditable}" Visibility="{Binding VdDpiCustomVisible, Converter={StaticResource BoolToVis}}" />
+            </StackPanel>
+          </StackPanel>
+        </StackPanel>
+      </ui:Card>
+    </StackPanel>
+  </ScrollViewer>
+</Page>
+
+
+
+
+
+
+
+
+
+
+

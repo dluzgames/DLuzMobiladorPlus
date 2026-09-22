@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="DLuz.Controls.KofiCta" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:controls="clr-namespace:DLuz.Controls;assembly=DLuzMobiladorPlus">
+  <Border Background="{DynamicResource Stex.CtaBgBrush}" BorderBrush="{DynamicResource Stex.CtaBorderBrush}" BorderThickness="1" CornerRadius="10" Padding="16,12" Margin="0,0,0,16">
+    <StackPanel Orientation="Horizontal">
+      <ui:SymbolIcon Symbol="Sparkle24" VerticalAlignment="Center" Foreground="{DynamicResource Stex.KofiAccentBrush}" />
+      <TextBlock Name="Host" Margin="12,0,0,0" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="12.5" Foreground="{DynamicResource Stex.TextLightBrush}" />
+    </StackPanel>
+  </Border>
+</UserControl>

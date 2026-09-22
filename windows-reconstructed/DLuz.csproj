@@ -1,0 +1,227 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <AssemblyName>DLuzMobiladorPlus</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <UseWPF>True</UseWPF>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <LangVersion>12.0</LangVersion>
+    <Version>3.0.0</Version>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
+    <FileVersion>3.0.0.0</FileVersion>
+    <InformationalVersion>3.0.0</InformationalVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <RootNamespace>DLuz</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([System.String]::Copy('$(RuntimeIdentifier)').StartsWith('win-'))">
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <DebugType>None</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Page Remove="DLuz.App.xaml" />
+    <ApplicationDefinition Include="DLuz.App.xaml" />
+    <Resource Include="assets\**\*.png" />
+    <None Remove="assets\icons\ic_wifi_add.png" />
+    <None Remove="assets\icons\ic_screen.png" />
+    <None Remove="assets\icons\ic_add_profile.png" />
+    <None Remove="assets\icons\ic_youtube.png" />
+    <None Remove="assets\icons\ic_acerca.png" />
+    <None Remove="assets\icons\ic_bolt.png" />
+    <None Remove="assets\icons\ic_menu.png" />
+    <None Remove="assets\icons\ic_verified.png" />
+    <None Remove="assets\icons\ic_more.png" />
+    <None Remove="assets\icons\ic_delete.png" />
+    <None Remove="assets\icons\ic_save.png" />
+    <None Remove="assets\icons\ic_sync.png" />
+    <None Remove="assets\icons\ic_check.png" />
+    <None Remove="assets\icons\ic_apply.png" />
+    <None Remove="assets\icons\ic_history.png" />
+    <None Remove="assets\icons\ic_extras.png" />
+    <None Remove="assets\icons\ic_perfiles.png" />
+    <None Remove="assets\icons\ic_expand.png" />
+    <None Remove="assets\icons\ic_wifi_connect.png" />
+    <None Remove="assets\icons\ic_tiktok.png" />
+    <None Remove="assets\icons\ic_refresh.png" />
+    <None Remove="assets\icons\ic_video.png" />
+    <None Remove="assets\icons\ic_download.png" />
+    <None Remove="assets\icons\ic_power.png" />
+    <None Remove="assets\icons\ic_upload.png" />
+    <None Remove="assets\icons\ic_save2.png" />
+    <None Remove="assets\icons\ic_reset.png" />
+    <None Remove="assets\icons\ic_kofi.png" />
+    <None Remove="assets\icons\ic_wifi_close.png" />
+    <None Remove="assets\icons\ic_home.png" />
+    <None Remove="assets\icons\ic_content_copy.png" />
+    <None Remove="assets\icons\ic_clean.png" />
+    <None Remove="assets\icons\ic_clear.png" />
+    <None Remove="assets\icons\ic_arrow_back.png" />
+    <None Remove="assets\logo.png" />
+    <None Remove="assets\icons\ic_wifi.png" />
+    <None Remove="assets\icons\ic_done.png" />
+    <None Remove="assets\icons\ic_import_export.png" />
+    <None Remove="assets\icons\ic_screen.png" />
+    <None Remove="assets\icons\ic_add_profile.png" />
+    <None Remove="assets\icons\ic_youtube.png" />
+    <None Remove="assets\icons\ic_acerca.png" />
+    <None Remove="assets\icons\ic_bolt.png" />
+    <None Remove="assets\icons\ic_menu.png" />
+    <None Remove="assets\icons\ic_verified.png" />
+    <None Remove="assets\icons\ic_more.png" />
+    <None Remove="assets\icons\ic_delete.png" />
+    <None Remove="assets\icons\ic_save.png" />
+    <None Remove="assets\icons\ic_sync.png" />
+    <None Remove="assets\icons\ic_check.png" />
+    <None Remove="assets\icons\ic_apply.png" />
+    <None Remove="assets\icons\ic_history.png" />
+    <None Remove="assets\icons\ic_extras.png" />
+    <None Remove="assets\icons\ic_perfiles.png" />
+    <None Remove="assets\icons\ic_expand.png" />
+    <None Remove="assets\icons\ic_wifi_connect.png" />
+    <None Remove="assets\icons\ic_tiktok.png" />
+    <None Remove="assets\icons\ic_refresh.png" />
+    <None Remove="assets\icons\ic_video.png" />
+    <None Remove="assets\icons\ic_download.png" />
+    <None Remove="assets\icons\ic_power.png" />
+    <None Remove="assets\icons\ic_upload.png" />
+    <None Remove="assets\icons\ic_save2.png" />
+    <None Remove="assets\icons\ic_reset.png" />
+    <None Remove="assets\icons\ic_kofi.png" />
+    <None Remove="assets\icons\ic_wifi_close.png" />
+    <None Remove="assets\icons\ic_home.png" />
+    <None Remove="assets\icons\ic_content_copy.png" />
+    <None Remove="assets\icons\ic_clean.png" />
+    <None Remove="assets\icons\ic_clear.png" />
+    <None Remove="assets\icons\ic_arrow_back.png" />
+    <None Remove="assets\logo.png" />
+    <None Remove="assets\icons\ic_wifi.png" />
+    <None Remove="assets\icons\ic_done.png" />
+    <None Remove="assets\icons\ic_import_export.png" />
+    <None Remove="assets\icons\ic_power_dark.png" />
+    <None Remove="assets\icons\ic_controller.png" />
+    <None Remove="assets\icons\ic_redo.png" />
+    <None Remove="assets\icons\ic_discord.png" />
+    <None Remove="assets\icons\ic_arrow_next.png" />
+    <None Remove="DLuz.perfiles.base.ini" />
+    <None Remove="DLuz.keymap.freefire.json" />
+    <None Remove="DLuz.keymap.bloodstrike.json" />
+    <None Remove="DLuz.keymap.codm.json" />
+    <None Remove="DLuz.keymap.pubg.json" />
+    <None Remove="DLuz.keymap.roblox.json" />
+    <None Remove="DLuz.keymap.stumbleguys.json" />
+    <None Remove="DLuz.keymap.minecraft.json" />
+    <None Remove="DLuz.adb.manifest.txt" />
+    <None Remove="DLuz.adb.respaldo.zip" />
+    <EmbeddedResource Include="assets\icons\ic_wifi_add.png" LogicalName="assets/icons/ic_wifi_add.png" />
+    <EmbeddedResource Include="assets\icons\ic_screen.png" LogicalName="assets/icons/ic_screen.png" />
+    <EmbeddedResource Include="assets\icons\ic_add_profile.png" LogicalName="assets/icons/ic_add_profile.png" />
+    <EmbeddedResource Include="assets\icons\ic_youtube.png" LogicalName="assets/icons/ic_youtube.png" />
+    <EmbeddedResource Include="assets\icons\ic_acerca.png" LogicalName="assets/icons/ic_acerca.png" />
+    <EmbeddedResource Include="assets\icons\ic_bolt.png" LogicalName="assets/icons/ic_bolt.png" />
+    <EmbeddedResource Include="assets\icons\ic_menu.png" LogicalName="assets/icons/ic_menu.png" />
+    <EmbeddedResource Include="assets\icons\ic_verified.png" LogicalName="assets/icons/ic_verified.png" />
+    <EmbeddedResource Include="assets\icons\ic_more.png" LogicalName="assets/icons/ic_more.png" />
+    <EmbeddedResource Include="assets\icons\ic_delete.png" LogicalName="assets/icons/ic_delete.png" />
+    <EmbeddedResource Include="assets\icons\ic_save.png" LogicalName="assets/icons/ic_save.png" />
+    <EmbeddedResource Include="assets\icons\ic_sync.png" LogicalName="assets/icons/ic_sync.png" />
+    <EmbeddedResource Include="assets\icons\ic_check.png" LogicalName="assets/icons/ic_check.png" />
+    <EmbeddedResource Include="assets\icons\ic_apply.png" LogicalName="assets/icons/ic_apply.png" />
+    <EmbeddedResource Include="assets\icons\ic_history.png" LogicalName="assets/icons/ic_history.png" />
+    <EmbeddedResource Include="assets\icons\ic_extras.png" LogicalName="assets/icons/ic_extras.png" />
+    <EmbeddedResource Include="assets\icons\ic_perfiles.png" LogicalName="assets/icons/ic_perfiles.png" />
+    <EmbeddedResource Include="assets\icons\ic_expand.png" LogicalName="assets/icons/ic_expand.png" />
+    <EmbeddedResource Include="assets\icons\ic_wifi_connect.png" LogicalName="assets/icons/ic_wifi_connect.png" />
+    <EmbeddedResource Include="assets\icons\ic_tiktok.png" LogicalName="assets/icons/ic_tiktok.png" />
+    <EmbeddedResource Include="assets\icons\ic_refresh.png" LogicalName="assets/icons/ic_refresh.png" />
+    <EmbeddedResource Include="assets\icons\ic_video.png" LogicalName="assets/icons/ic_video.png" />
+    <EmbeddedResource Include="assets\icons\ic_download.png" LogicalName="assets/icons/ic_download.png" />
+    <EmbeddedResource Include="assets\icons\ic_power.png" LogicalName="assets/icons/ic_power.png" />
+    <EmbeddedResource Include="assets\icons\ic_upload.png" LogicalName="assets/icons/ic_upload.png" />
+    <EmbeddedResource Include="assets\icons\ic_save2.png" LogicalName="assets/icons/ic_save2.png" />
+    <EmbeddedResource Include="assets\icons\ic_reset.png" LogicalName="assets/icons/ic_reset.png" />
+    <EmbeddedResource Include="assets\icons\ic_kofi.png" LogicalName="assets/icons/ic_kofi.png" />
+    <EmbeddedResource Include="assets\icons\ic_wifi_close.png" LogicalName="assets/icons/ic_wifi_close.png" />
+    <EmbeddedResource Include="assets\icons\ic_home.png" LogicalName="assets/icons/ic_home.png" />
+    <EmbeddedResource Include="assets\icons\ic_content_copy.png" LogicalName="assets/icons/ic_content_copy.png" />
+    <EmbeddedResource Include="assets\icons\ic_clean.png" LogicalName="assets/icons/ic_clean.png" />
+    <EmbeddedResource Include="assets\icons\ic_clear.png" LogicalName="assets/icons/ic_clear.png" />
+    <EmbeddedResource Include="assets\icons\ic_arrow_back.png" LogicalName="assets/icons/ic_arrow_back.png" />
+    <EmbeddedResource Include="assets\logo.png" LogicalName="assets/logo.png" />
+    <EmbeddedResource Include="assets\icons\ic_wifi.png" LogicalName="assets/icons/ic_wifi.png" />
+    <EmbeddedResource Include="assets\icons\ic_done.png" LogicalName="assets/icons/ic_done.png" />
+    <EmbeddedResource Include="assets\icons\ic_import_export.png" LogicalName="assets/icons/ic_import_export.png" />
+    <EmbeddedResource Include="assets\icons\ic_power_dark.png" LogicalName="assets/icons/ic_power_dark.png" />
+    <EmbeddedResource Include="assets\icons\ic_controller.png" LogicalName="assets/icons/ic_controller.png" />
+    <EmbeddedResource Include="assets\icons\ic_redo.png" LogicalName="assets/icons/ic_redo.png" />
+    <EmbeddedResource Include="assets\icons\ic_discord.png" LogicalName="assets/icons/ic_discord.png" />
+    <EmbeddedResource Include="assets\icons\ic_arrow_next.png" LogicalName="assets/icons/ic_arrow_next.png" />
+    <EmbeddedResource Include="DLuz.perfiles.base.ini" LogicalName="DLuz.perfiles.base.ini" />
+    <EmbeddedResource Include="DLuz.keymap.freefire.json" LogicalName="DLuz.keymap.freefire.json" />
+    <EmbeddedResource Include="DLuz.keymap.bloodstrike.json" LogicalName="DLuz.keymap.bloodstrike.json" />
+    <EmbeddedResource Include="DLuz.keymap.codm.json" LogicalName="DLuz.keymap.codm.json" />
+    <EmbeddedResource Include="DLuz.keymap.pubg.json" LogicalName="DLuz.keymap.pubg.json" />
+    <EmbeddedResource Include="DLuz.keymap.roblox.json" LogicalName="DLuz.keymap.roblox.json" />
+    <EmbeddedResource Include="DLuz.keymap.stumbleguys.json" LogicalName="DLuz.keymap.stumbleguys.json" />
+    <EmbeddedResource Include="DLuz.keymap.minecraft.json" LogicalName="DLuz.keymap.minecraft.json" />
+    <EmbeddedResource Include="DLuz.adb.manifest.txt" LogicalName="DLuz.adb.manifest.txt" />
+    <EmbeddedResource Include="DLuz.adb.respaldo.zip" LogicalName="DLuz.adb.respaldo.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="assets\**\*.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="QRCoder" Version="1.7.0" />
+    <Reference Include="INIFileParser">
+      <HintPath>lib\INIFileParser.dll</HintPath>
+    </Reference>
+    <Reference Include="Wpf.Ui">
+      <HintPath>lib\Wpf.Ui.dll</HintPath>
+    </Reference>
+    <Reference Include="Wpf.Ui.Abstractions">
+      <HintPath>lib\Wpf.Ui.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="CommunityToolkit.Mvvm">
+      <HintPath>lib\CommunityToolkit.Mvvm.dll</HintPath>
+    </Reference>
+    <Reference Include="WinRT.Runtime">
+      <HintPath>lib\WinRT.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RuntimeAssets\bin\**\*">
+      <Link>bin\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Include="RuntimeAssets\dlss5\**\*">
+      <Link>dlss5\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+  <Target Name="CreateDluzMobiladorPlusLauncher" AfterTargets="Build">
+    <Copy SourceFiles="$(TargetDir)$(AssemblyName).exe" DestinationFiles="$(TargetDir)DluzMobiladorPlus.exe" />
+    <Copy SourceFiles="$(TargetDir)$(AssemblyName).dll" DestinationFiles="$(TargetDir)DluzMobiladorPlus.dll" />
+    <Copy SourceFiles="$(TargetDir)$(AssemblyName).runtimeconfig.json" DestinationFiles="$(TargetDir)DluzMobiladorPlus.runtimeconfig.json" />
+    <Copy SourceFiles="$(TargetDir)$(AssemblyName).deps.json" DestinationFiles="$(TargetDir)DluzMobiladorPlus.deps.json" />
+  </Target>
+  <Target Name="CreateDluzMobiladorPlusSingleFile" AfterTargets="Publish" Condition="$([System.String]::Copy('$(RuntimeIdentifier)').StartsWith('win-'))">
+    <Copy SourceFiles="$(PublishDir)$(AssemblyName).exe" DestinationFiles="$(PublishDir)DluzMobiladorPlus.exe" />
+    <Delete Files="$(PublishDir)$(AssemblyName).exe" />
+  </Target>
+</Project>
+
+

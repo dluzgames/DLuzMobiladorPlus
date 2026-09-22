@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="DLuz.Views.MapeadorCursorOverlay" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="DLuzMObi v2 (Cursor)" Icon="pack://application:,,,/Assets/logo.png" WindowStyle="None" AllowsTransparency="True" Background="#00FFFFFF" Topmost="True" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="Manual" ShowActivated="False" Focusable="False" xmlns:views="clr-namespace:DLuz.Views;assembly=DLuzMobiladorPlus">
+  <Grid Name="Raiz" Background="#01000000" />
+</Window>
+

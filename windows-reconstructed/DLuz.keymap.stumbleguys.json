@@ -1,0 +1,34 @@
+{
+  "device_resolution": "auto",
+  "toggle_key": "F1",
+  "exit_key": "Escape",
+  "overlay_opacity": 0.85,
+  "joystick": {
+    "center_x": 260,
+    "center_y": 820,
+    "radius": 130,
+    "keys": {
+      "w": [0, -1],
+      "s": [0, 1],
+      "a": [-1, 0],
+      "d": [1, 0]
+    }
+  },
+  "camera": {
+    "zone_x": 960,
+    "zone_y": 480,
+    "sensitivity": 1.8,
+    "sensitivity_x": 1.8,
+    "sensitivity_y": 1.6,
+    "acceleration": 0.2,
+    "exponent_y": 1.0,
+    "invert_x": false,
+    "invert_y": false,
+    "free_mouse_key": "alt"
+  },
+  "buttons": [
+    {"label": "Pular", "key": "space", "x": 1700, "y": 900, "mode": "tap"},
+    {"label": "Socar/Agarrar", "key": "mouse_left", "x": 1550, "y": 820, "mode": "tap"},
+    {"label": "Mergulhar", "key": "c", "x": 1700, "y": 820, "mode": "tap"}
+  ]
+}

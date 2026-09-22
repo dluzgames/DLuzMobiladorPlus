@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="DLuz.Views.ExtrasPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:helpers="clr-namespace:DLuz.Helpers" xmlns:ctl="clr-namespace:DLuz.Controls" Title="Opções extras" xmlns:views="clr-namespace:DLuz.Views">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Padding="32,24,32,32" helpers:ScrollReset.ResetOnShow="True">
+      <StackPanel>
+      <TextBlock Text="Opções extras" Style="{StaticResource Stex.PageTitle}" />
+      <TextBlock Text="Comportamento do aparelho, atalhos, cursor e diagnóstico." Margin="0,4,0,20" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+        <ui:Card Margin="0,0,0,16" Padding="20,18">
+          <StackPanel>
+            <TextBlock Text="Comportamento do aparelho" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <ctl:SettingRow Margin="0,14,0,0" Title="Evitar suspensão da tela no Windows" Description="Impede que o Windows desligue ou suspenda a tela durante a sessão.">
+              <ctl:SettingRow.Action>
+                <ui:ToggleSwitch IsChecked="{Binding S.DisableScreensaver, Mode=TwoWay}" />
+              </ctl:SettingRow.Action>
+            </ctl:SettingRow>
+            <ctl:SettingRow Margin="0,14,0,0" Title="Evitar bloqueio do celular" Description="Impede que o celular entre em repouso e seja bloqueado durante a sessão. Não mantém a tela ligada.">
+              <ctl:SettingRow.Action>
+                <ui:ToggleSwitch IsChecked="{Binding S.KeepActive, Mode=TwoWay}" />
+              </ctl:SettingRow.Action>
+            </ctl:SettingRow>
+            <ctl:SettingRow Margin="0,14,0,0" Title="Desligar a tela do celular ao jogar" Description="Desliga a tela física do celular; o jogo continua rodando e transmitindo ao PC. Pode não funcionar em alguns aparelhos.">
+              <ctl:SettingRow.Action>
+                <ui:ToggleSwitch IsChecked="{Binding S.TurnScreenOff, Mode=TwoWay}" />
+              </ctl:SettingRow.Action>
+            </ctl:SettingRow>
+          </StackPanel>
+        </ui:Card>
+        <ui:Card Margin="0,0,0,16" Padding="20,18">
+          <StackPanel>
+            <TextBlock Text="Capturas e gravações" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <TextBlock Text="Local onde as capturas de tela e os vídeos do Modo DLuzStacks serão salvos." Margin="0,6,0,12" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+            <TextBlock Text="Pasta de destino" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+              <ui:TextBox Name="TxtPastaCapturas" Width="460" IsReadOnly="True" />
+              <ui:Button Content="Escolher pasta" Margin="10,0,0,0" Icon="{ui:SymbolIcon Folder24}" Click="EscolherPastaCapturas_Click" />
+            </StackPanel>
+            <TextBlock Text="Formato de vídeo" Margin="0,14,0,4" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <ComboBox Name="ComboFormatoGravacao" Width="180" HorizontalAlignment="Left" SelectedIndex="0" helpers:ComboGuard.ProtegerApertura="True" SelectionChanged="FormatoGravacao_SelectionChanged">
+              <ComboBoxItem Content="MP4 (recomendado)" />
+            </ComboBox>
+            <Border Margin="0,12,0,0" Padding="12,8" CornerRadius="6" Background="{DynamicResource Stex.BgDarkMidBrush}" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1">
+              <TextBlock Text="A gravação usa o recurso nativo do Android e tem limite de até 3 minutos por vídeo. Ao parar, o arquivo é salvo automaticamente nesta pasta." TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+            </Border>
+          </StackPanel>
+        </ui:Card>
+        <ui:Card Margin="0,0,0,16" Padding="20,18">
+          <StackPanel>
+      <TextBlock Text="Depuração" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <ctl:SettingRow Margin="0,14,0,0" Title="Janela flutuante de controle" Description="Barra flutuante com o botão de parar e os dados da sessão.">
+              <ctl:SettingRow.Action>
+                <ui:ToggleSwitch IsChecked="{Binding S.MostrarFlotante, Mode=TwoWay}" />
+              </ctl:SettingRow.Action>
+            </ctl:SettingRow>
+            <TextBlock Text="Mostrar FPS" Margin="0,16,0,4" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <ComboBox Width="280" HorizontalAlignment="Left" helpers:ComboGuard.ProtegerApertura="True" ItemsSource="{Binding FpsModos}" SelectedIndex="{Binding FpsModoSel, Mode=TwoWay}" />
+            <Border Margin="0,12,0,0" Padding="12,8" CornerRadius="6" Background="{DynamicResource Stex.BgDarkMidBrush}" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1">
+              <StackPanel Orientation="Horizontal">
+                <ui:SymbolIcon Symbol="Info24" VerticalAlignment="Center" Foreground="{DynamicResource Stex.AccentLightBrush}" />
+                <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Text="{Binding FpsModoNota}" />
+              </StackPanel>
+            </Border>
+            <TextBlock Text="A janela flutuante está desativada; somente a sobreposição será exibida." Margin="0,8,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextLighterBrush}" Visibility="{Binding FlotanteDesactivadaNotaVisible, Converter={StaticResource BoolToVis}}" />
+            <StackPanel Visibility="{Binding OverlayPosVisible, Converter={StaticResource BoolToVis}}">
+            <TextBlock Text="Posição da sobreposição" Margin="0,12,0,4" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+              <ComboBox Width="200" HorizontalAlignment="Left" helpers:ComboGuard.ProtegerApertura="True" ItemsSource="{Binding EsquinasOverlay}" SelectedIndex="{Binding OverlayEsquinaSel, Mode=TwoWay}" />
+            </StackPanel>
+          </StackPanel>
+        </ui:Card>
+        <ui:Card Margin="0,0,0,16" Padding="20,18">
+          <StackPanel>
+            <TextBlock Text="MOD — tecla modificadora de atalhos" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+              <Border Padding="12,6" CornerRadius="6" VerticalAlignment="Center" Background="{DynamicResource Stex.BgCardBrush}">
+                <TextBlock FontWeight="Bold" Foreground="{DynamicResource Stex.AccentLightBrush}" Text="{Binding ModNombre}" />
+              </Border>
+              <ui:Button Margin="12,0,0,0" Content="{Binding ModBotonTexto}" Icon="{ui:SymbolIcon Keyboard24}" Command="{Binding IniciarCapturaModCommand}" />
+            </StackPanel>
+            <TextBlock Margin="0,8,0,0" FontSize="12" Foreground="{DynamicResource Stex.AccentLightBrush}" Text="{Binding ModStatus}" />
+            <TextBlock Text="É a tecla-base usada junto com outra tecla. Pressione o botão e escolha a MOD desejada. Atalhos: MOD+F tela cheia, MOD+M menu, MOD+P energia e MOD+Q fechar." Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextLighterBrush}" />
+            <TextBlock Text="A tecla escolhida fica reservada para o espelho e não poderá ser atribuída aos controles do jogo." Margin="0,6,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+          </StackPanel>
+        </ui:Card>
+        <ui:Card Margin="0,0,0,16" Padding="20,18">
+          <StackPanel>
+            <TextBlock Text="Velocidade do cursor (mouse · avançado)" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <Grid Margin="0,12,0,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="90" />
+              </Grid.ColumnDefinitions>
+              <Slider Minimum="-7" Maximum="7" TickFrequency="1" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding S.PointerSpeed, Mode=TwoWay}" />
+              <TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource Stex.AccentLightBrush}" Text="{Binding CursorValorTexto}" />
+            </Grid>
+            <TextBlock Text="Intervalo de −7 (mais lento) a +7 (mais rápido). 0 é a velocidade normal." Margin="0,6,0,0" FontSize="12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+                    <TextBlock Text="Esta configuração é salva no celular. Se depois você conectar um hub ou usar o celular sem o DLuzMObi v2, recomendamos restaurá-la." Margin="0,8,0,0" FontSize="12" TextWrapping="Wrap" FontWeight="SemiBold" Foreground="{DynamicResource Stex.WarningTextBrush}" />
+            <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+              <ui:Button Content="Aplicar agora" Appearance="Primary" Icon="{ui:SymbolIcon Checkmark24}" Command="{Binding AplicarCursorCommand}" />
+              <ui:Button Content="Restaurar (0)" Margin="10,0,0,0" Icon="{ui:SymbolIcon ArrowReset24}" Command="{Binding ResetCursorCommand}" />
+              <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" FontStyle="Italic" Foreground="{DynamicResource Stex.SuccessBrush}" Text="{Binding CursorStatus}" />
+            </StackPanel>
+            <TextBlock Margin="0,8,0,0" FontSize="12" FontStyle="Italic" Foreground="{DynamicResource Stex.AccentLightBrush}" Text="{Binding UltimaVelocidadTexto}" Visibility="{Binding UltimaVelocidadVisible, Converter={StaticResource BoolToVis}}" />
+          </StackPanel>
+        </ui:Card>
+        <ui:Card Margin="0,0,0,16" Padding="20,18">
+          <StackPanel>
+            <TextBlock Text="Comportamento da janela" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <ctl:SettingRow Margin="0,14,0,0" Title="Permitir redimensionamento livre" Description="{Binding FreeResizeDesc}">
+              <ctl:SettingRow.Action>
+                <ui:ToggleSwitch IsChecked="{Binding S.FreeWindowResize, Mode=TwoWay}" IsEnabled="{Binding FreeResizeHabilitado}" />
+              </ctl:SettingRow.Action>
+            </ctl:SettingRow>
+            <TextBlock Text="Cor das bordas ou preenchimento (ex.: #222222)" Margin="0,14,0,4" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <StackPanel Orientation="Horizontal">
+              <ui:TextBox Width="160" MaxLength="7" PlaceholderText="#222222" Text="{Binding S.BackgroundColorHex, UpdateSourceTrigger=PropertyChanged}" />
+              <Border Width="28" Height="28" Margin="10,0,0,0" CornerRadius="4" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" Background="{Binding ColorPreviewBrush}" />
+            </StackPanel>
+            <TextBlock Margin="0,8,0,0" FontSize="12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Text="{Binding ColorStatus}" />
+          </StackPanel>
+        </ui:Card>
+        <ui:Card Margin="0,0,0,16" Padding="20,18">
+          <StackPanel>
+            <Grid>
+              <TextBlock Text="Diagnóstico" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+              <ui:ToggleSwitch HorizontalAlignment="Right" Content="Modo de depuração" ToolTip="Exibe o console do espelhamento. Útil para verificar erros em tempo real." IsChecked="{Binding S.ModoDebug, Mode=TwoWay}" />
+            </Grid>
+            <TextBlock Text="Comando completo:" Margin="0,10,0,4" FontSize="12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+            <ui:TextBox IsReadOnly="True" TextWrapping="Wrap" FontFamily="Cascadia Mono, Consolas" MinHeight="70" Text="{Binding ComandoPreview, Mode=OneWay}" />
+          </StackPanel>
+        </ui:Card>
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
+</Page>
+

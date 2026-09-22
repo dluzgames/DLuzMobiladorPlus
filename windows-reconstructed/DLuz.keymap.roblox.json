@@ -1,0 +1,36 @@
+{
+  "device_resolution": "auto",
+  "toggle_key": "F1",
+  "exit_key": "Escape",
+  "overlay_opacity": 0.85,
+  "joystick": {
+    "center_x": 280,
+    "center_y": 830,
+    "radius": 140,
+    "keys": {
+      "w": [0, -1],
+      "s": [0, 1],
+      "a": [-1, 0],
+      "d": [1, 0]
+    }
+  },
+  "camera": {
+    "zone_x": 1000,
+    "zone_y": 500,
+    "sensitivity": 2.0,
+    "sensitivity_x": 2.0,
+    "sensitivity_y": 1.8,
+    "acceleration": 0.3,
+    "exponent_y": 1.1,
+    "invert_x": false,
+    "invert_y": false,
+    "free_mouse_key": "alt"
+  },
+  "buttons": [
+    {"label": "Pular", "key": "space", "x": 1600, "y": 900, "mode": "tap"},
+    {"label": "Atacar", "key": "mouse_left", "x": 1750, "y": 750, "mode": "tap"},
+    {"label": "Interagir", "key": "e", "x": 1600, "y": 750, "mode": "tap"},
+    {"label": "Chat", "key": "slash", "x": 100, "y": 60, "mode": "tap"},
+    {"label": "Menu", "key": "escape", "x": 40, "y": 40, "mode": "tap"}
+  ]
+}

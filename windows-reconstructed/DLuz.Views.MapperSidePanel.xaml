@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="DLuz.Views.MapperSidePanel" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:helpers="clr-namespace:DLuz.Helpers" Title="Modo DLuzStacks — Editor de controles" Icon="pack://application:,,,/Assets/logo.png" SizeToContent="Width" Height="720" WindowStyle="None" AllowsTransparency="True" Background="#00FFFFFF" Topmost="True" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="Manual" xmlns:views="clr-namespace:DLuz.Views">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <Style x:Key="RailButton" TargetType="{x:Type ui:Button}" BasedOn="{StaticResource {x:Type ui:Button}}">
+        <Setter Property="Width" Value="38" />
+        <Setter Property="Height" Value="38" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="0,2" />
+        <Setter Property="Background" Value="#00FFFFFF" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+      </Style>
+      <Style x:Key="ControlTile" TargetType="{x:Type ui:Button}" BasedOn="{StaticResource {x:Type ui:Button}}">
+        <Setter Property="Height" Value="86" />
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="#202747" />
+        <Setter Property="BorderBrush" Value="#3D4774" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="#F3F6FF" />
+      </Style>
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
+    <Border Grid.Column="1" Width="46" Background="{DynamicResource Stex.BgCardBrush}" BorderBrush="{DynamicResource Stex.BorderSecondaryBrush}" BorderThickness="1" CornerRadius="8" Padding="0,6">
+      <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+          <ui:Button Name="BtnDetener" Style="{StaticResource RailButton}" Appearance="Danger" ToolTip="Parar sessão" Icon="{ui:SymbolIcon Stop24}" />
+        </StackPanel>
+        <StackPanel>
+          <ui:Button Name="BtnOverlays" Style="{StaticResource RailButton}" ToolTip="Ocultar controles" Icon="{ui:SymbolIcon EyeOff24}" />
+          <ui:Button Name="BtnProbar" Style="{StaticResource RailButton}" ToolTip="Jogar/Pausar (F1)" Icon="{ui:SymbolIcon Pause24}" />
+          <ui:Button Name="BtnFps" Style="{StaticResource RailButton}" Content="FPS" ToolTip="Ocultar FPS" FontSize="10" FontWeight="SemiBold" />
+          <ui:Button Name="BtnDlss5" Style="{StaticResource RailButton}" Content="DLSS 5" ToolTip="DLSS 5 Ultra AI Mode (Ray Reconstruction &amp; Super Resolution)" FontSize="8.5" FontWeight="Bold" Foreground="#38EF7D" />
+          <ui:Button Name="BtnCapturaTela" Style="{StaticResource RailButton}" ToolTip="Capturar tela" Icon="{ui:SymbolIcon Camera24}" />
+          <ui:Button Name="BtnGravarTela" Style="{StaticResource RailButton}" ToolTip="Iniciar gravação" Icon="{ui:SymbolIcon Record24}" />
+          <ui:Button Name="BtnPantallaCompleta" Style="{StaticResource RailButton}" ToolTip="Tela cheia (F11)" Icon="{ui:SymbolIcon FullScreenMaximize24}" />
+          <ui:Button Name="BtnGirarTela" Style="{StaticResource RailButton}" ToolTip="Girar Tela (90° / 180° / Desvirar)" Icon="{ui:SymbolIcon ArrowRotateClockwise24}" />
+          <ui:Button Name="BtnEditar" Style="{StaticResource RailButton}" ToolTip="Controles" Icon="{ui:SymbolIcon Edit24}" />
+        </StackPanel>
+      </DockPanel>
+    </Border>
+    <Border Name="Flyout" Grid.Column="0" Visibility="Collapsed" Width="286" Margin="0,0,6,0" Background="#1B2141" BorderBrush="#3C4775" BorderThickness="1" CornerRadius="4" Padding="0">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Row="0" Margin="0" Background="#242C54" Height="42">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Editor de controles" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="15" FontWeight="SemiBold" Foreground="#FFFFFF" />
+          </StackPanel>
+          <ui:Button Name="BtnCerrarEdicion" HorizontalAlignment="Right" Margin="0,0,8,0" Padding="6,2" Background="#00FFFFFF" BorderThickness="0" ToolTip="Fechar o editor" Icon="{ui:SymbolIcon Dismiss24}" />
+        </Grid>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+          <StackPanel Margin="9">
+            <StackPanel Name="PanelRapido">
+              <!-- Card: DLSS 5 Ultra AI Mode -->
+              <Border Background="#1C244B" BorderBrush="#38EF7D" BorderThickness="1.2" CornerRadius="5" Padding="9" Margin="0,0,0,12">
+                <StackPanel>
+                  <Grid Margin="0,0,0,6">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                      <ui:SymbolIcon Symbol="Sparkle24" Foreground="#38EF7D" VerticalAlignment="Center" Margin="0,0,6,0" />
+                      <TextBlock Text="DLSS 5 Ultra AI Mode" FontSize="12.5" FontWeight="Bold" Foreground="#38EF7D" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <TextBlock Name="TxtDlss5Estado" Text="🟢 ATIVO" HorizontalAlignment="Right" FontSize="11" FontWeight="Bold" Foreground="#38EF7D" VerticalAlignment="Center" />
+                  </Grid>
+                  <TextBlock Text="Upscaling e Ray Reconstruction por IA (DirectX 11/12) com latência 1ms no espelhamento." FontSize="10" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Margin="0,0,0,8" />
+                  <Grid Margin="0,0,0,6">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Ativar DLSS 5" VerticalAlignment="Center" Foreground="{DynamicResource Stex.TextPrimaryBrush}" FontWeight="SemiBold" FontSize="11" />
+                    <ui:ToggleSwitch Name="ToggleDlss5" Grid.Column="1" IsChecked="True" />
+                  </Grid>
+                  <Grid Margin="0,0,0,4">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Preset IA:" VerticalAlignment="Center" Margin="0,0,8,0" Foreground="{DynamicResource Stex.TextSecondaryBrush}" FontSize="11" />
+                    <ComboBox Name="ComboDlss5Preset" Grid.Column="1" Height="28" FontSize="11" Background="#242C54" Foreground="#F3F6FF">
+                      <ComboBoxItem Content="Equilibrado (Recomendado)" IsSelected="True" />
+                      <ComboBoxItem Content="Ultra Performance (Max FPS)" />
+                      <ComboBoxItem Content="Qualidade Ultra (2K/4K Sharp)" />
+                      <ComboBoxItem Content="RenoDX HDR Boost" />
+                    </ComboBox>
+                  </Grid>
+                </StackPanel>
+              </Border>
+              <TextBlock Text="Sensibilidade do mouse" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource Stex.AccentLightBrush}" Margin="0,0,0,8" />
+              <Grid Margin="0,0,0,4">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Ajuste principal" VerticalAlignment="Center" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+                <ui:NumberBox Name="NumSensibilidadeMouseFutura" Grid.Column="1" Width="155" Value="16450" SmallChange="50" LargeChange="500" Minimum="1" Maximum="100000" MaxDecimalPlaces="0" ClearButtonEnabled="False" SpinButtonPlacementMode="Inline" />
+              </Grid>
+              <TextBlock Text="Padrão: 16450 · ajuste experimental, ainda sem efeito no jogo." FontSize="11" TextWrapping="Wrap" Margin="0,0,0,12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+              <Border Background="#202747" BorderBrush="#3C4775" BorderThickness="1" CornerRadius="5" Padding="9" Margin="0,0,0,12">
+                <StackPanel>
+                  <Grid Margin="0,0,0,5">
+                    <TextBlock Text="Velocidade do cursor (Android)" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+                    <TextBlock Name="TxtPointerValor" HorizontalAlignment="Right" Foreground="{DynamicResource Stex.AccentLightBrush}" FontWeight="SemiBold" />
+                  </Grid>
+                  <Slider Name="SliderPointerSpeed" Minimum="-7" Maximum="7" TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,0,0,2" />
+                  <Grid Margin="0,0,0,6"><TextBlock Text="−7" FontSize="10" Foreground="{DynamicResource Stex.TextSecondaryBrush}" /><TextBlock Text="+7" HorizontalAlignment="Right" FontSize="10" Foreground="{DynamicResource Stex.TextSecondaryBrush}" /></Grid>
+                  <TextBlock Text="Salvo no celular: −7 é mais lento, 0 é padrão e +7 é mais rápido." FontSize="10.5" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+                  <TextBlock Text="Restaure antes de usar o celular sem o DLuzMObi." FontSize="10.5" TextWrapping="Wrap" Margin="0,3,0,7" Foreground="#F2B84B" />
+                  <StackPanel Orientation="Horizontal">
+                    <ui:Button Name="BtnAplicarPointerSpeed" Content="Aplicar agora" Appearance="Primary" Margin="0,0,6,0" Icon="{ui:SymbolIcon Checkmark24}" />
+                    <ui:Button Name="BtnRestaurarPointerSpeed" Content="Restaurar (0)" Icon="{ui:SymbolIcon ArrowReset24}" />
+                  </StackPanel>
+                  <TextBlock Name="TxtPointerEstado" FontSize="10.5" Margin="0,6,0,0" TextWrapping="Wrap" Foreground="{DynamicResource Stex.AccentLightBrush}" />
+                </StackPanel>
+              </Border>
+              <Grid Margin="0,0,0,8">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Sensibilidade X" VerticalAlignment="Center" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+                <ui:NumberBox Name="NumSensX" Grid.Column="1" Width="155" SmallChange="0.05" LargeChange="0.25" Minimum="0.01" Maximum="20" MaxDecimalPlaces="2" ClearButtonEnabled="False" SpinButtonPlacementMode="Inline" />
+              </Grid>
+              <Grid Margin="0,0,0,8">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Sensibilidade Y" VerticalAlignment="Center" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+                <ui:NumberBox Name="NumSensY" Grid.Column="1" Width="155" SmallChange="0.05" LargeChange="0.25" Minimum="0.01" Maximum="20" MaxDecimalPlaces="2" ClearButtonEnabled="False" SpinButtonPlacementMode="Inline" />
+              </Grid>
+              <!-- Card: Sensibilidade Avançada & Capa (FPS) -->
+              <Border Background="#202747" BorderBrush="#3C4775" BorderThickness="1" CornerRadius="5" Padding="9" Margin="0,0,0,12">
+                <StackPanel>
+                  <Grid Margin="0,0,0,8">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                      <ui:SymbolIcon Symbol="Target24" Foreground="#FF2A3A" VerticalAlignment="Center" Margin="0,0,6,0" />
+                      <TextBlock Text="Sensibilidade Avançada &amp; Capa" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <!-- Botão de Ajuda ? -->
+                    <Border Name="BtnAjudaSensi" HorizontalAlignment="Right" Width="20" Height="20" CornerRadius="10" Background="#354064" BorderBrush="{DynamicResource Stex.AccentLightBrush}" BorderThickness="1" Cursor="Hand" ToolTipService.ShowDuration="30000" MouseLeftButtonUp="BtnAjudaSensi_Click">
+                      <Border.ToolTip>
+                        <ToolTip Background="#0D1122" BorderBrush="{DynamicResource Stex.AccentLightBrush}" BorderThickness="1" Padding="14,12" MaxWidth="360">
+                          <StackPanel>
+                            <TextBlock Text="🎯 GUIA DE SENSIBILIDADE &amp; CAPA" FontWeight="Bold" FontSize="12" Foreground="#38EF7D" Margin="0,0,0,6"/>
+                            
+                            <TextBlock Text="1. 🎯 Puxada de Capa (Eixo Y):" FontWeight="Bold" FontSize="10.5" Foreground="#FF2A3A"/>
+                            <TextBlock Text="• Multiplicador vertical ativo ao arrastar o mouse para cima." FontSize="10" TextWrapping="Wrap" Foreground="#D0D6EC"/>
+                            <TextBlock Text="• Sobe a mira direto na cabeça no Free Fire sem afetar o giro lateral." FontSize="10" TextWrapping="Wrap" Foreground="#A2ACCB"/>
+                            <TextBlock Text="• Rec: 1.0 (1:1) | 1.30 a 1.40 (Equilibrado) | 1.80+ (Extrema)" FontSize="9.5" Foreground="#38EF7D" Margin="0,1,0,5"/>
+
+                            <TextBlock Text="2. ⚡ Aceleração Câmera:" FontWeight="Bold" FontSize="10.5" Foreground="#58A6FF"/>
+                            <TextBlock Text="• Ajusta o giro pela velocidade do movimento da mão." FontSize="10" TextWrapping="Wrap" Foreground="#D0D6EC"/>
+                            <TextBlock Text="• Lento = mira precisa de longe. Rápido = giro ágil 180°/360°." FontSize="10" TextWrapping="Wrap" Foreground="#A2ACCB"/>
+                            <TextBlock Text="• Rec: 0.0 (RAW puro) | 0.6 a 1.1 (Free Fire)" FontSize="9.5" Foreground="#38EF7D" Margin="0,1,0,5"/>
+
+                            <TextBlock Text="3. 🛡️ Suavização (Anti-Tremor):" FontWeight="Bold" FontSize="10.5" Foreground="#FFC107"/>
+                            <TextBlock Text="• Filtro inteligente contra tremores e ruídos do sensor." FontSize="10" TextWrapping="Wrap" Foreground="#D0D6EC"/>
+                            <TextBlock Text="• Deixa a mira cravada e lisa no adversário sem delay." FontSize="10" TextWrapping="Wrap" Foreground="#A2ACCB"/>
+                            <TextBlock Text="• Rec: 0.0 (Desligado) | 0.10 a 0.30 (Firme)" FontSize="9.5" Foreground="#38EF7D" Margin="0,1,0,5"/>
+
+                            <TextBlock Text="4. ⚡ Polling 1000Hz (1ms):" FontWeight="Bold" FontSize="10.5" Foreground="#38EF7D"/>
+                            <TextBlock Text="• Lê o mouse 1.000x por segundo via Windows Raw Input." FontSize="10" TextWrapping="Wrap" Foreground="#D0D6EC"/>
+                            <TextBlock Text="• Latência zero, cliques instantâneos e máxima precisão." FontSize="10" TextWrapping="Wrap" Foreground="#A2ACCB"/>
+                          </StackPanel>
+                        </ToolTip>
+                      </Border.ToolTip>
+                      <TextBlock Text="?" FontWeight="Bold" FontSize="11" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-1,0,0"/>
+                    </Border>
+                  </Grid>
+                  
+                  <!-- Puxada de Capa Y -->
+                  <Grid Margin="0,0,0,6">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Puxada de Capa (Y)" VerticalAlignment="Center" FontSize="11" Foreground="{DynamicResource Stex.TextSecondaryBrush}">
+                      <TextBlock.ToolTip>
+                        <ToolTip Background="#0D1122" BorderBrush="#FF2A3A" BorderThickness="1" Padding="10,8" MaxWidth="320">
+                          <StackPanel>
+                            <TextBlock Text="🎯 1. Puxada de Capa (Eixo Y)" FontWeight="Bold" FontSize="11" Foreground="#FF2A3A" Margin="0,0,0,3"/>
+                            <TextBlock Text="• O que faz: Multiplicador vertical ativo ao mover o mouse para cima." FontSize="10" TextWrapping="Wrap" Foreground="#FFFFFF"/>
+                            <TextBlock Text="• No jogo: Sobe a mira na cabeça no Free Fire sem afetar a lateral." FontSize="10" TextWrapping="Wrap" Foreground="#A2ACCB"/>
+                            <TextBlock Text="• Rec: 1.0 (1:1) | 1.30 a 1.40 (Equilibrado) | 1.80+ (Extrema)" FontSize="9.5" Foreground="#38EF7D" Margin="0,2,0,0"/>
+                          </StackPanel>
+                        </ToolTip>
+                      </TextBlock.ToolTip>
+                    </TextBlock>
+                    <ui:NumberBox Name="NumPuxadaCapa" Grid.Column="1" Width="130" SmallChange="0.05" LargeChange="0.1" Minimum="1.0" Maximum="2.5" MaxDecimalPlaces="2" ClearButtonEnabled="False" SpinButtonPlacementMode="Inline" />
+                  </Grid>
+
+                  <!-- Aceleração Dinâmica -->
+                  <Grid Margin="0,0,0,6">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Aceleração Câmera" VerticalAlignment="Center" FontSize="11" Foreground="{DynamicResource Stex.TextSecondaryBrush}">
+                      <TextBlock.ToolTip>
+                        <ToolTip Background="#0D1122" BorderBrush="#58A6FF" BorderThickness="1" Padding="10,8" MaxWidth="320">
+                          <StackPanel>
+                            <TextBlock Text="⚡ 2. Aceleração Câmera" FontWeight="Bold" FontSize="11" Foreground="#58A6FF" Margin="0,0,0,3"/>
+                            <TextBlock Text="• O que faz: Ajusta a velocidade de giro pela rapidez da sua mão." FontSize="10" TextWrapping="Wrap" Foreground="#FFFFFF"/>
+                            <TextBlock Text="• No jogo: Lento = mira precisa de longe. Rápido = giro 180°/360°." FontSize="10" TextWrapping="Wrap" Foreground="#A2ACCB"/>
+                            <TextBlock Text="• Rec: 0.0 (RAW puro) | 0.6 a 1.1 (Free Fire)" FontSize="9.5" Foreground="#38EF7D" Margin="0,2,0,0"/>
+                          </StackPanel>
+                        </ToolTip>
+                      </TextBlock.ToolTip>
+                    </TextBlock>
+                    <ui:NumberBox Name="NumAceleracao" Grid.Column="1" Width="130" SmallChange="0.05" LargeChange="0.1" Minimum="0.0" Maximum="1.5" MaxDecimalPlaces="2" ClearButtonEnabled="False" SpinButtonPlacementMode="Inline" />
+                  </Grid>
+
+                  <!-- Suavização de Mira -->
+                  <Grid Margin="0,0,0,4">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Suavização (Anti-Tremor)" VerticalAlignment="Center" FontSize="11" Foreground="{DynamicResource Stex.TextSecondaryBrush}">
+                      <TextBlock.ToolTip>
+                        <ToolTip Background="#0D1122" BorderBrush="#FFC107" BorderThickness="1" Padding="10,8" MaxWidth="320">
+                          <StackPanel>
+                            <TextBlock Text="🛡️ 3. Suavização (Anti-Tremor)" FontWeight="Bold" FontSize="11" Foreground="#FFC107" Margin="0,0,0,3"/>
+                            <TextBlock Text="• O que faz: Filtro que remove tremores e ruídos do sensor do mouse." FontSize="10" TextWrapping="Wrap" Foreground="#FFFFFF"/>
+                            <TextBlock Text="• No jogo: Deixa a mira cravada e lisa sem tremidas, sem delay." FontSize="10" TextWrapping="Wrap" Foreground="#A2ACCB"/>
+                            <TextBlock Text="• Rec: 0.0 (Desligado) | 0.10 a 0.30 (Firme)" FontSize="9.5" Foreground="#38EF7D" Margin="0,2,0,0"/>
+                          </StackPanel>
+                        </ToolTip>
+                      </TextBlock.ToolTip>
+                    </TextBlock>
+                    <ui:NumberBox Name="NumSuavizacao" Grid.Column="1" Width="130" SmallChange="0.02" LargeChange="0.05" Minimum="0.0" Maximum="0.5" MaxDecimalPlaces="2" ClearButtonEnabled="False" SpinButtonPlacementMode="Inline" />
+                  </Grid>
+
+                  <Border Background="#141E38" BorderBrush="#38EF7D" BorderThickness="1" CornerRadius="4" Padding="6,3" Margin="0,4,0,0">
+                    <Border.ToolTip>
+                      <ToolTip Background="#0D1122" BorderBrush="#38EF7D" BorderThickness="1" Padding="10,8" MaxWidth="320">
+                        <StackPanel>
+                          <TextBlock Text="⚡ 4. Polling 1000Hz (1ms) Ativo" FontWeight="Bold" FontSize="11" Foreground="#38EF7D" Margin="0,0,0,3"/>
+                          <TextBlock Text="• O que faz: Lê o mouse 1.000x por segundo via Windows Raw Input." FontSize="10" TextWrapping="Wrap" Foreground="#FFFFFF"/>
+                          <TextBlock Text="• No jogo: Latência zero, cliques instantâneos e máxima precisão." FontSize="10" TextWrapping="Wrap" Foreground="#A2ACCB"/>
+                        </StackPanel>
+                      </ToolTip>
+                    </Border.ToolTip>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                      <ui:SymbolIcon Symbol="Flash24" FontSize="12" Foreground="#38EF7D" VerticalAlignment="Center" Margin="0,0,4,0" />
+                      <TextBlock Text="Polling 1000Hz (1ms) Ativo" FontSize="10" FontWeight="Bold" Foreground="#38EF7D" />
+                    </StackPanel>
+                  </Border>
+                </StackPanel>
+              </Border>
+
+              <!-- Card: Orientação da Tela (Girar / Desvirar) -->
+              <Border Background="#202747" BorderBrush="#3C4775" BorderThickness="1" CornerRadius="5" Padding="9" Margin="0,0,0,12">
+                <StackPanel>
+                  <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                    <ui:SymbolIcon Symbol="ArrowRotateClockwise24" Foreground="#00E676" VerticalAlignment="Center" Margin="0,0,6,0" />
+                    <TextBlock Text="Orientação da Tela (Girar / Desvirar)" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+                  </StackPanel>
+                  <TextBlock Text="Se o jogo abrir de cabeça para baixo ou invertido no modo horizontal, clique abaixo para desvirar." FontSize="10.5" TextWrapping="Wrap" Margin="0,0,0,8" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+                  <UniformGrid Columns="2">
+                    <ui:Button Name="BtnGirar90" Content="Girar 90°" Margin="0,0,4,0" Icon="{ui:SymbolIcon ArrowRotateClockwise24}" />
+                    <ui:Button Name="BtnGirar180" Content="Desvirar 180°" Margin="4,0,0,0" Appearance="Primary" Icon="{ui:SymbolIcon ArrowSync24}" />
+                  </UniformGrid>
+                </StackPanel>
+              </Border>
+
+              <ui:Button Name="BtnAbrirEditor" Content="Abrir editor de controles" HorizontalAlignment="Stretch" Icon="{ui:SymbolIcon Edit24}" />
+            </StackPanel>
+            <StackPanel Name="PanelEdicion" Visibility="Collapsed">
+              <TextBlock Text="Esquema de controle" FontSize="11" Foreground="#AEB8DE" Margin="0,0,0,5" />
+              <ComboBox Name="ComboPerfiles" Height="31" Margin="0,0,0,7" helpers:ComboGuard.ProtegerApertura="True" />
+              <Border Height="1" Background="#354064" Margin="0,0,0,8" />
+              <TextBlock Text="Adicionar controles" FontSize="13" FontWeight="SemiBold" Foreground="#FFFFFF" Margin="0,0,0,2" />
+              <TextBlock Text="Arraste um controle para a tela e atribua uma tecla." FontSize="11" TextWrapping="Wrap" Margin="0,0,0,7" Foreground="#9FA9CD" />
+
+              <!-- Botão 1-Clique: Pré-configuração Completa -->
+              <ui:Button Name="BtnAplicarPadraoFps" Content="⚡ Carregar Controles Padrão (FPS)" HorizontalAlignment="Stretch" Appearance="Primary" Height="34" Margin="0,0,0,8" FontWeight="Bold" Icon="{ui:SymbolIcon Flash24}" ToolTip="Carrega e posiciona na hora: Analógico WASD + Visão do Mouse + Botão de Tiro (Mouse Esquerdo) + Mira + Teclas de ação!" />
+
+              <!-- Grade de Controles Essenciais (WASD, Mouse, Tiro, Mira) -->
+              <UniformGrid Columns="4" Margin="-3,0,-3,5">
+                <ui:Button Name="BtnAddWasd" Style="{StaticResource ControlTile}" ToolTip="Posicionar Analógico WASD">
+                  <StackPanel HorizontalAlignment="Center"><ui:SymbolIcon Symbol="Games24" HorizontalAlignment="Center" Foreground="#00E676" /><TextBlock Text="Analógico&#x0a;WASD" TextAlignment="Center" TextWrapping="Wrap" Margin="0,4,0,0" FontSize="10.5" /></StackPanel>
+                </ui:Button>
+                <ui:Button Name="BtnAddCamera" Style="{StaticResource ControlTile}" ToolTip="Posicionar Zona de Visão / Movimentação do Mouse">
+                  <StackPanel HorizontalAlignment="Center"><ui:SymbolIcon Symbol="Cursor24" HorizontalAlignment="Center" Foreground="#00B0FF" /><TextBlock Text="Visão do&#x0a;Mouse" TextAlignment="Center" TextWrapping="Wrap" Margin="0,4,0,0" FontSize="10.5" /></StackPanel>
+                </ui:Button>
+                <ui:Button Name="BtnAddAtirar" Style="{StaticResource ControlTile}" ToolTip="Adicionar Botão de Tiro (Botão Esquerdo do Mouse)">
+                  <StackPanel HorizontalAlignment="Center"><ui:SymbolIcon Symbol="Target24" HorizontalAlignment="Center" Foreground="#FF5252" /><TextBlock Text="Tiro&#x0a;(L-Click)" TextAlignment="Center" TextWrapping="Wrap" Margin="0,4,0,0" FontSize="10.5" /></StackPanel>
+                </ui:Button>
+                <ui:Button Name="BtnAddMira" Style="{StaticResource ControlTile}" ToolTip="Adicionar Botão de Mira (Botão Direito do Mouse)">
+                  <StackPanel HorizontalAlignment="Center"><ui:SymbolIcon Symbol="Eye24" HorizontalAlignment="Center" Foreground="#FFD700" /><TextBlock Text="Mira&#x0a;(R-Click)" TextAlignment="Center" TextWrapping="Wrap" Margin="0,4,0,0" FontSize="10.5" /></StackPanel>
+                </ui:Button>
+              </UniformGrid>
+
+              <!-- Grade de Toques e Repetição -->
+              <UniformGrid Columns="3" Margin="-3,0,-3,7">
+                <ui:Button Name="BtnAddBoton" Style="{StaticResource ControlTile}" ToolTip="Ponto de toque contínuo (Segurar)">
+                  <StackPanel HorizontalAlignment="Center"><ui:SymbolIcon Symbol="Circle24" HorizontalAlignment="Center" /><TextBlock Text="Ponto de&#x0a;toque" TextAlignment="Center" TextWrapping="Wrap" Margin="0,5,0,0" /></StackPanel>
+                </ui:Button>
+                <ui:Button Name="BtnAddTap" Style="{StaticResource ControlTile}" ToolTip="Toque rápido simples">
+                  <StackPanel HorizontalAlignment="Center"><ui:SymbolIcon Symbol="HandRight24" HorizontalAlignment="Center" /><TextBlock Text="Toque&#x0a;simples" TextAlignment="Center" TextWrapping="Wrap" Margin="0,5,0,0" /></StackPanel>
+                </ui:Button>
+                <ui:Button Name="BtnAddRepetido" Style="{StaticResource ControlTile}" ToolTip="Disparo repetido / Turbo">
+                  <StackPanel HorizontalAlignment="Center"><ui:SymbolIcon Symbol="ArrowRepeatAll24" HorizontalAlignment="Center" /><TextBlock Text="Repetição" TextAlignment="Center" TextWrapping="Wrap" Margin="0,5,0,0" /></StackPanel>
+                </ui:Button>
+              </UniformGrid>
+              <TextBlock Text="Clique duplo adiciona um toque • Delete apaga o item selecionado." FontSize="10.5" TextWrapping="Wrap" Margin="0,0,0,10" Foreground="#9FA9CD" />
+              <Border Height="1" Background="#354064" Margin="0,0,0,9" />
+              <TextBlock Text="Gerenciar esquemas" FontSize="11" FontWeight="SemiBold" Foreground="#AEB8DE" Margin="0,0,0,6" />
+              <UniformGrid Columns="2" Margin="0,0,0,5">
+                <ui:Button Name="BtnPerfilNuevo" Content="Novo" Margin="0,0,4,4" HorizontalAlignment="Stretch" Icon="{ui:SymbolIcon Add24}" />
+                <ui:Button Name="BtnPerfilRenombrar" Content="Renomear" Margin="0,0,0,4" HorizontalAlignment="Stretch" Icon="{ui:SymbolIcon Rename24}" />
+                <ui:Button Name="BtnImportar" Content="Importar" Margin="0,0,4,4" HorizontalAlignment="Stretch" Icon="{ui:SymbolIcon ArrowDownload24}" />
+                <ui:Button Name="BtnExportar" Content="Exportar" Margin="0,0,0,4" HorizontalAlignment="Stretch" Icon="{ui:SymbolIcon ArrowUpload24}" />
+                <ui:Button Name="BtnPerfilEliminar" Content="Excluir" Appearance="Danger" Margin="0,0,4,0" HorizontalAlignment="Stretch" Icon="{ui:SymbolIcon Delete24}" />
+              </UniformGrid>
+              <StackPanel Name="FilaNombrePerfil" Orientation="Horizontal" Visibility="Collapsed" Margin="0,0,0,6">
+                        <ui:TextBox Name="TxtNombrePerfil" Width="180" PlaceholderText="Nome do perfil" Margin="0,0,6,0" />
+                <ui:Button Name="BtnConfirmarNombre" Content="OK" Appearance="Primary" />
+              </StackPanel>
+                    <TextBlock Text="Cada perfil salva joystick, teclas, posições e tamanhos e se adapta automaticamente a qualquer resolução." FontSize="11" TextWrapping="Wrap" Margin="0,0,0,4" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+            </StackPanel>
+          </StackPanel>
+        </ScrollViewer>
+        <ContentPresenter Name="HostDialogos" Grid.RowSpan="3" />
+        <Grid Name="PieEdicion" Row="2" Margin="0" Height="62" Background="#242C54" Visibility="Collapsed">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.ColumnSpan="2" Text="Alterações no perfil atual" HorizontalAlignment="Center" Margin="0,6,0,0" FontSize="10" Foreground="#AEB8DE" />
+          <ui:Button Name="BtnRestablecer" Content="Redefinir" ToolTip="Voltar aos controles padrão" Margin="9,24,5,7" Icon="{ui:SymbolIcon ArrowReset24}" />
+          <ui:Button Name="BtnGuardarLayout" Grid.Column="1" Content="Salvar" Appearance="Primary" Margin="0,24,9,7" HorizontalAlignment="Stretch" ToolTip="Salvar este mapeamento para as próximas sessões" Icon="{ui:SymbolIcon Save24}" />
+        </Grid>
+      </Grid>
+    </Border>
+  </Grid>
+</Window>
+
+

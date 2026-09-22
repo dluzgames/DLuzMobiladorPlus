@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="DLuz.Views.ControlesPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:helpers="clr-namespace:DLuz.Helpers" xmlns:ctl="clr-namespace:DLuz.Controls" Title="Controles" xmlns:views="clr-namespace:DLuz.Views">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Padding="32,24,32,32" helpers:ScrollReset.ResetOnShow="True">
+      <StackPanel>
+      <TextBlock Text="Controles" Style="{StaticResource Stex.PageTitle}" />
+      <TextBlock Text="Modos de teclado, mouse e gamepad." Margin="0,4,0,20" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+        <ui:Card Margin="0,0,0,16" Padding="20,18">
+          <StackPanel>
+            <TextBlock Text="Modo de entrada" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <ComboBox Margin="0,10,0,0" Width="180" HorizontalAlignment="Left" ItemsSource="{Binding ModosEntrada}" SelectedItem="{Binding InputModeSel, Mode=TwoWay}" />
+            <TextBlock Text="UHID simula um dispositivo físico HID, recomendado para jogos. SDK é o modo padrão do Android, útil para visualizar conteúdo." Margin="0,8,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+          </StackPanel>
+        </ui:Card>
+        <ui:Card Margin="0,0,0,16" Padding="20,18">
+          <StackPanel>
+            <TextBlock Text="Teclado e mouse" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            <ctl:SettingRow Margin="0,14,0,0" Title="Ativar teclado" Description="Simula um teclado físico HID. Funciona por USB e Wi-Fi.">
+              <ctl:SettingRow.Action>
+                <ui:ToggleSwitch IsChecked="{Binding TecladoActivo, Mode=TwoWay}" IsEnabled="{Binding TecladoHabilitado}" />
+              </ctl:SettingRow.Action>
+            </ctl:SettingRow>
+            <ctl:SettingRow Margin="0,14,0,0" Title="Ativar mouse" Description="Simula um mouse físico HID. O cursor aparece no aparelho; use a tecla modificadora MOD, normalmente Alt esquerdo, para liberá-lo.">
+              <ctl:SettingRow.Action>
+                <ui:ToggleSwitch IsChecked="{Binding MouseActivo, Mode=TwoWay}" IsEnabled="{Binding MouseHabilitado}" />
+              </ctl:SettingRow.Action>
+            </ctl:SettingRow>
+            <ctl:SettingRow Margin="0,14,0,0" Title="Repassar todos os cliques" Description="Corrige Shift e clique direito em jogos como Free Fire.">
+              <ctl:SettingRow.Action>
+                <ui:ToggleSwitch IsChecked="{Binding ForwardAllClicks, Mode=TwoWay}" />
+              </ctl:SettingRow.Action>
+            </ctl:SettingRow>
+            <TextBlock Text="⚠ Teclado e mouse desativados pelo gamepad UHID" Margin="0,12,0,0" FontStyle="Italic" Foreground="{DynamicResource Stex.WarningBrush}" Visibility="{Binding GamepadInfoVisible, Converter={StaticResource BoolToVis}}" />
+          </StackPanel>
+        </ui:Card>
+        <ui:Card Margin="0,0,0,16" Padding="20,18">
+          <StackPanel>
+            <Grid>
+              <TextBlock Text="Gamepad (UHID)" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+              <ui:ToggleSwitch HorizontalAlignment="Right" ToolTip="Conecte o controle por USB. Compatível com a maioria dos modelos." IsChecked="{Binding GamepadUhid, Mode=TwoWay}" />
+            </Grid>
+            <TextBlock Text="Simula um gamepad físico HID. Funciona por USB e Wi-Fi. Ao ativá-lo, teclado e mouse são desativados automaticamente." Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+          </StackPanel>
+        </ui:Card>
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
+</Page>
+

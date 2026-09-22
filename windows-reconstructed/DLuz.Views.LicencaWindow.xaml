@@ -1,0 +1,73 @@
+<ui:FluentWindow x:Class="DLuz.Views.LicencaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:services="clr-namespace:DLuz.Services"
+        Title="Licença e Teste Grátis - DLuzMobiladorPlus"
+        Height="480" Width="520"
+        WindowStartupLocation="CenterOwner"
+        ExtendsContentIntoTitleBar="True"
+        WindowBackdropType="None"
+        ResizeMode="NoResize"
+        Background="#101426">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    
+    <ui:TitleBar Grid.Row="0" Title="Ativação de Licença" />
+
+    <Border Grid.Row="1" Padding="24,16,24,24">
+      <StackPanel VerticalAlignment="Center">
+        <!-- Logo e Título -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,16">
+          <Image Source="pack://application:,,,/Assets/logo.png" Width="36" Height="36" Margin="0,0,10,0"/>
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="DLuzMobiladorPlus" FontSize="18" FontWeight="Bold" Foreground="#FFFFFF"/>
+            <TextBlock Text="Sistema de Licenciamento &amp; HWID Lock" FontSize="11" Foreground="#FF2A3A"/>
+          </StackPanel>
+        </StackPanel>
+
+        <!-- Status Card -->
+        <Border Background="#181D33" BorderBrush="#2A3052" BorderThickness="1" CornerRadius="8" Padding="14,12" Margin="0,0,0,14">
+          <StackPanel>
+            <Grid>
+              <TextBlock Text="Status do seu Acesso:" FontSize="11" Foreground="{DynamicResource Stex.TextSecondaryBrush}"/>
+              <TextBlock HorizontalAlignment="Right" Text="{Binding StatusTexto, Source={x:Static services:LicenseService.Instance}}" FontWeight="Bold" FontSize="12" Foreground="{Binding StatusBrush, Source={x:Static services:LicenseService.Instance}}"/>
+            </Grid>
+            
+            <Separator Margin="0,8" Background="#2A3052"/>
+            
+            <TextBlock Text="HWID deste Computador (Hardware Lock):" FontSize="11" Foreground="{DynamicResource Stex.TextSecondaryBrush}"/>
+            <Grid Margin="0,4,0,0">
+              <TextBox Name="TxtHwid" IsReadOnly="True" Text="{Binding Hwid, Source={x:Static services:LicenseService.Instance}, Mode=OneTime}" FontFamily="Cascadia Mono, Consolas" FontSize="11" Padding="8,4" Background="#101426" Foreground="#38EF7D" BorderBrush="#2A3052"/>
+              <ui:Button HorizontalAlignment="Right" Content="Copiar" Padding="8,2" Margin="2" Click="BtnCopiarHwid_Click"/>
+            </Grid>
+          </StackPanel>
+        </Border>
+
+        <!-- Campo de Inserir Chave -->
+        <TextBlock Text="Possui uma Chave de Licença Pro?" FontWeight="SemiBold" FontSize="12" Foreground="#FFFFFF" Margin="0,0,0,6"/>
+        <TextBox Name="TxtChave" FontFamily="Cascadia Mono, Consolas" FontSize="13" Padding="10,8" Background="#181D33" Foreground="#FFFFFF" BorderBrush="#FF2A3A" TextChanged="TxtChave_TextChanged" />
+
+        <TextBlock Name="TxtMsgResultado" Margin="0,6,0,0" FontSize="11.5" FontWeight="SemiBold" TextWrapping="Wrap" Visibility="Collapsed"/>
+
+        <!-- Botões de Ação -->
+        <Grid Margin="0,16,0,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+
+          <ui:Button Grid.Column="0" Content="⚡ Ativar Chave Pro" Appearance="Primary" Padding="12,10" FontWeight="Bold" Click="BtnAtivar_Click" HorizontalAlignment="Stretch"/>
+          <ui:Button Grid.Column="2" Content="🛒 Comprar Licença Pro" Padding="12,10" FontWeight="Bold" Click="BtnComprar_Click" HorizontalAlignment="Stretch"/>
+        </Grid>
+
+        <!-- Botão Membro YouTube -->
+        <ui:Button Content="🔴 Seja Membro no YouTube (Chave Grátis Todo Mês)" Margin="0,10,0,0" Padding="12,9" FontWeight="SemiBold" Click="BtnMembroYoutube_Click" HorizontalAlignment="Stretch" Appearance="Secondary" Icon="{ui:SymbolIcon Play24}" />
+      </StackPanel>
+    </Border>
+  </Grid>
+</ui:FluentWindow>

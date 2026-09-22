@@ -1,0 +1,35 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio / Rider / VSCode
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Packages & Dist
+dist/
+INSTALADOR_CLIENTES/
+*.zip
+*.7z
+*.rar
+windows-reconstructed-backup*
+backups/
+
+# Internal server scripts and notes
+server/
+project.md
+Publicar_Nova_Versao_Servidor*
+linux-reconstructed/
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
