@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -16,9 +16,9 @@ public static class KeyNames
 
 	public const int MouseX2 = 261;
 
-	public const int MouseWheelUp = 262;
+	public const int WheelUp = 262;
 
-	public const int MouseWheelDown = 263;
+	public const int WheelDown = 263;
 
 	private static readonly Dictionary<string, int> Nombrados = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
 	{
@@ -59,16 +59,50 @@ public static class KeyNames
 		["oem7"] = 222,
 		["oem8"] = 223,
 		["oem102"] = 226,
+		["backspace"] = 8,
+		["capslock"] = 20,
+		["insert"] = 45,
+		["delete"] = 46,
+		["del"] = 46,
+		["home"] = 36,
+		["end"] = 35,
+		["pageup"] = 33,
+		["pgup"] = 33,
+		["pagedown"] = 34,
+		["pgdn"] = 34,
+		["left"] = 37,
+		["up"] = 38,
+		["right"] = 39,
+		["down"] = 40,
+		["leftmeta"] = 91,
+		["lwin"] = 91,
+		["rightmeta"] = 92,
+		["rwin"] = 92,
+		["apps"] = 93,
+		["numlock"] = 144,
+		["scrolllock"] = 145,
+		["pause"] = 19,
+		["numpad0"] = 96,
+		["numpad1"] = 97,
+		["numpad2"] = 98,
+		["numpad3"] = 99,
+		["numpad4"] = 100,
+		["numpad5"] = 101,
+		["numpad6"] = 102,
+		["numpad7"] = 103,
+		["numpad8"] = 104,
+		["numpad9"] = 105,
+		["multiply"] = 106,
+		["add"] = 107,
+		["subtract"] = 109,
+		["decimal"] = 110,
+		["divide"] = 111,
 		["mouse_left"] = 257,
 		["mouse_right"] = 258,
 		["mouse_middle"] = 259,
 		["mouse_x1"] = 260,
 		["mouse_x2"] = 261,
-		["mouse_wheel_up"] = 262,
-		["mousewheelup"] = 262,
 		["wheel_up"] = 262,
-		["mouse_wheel_down"] = 263,
-		["mousewheeldown"] = 263,
 		["wheel_down"] = 263
 	};
 
@@ -78,58 +112,112 @@ public static class KeyNames
 		switch (text)
 		{
 		default:
-			if (text != null && text.StartsWith("oem"))
+			if (text != null)
 			{
-				return EtiquetaOem(nombre);
+				if (text.StartsWith("numpad") && text.Length == 7)
+				{
+					return "Num " + text[6];
+				}
+				if (text.StartsWith("oem"))
+				{
+					return EtiquetaOem(nombre);
+				}
 			}
 			return string.IsNullOrWhiteSpace(nombre) ? "F1" : nombre;
 		case "mouse_left":
-			return "Clic izquierdo";
+			return "Left Click";
 		case "mouse_right":
-			return "Clic derecho";
+			return "Right Click";
 		case "mouse_middle":
-			return "Clic medio";
+			return "Middle Click";
 		case "mouse_x1":
-			return "Botón lateral 1";
+			return "Mouse 4";
 		case "mouse_x2":
-			return "Botón lateral 2";
-		case "mouse_wheel_up":
-		case "mousewheelup":
+			return "Mouse 5";
 		case "wheel_up":
-			return "Roda para cima";
-		case "mouse_wheel_down":
-		case "mousewheeldown":
+			return "Wheel Up";
 		case "wheel_down":
-			return "Roda para baixo";
+			return "Wheel Down";
 		case "leftcontrol":
 		case "leftctrl":
 		case "lctrl":
-			return "Ctrl izq";
+			return "L Ctrl";
 		case "rightcontrol":
 		case "rctrl":
 		case "rightctrl":
-			return "Ctrl der";
+			return "R Ctrl";
 		case "leftalt":
 		case "lalt":
-			return "Alt izq";
+			return "L Alt";
 		case "rightalt":
 		case "ralt":
-			return "Alt der";
+			return "R Alt";
 		case "leftshift":
 		case "lshift":
-			return "Shift izq";
+			return "L Shift";
 		case "rightshift":
 		case "rshift":
-			return "Shift der";
+			return "R Shift";
 		case "control":
 		case "ctrl":
-			return "Ctrl (ambos)";
+			return "Ctrl";
 		case "alt":
-			return "Alt (ambos)";
+			return "Alt";
 		case "shift":
-			return "Shift (ambos)";
+			return "Shift";
 		case "space":
-			return "Espacio";
+			return "Space";
+		case "up":
+			return "↑";
+		case "down":
+			return "↓";
+		case "left":
+			return "←";
+		case "right":
+			return "→";
+		case "capslock":
+			return "Caps Lock";
+		case "numlock":
+			return "Num Lock";
+		case "scrolllock":
+			return "Scroll Lock";
+		case "backspace":
+			return "Backspace";
+		case "insert":
+			return "Insert";
+		case "delete":
+		case "del":
+			return "Delete";
+		case "home":
+			return "Home";
+		case "end":
+			return "End";
+		case "pgup":
+		case "pageup":
+			return "Page Up";
+		case "pagedown":
+		case "pgdn":
+			return "Page Down";
+		case "leftmeta":
+		case "lwin":
+			return "L Win";
+		case "rightmeta":
+		case "rwin":
+			return "R Win";
+		case "apps":
+			return "Menu";
+		case "pause":
+			return "Pause";
+		case "multiply":
+			return "Num *";
+		case "add":
+			return "Num +";
+		case "subtract":
+			return "Num −";
+		case "decimal":
+			return "Num .";
+		case "divide":
+			return "Num /";
 		}
 	}
 
@@ -202,7 +290,7 @@ public static class KeyNames
 		}
 		char c2 = text[0];
 		bool flag = ((c2 == 'F' || c2 == 'f') ? true : false);
-		if (flag && int.TryParse(text.AsSpan(1), out var result) && result >= 1 && result <= 12)
+		if (flag && int.TryParse(text.AsSpan(1), out var result) && result >= 1 && result <= 24)
 		{
 			return 112 + (result - 1);
 		}
@@ -247,4 +335,3 @@ public static class KeyNames
 		};
 	}
 }
-

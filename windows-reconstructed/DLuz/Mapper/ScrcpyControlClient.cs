@@ -46,8 +46,6 @@ public sealed class ScrcpyControlClient : IDisposable
 				tcpClient = new TcpClient();
 				tcpClient.Connect("127.0.0.1", puerto);
 				tcpClient.NoDelay = true;
-				tcpClient.SendBufferSize = 65536;
-				tcpClient.ReceiveBufferSize = 65536;
 				NetworkStream stream = tcpClient.GetStream();
 				tcpClient.ReceiveTimeout = 3000;
 				if (stream.ReadByte() < 0)
@@ -100,8 +98,7 @@ public sealed class ScrcpyControlClient : IDisposable
 		})
 		{
 			IsBackground = true,
-			Priority = ThreadPriority.AboveNormal,
-			Name = "LyXelMapperDrain"
+			Name = "DLuzMapperDrain"
 		};
 		_drenajeWorker.Start();
 	}
@@ -109,12 +106,11 @@ public sealed class ScrcpyControlClient : IDisposable
 	private void IniciarEnvio()
 	{
 		_sendActivo = true;
-		_sendQueue = new BlockingCollection<byte[]>(new ConcurrentQueue<byte[]>(), 2048);
+		_sendQueue = new BlockingCollection<byte[]>(new ConcurrentQueue<byte[]>(), 1024);
 		_sendWorker = new Thread(EnviarLoop)
 		{
 			IsBackground = true,
-			Priority = ThreadPriority.Highest,
-			Name = "LyXelMapperSender"
+			Name = "DLuzMapperSender"
 		};
 		_sendWorker.Start();
 	}
@@ -126,22 +122,22 @@ public sealed class ScrcpyControlClient : IDisposable
 		{
 			return;
 		}
-		byte[] batchBuffer = new byte[4096];
 		while (_sendActivo && !sendQueue.IsCompleted)
 		{
 			byte[] item;
 			try
 			{
-				item = sendQueue.Take();
+				if (!sendQueue.TryTake(out item, 100) || item == null)
+				{
+					continue;
+				}
+				goto IL_0023;
 			}
 			catch
 			{
 				break;
 			}
-			if (item == null)
-			{
-				continue;
-			}
+			IL_0023:
 			try
 			{
 				NetworkStream controlStream;
@@ -153,26 +149,7 @@ public sealed class ScrcpyControlClient : IDisposable
 				{
 					break;
 				}
-
-				if (item.Length <= batchBuffer.Length)
-				{
-					Buffer.BlockCopy(item, 0, batchBuffer, 0, item.Length);
-					int totalBytes = item.Length;
-
-					while (totalBytes + 32 <= batchBuffer.Length && sendQueue.TryTake(out byte[]? nextItem))
-					{
-						if (nextItem != null)
-						{
-							Buffer.BlockCopy(nextItem, 0, batchBuffer, totalBytes, nextItem.Length);
-							totalBytes += nextItem.Length;
-						}
-					}
-					controlStream.Write(batchBuffer, 0, totalBytes);
-				}
-				else
-				{
-					controlStream.Write(item, 0, item.Length);
-				}
+				controlStream.Write(item, 0, item.Length);
 			}
 			catch (Exception ex)
 			{

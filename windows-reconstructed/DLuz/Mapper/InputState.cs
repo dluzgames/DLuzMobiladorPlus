@@ -1,10 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DLuz.Mapper;
 
 public sealed class InputState
 {
+	private const long PulsoMs = 70L;
+
 	private readonly object _gate = new object();
 
 	private readonly HashSet<int> _presionadas = new HashSet<int>();
@@ -45,27 +48,35 @@ public sealed class InputState
 	{
 		lock (_gate)
 		{
-			if (_presionadas.Contains(vk))
-			{
-				return true;
-			}
-			if (_pulsos.TryGetValue(vk, out long fim))
-			{
-				if (Environment.TickCount64 < fim)
-				{
-					return true;
-				}
-				_pulsos.Remove(vk);
-			}
-			return false;
+			return _presionadas.Contains(vk);
 		}
 	}
 
-	public void Pulsar(int vk, int duracaoMs = 90)
+	public void Pulso(int vk)
 	{
 		lock (_gate)
 		{
-			_pulsos[vk] = Environment.TickCount64 + Math.Max(30, duracaoMs);
+			_presionadas.Add(vk);
+			_pulsos[vk] = Environment.TickCount64;
+		}
+	}
+
+	public void ExpirarPulsos()
+	{
+		lock (_gate)
+		{
+			if (_pulsos.Count == 0)
+			{
+				return;
+			}
+			long ahora = Environment.TickCount64;
+			foreach (int item in (from p in _pulsos
+				where ahora - p.Value >= 70
+				select p.Key).ToList())
+			{
+				_pulsos.Remove(item);
+				_presionadas.Remove(item);
+			}
 		}
 	}
 
@@ -100,4 +111,3 @@ public sealed class InputState
 		}
 	}
 }
-

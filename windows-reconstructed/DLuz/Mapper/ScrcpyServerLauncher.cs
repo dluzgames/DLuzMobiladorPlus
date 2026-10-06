@@ -17,6 +17,8 @@ public sealed class ScrcpyServerLauncher
 
 	private int _puertoForward;
 
+	public int Factor { get; private set; } = 1;
+
 	public ScrcpyServerLauncher(string adbPath)
 	{
 		_adbPath = adbPath;

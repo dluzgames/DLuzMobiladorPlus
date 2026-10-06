@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace DLuz.Mapper;
@@ -81,9 +81,10 @@ public sealed class JoystickMapper
 		if (!_activo)
 		{
 			inj.Tocar("joystick", _centroX, _centroY);
+			inj.Tocar("joystick", num4, num5);
 			_activo = true;
-			_destX = _centroX;
-			_destY = _centroY;
+			_destX = num4;
+			_destY = num5;
 			_ultimoEnvioMs = nowMs;
 		}
 		else if (num4 != _destX || num5 != _destY || nowMs - _ultimoEnvioMs >= 50)
@@ -95,40 +96,11 @@ public sealed class JoystickMapper
 		}
 	}
 
-	public void Resetar(TouchInjector inj)
-	{
-		Liberar(inj);
-		if (inj.EstaAbajo("joystick"))
-		{
-			inj.Soltar("joystick");
-		}
-		_activo = false;
-	}
-
-	/// <summary>
-	/// Anti-Stuck: libera imediatamente o analógico e reseta para o centro.
-	/// Chamado ao suspender/retomar o cursor para evitar o bug de analógico travado.
-	/// </summary>
-	public void ForceReset(TouchInjector inj)
-	{
-		try
-		{
-			if (inj.EstaAbajo("joystick"))
-			{
-				inj.Tocar("joystick", _centroX, _centroY);
-				inj.Soltar("joystick");
-			}
-			_activo = false;
-			_destX = _centroX;
-			_destY = _centroY;
-			_ultimoEnvioMs = 0;
-		}
-		catch { }
-	}
+	public void ForceReset(TouchInjector inj) => Liberar(inj);
 
 	public void Liberar(TouchInjector inj)
 	{
-		if (_activo || inj.EstaAbajo("joystick"))
+		if (_activo)
 		{
 			inj.Tocar("joystick", _centroX, _centroY);
 			inj.Soltar("joystick");
@@ -136,4 +108,3 @@ public sealed class JoystickMapper
 		}
 	}
 }
-

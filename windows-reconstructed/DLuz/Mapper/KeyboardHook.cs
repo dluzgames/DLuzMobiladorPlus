@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 
 namespace DLuz.Mapper;
@@ -56,7 +56,7 @@ public sealed class KeyboardHook : IDisposable
 			bool flag2 = flag;
 			flag = ((num == 257 || num == 261) ? true : false);
 			bool flag3 = flag;
-			if (flag2 || flag3)
+			if (flag2 | flag3)
 			{
 				int arg = Marshal.ReadInt32(lParam);
 				try
@@ -92,4 +92,3 @@ public sealed class KeyboardHook : IDisposable
 	[DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
 	private static extern nint GetModuleHandle(string? lpModuleName);
 }
-

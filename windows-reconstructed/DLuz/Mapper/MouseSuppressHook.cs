@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 
 namespace DLuz.Mapper;
@@ -111,4 +111,3 @@ public sealed class MouseSuppressHook : IDisposable
 	[DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
 	private static extern nint GetModuleHandle(string? lpModuleName);
 }
-

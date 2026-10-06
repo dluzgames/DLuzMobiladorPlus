@@ -16,16 +16,11 @@ public sealed class NCamera
 
 	public string? FreeMouseKey { get; set; } = "Alt";
 
-	public double Smoothing { get; set; } = 0.0;
+	public double Smoothing { get; set; } = 0.1;
 
 	public bool InvertX { get; set; }
 
 	public bool InvertY { get; set; }
 
 	public double ZoneSize { get; set; } = 0.18;
-
-	public double Acceleration { get; set; } = 0.15;
-
-	public double ExponentY { get; set; } = 1.25;
 }
-

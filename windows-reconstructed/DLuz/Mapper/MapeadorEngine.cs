@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using DLuz.Helpers;
 
 namespace DLuz.Mapper;
@@ -38,7 +39,9 @@ public sealed class MapeadorEngine : IDisposable
 
 	private int _exitVk = 27;
 
-	public int PeriodoLoopMs { get; set; } = 1;
+	public int PeriodoLoopMs { get; set; } = 8;
+
+	private Thread? _loopCamara;
 
 	private Thread? _loop;
 
@@ -58,7 +61,19 @@ public sealed class MapeadorEngine : IDisposable
 
 	private bool _togglePrevAbajo;
 
+	private const bool LiberacionParcialAlReanudar = true;
+
+	private readonly object _scrollGate = new object();
+
+	private long _replantarDespuesDeMs;
+
+	public int CamaraHz { get; set; } = 500;
+
 	public Func<bool>? TogglePorMousePermitido { get; set; }
+
+	public Func<bool>? InyeccionSuspendidaPermitida { get; set; }
+
+	public Func<(int x, int y)?>? PosicionCursorAlSuspender { get; set; }
 
 	public bool SesionActiva { get; private set; }
 
@@ -105,18 +120,18 @@ public sealed class MapeadorEngine : IDisposable
 	{
 		_serial = serial;
 		_inj.EstablecerResolucion(ancho, alto);
-		bool isWifi = !string.IsNullOrWhiteSpace(serial) && serial.Contains(':');
-		PeriodoLoopMs = isWifi ? 3 : 1;
 		int num = _server.Iniciar(serial, versionServer, displayId);
 		if (num <= 0)
 		{
 			return false;
 		}
+		_inj.Escala = _server.Factor;
 		if (!_control.Conectar(num))
 		{
 			_server.Detener(serial);
 			return false;
 		}
+		_inj.ReiniciarEstado();
 		return true;
 	}
 
@@ -142,41 +157,54 @@ public sealed class MapeadorEngine : IDisposable
 			IsBackground = true,
 			Name = "DLuzMapperLoop"
 		};
+		_loopCamara = new Thread(LoopCamara)
+		{
+			IsBackground = true,
+			Name = "DLuzCamaraRapida",
+			Priority = ThreadPriority.AboveNormal
+		};
+		_loopCamara.Start();
 		_loop.Start();
 		SesionActiva = true;
 	}
 
 	public void SetCaptura(bool activo)
 	{
-		if (_capturando != activo)
+		if (_capturando == activo)
 		{
-			_capturando = activo;
-			_mouse.Capturar(activo);
-			if (activo)
+			return;
+		}
+		_capturando = activo;
+		_mouse.Capturar(activo);
+		if (activo)
+		{
+			_mouse.Confinar(activo: true);
+			_mouseSuppress.Suprimir(activo: true);
+			_confinarActual = true;
+			_libreActual = false;
+		}
+		else
+		{
+			_confinarActual = false;
+			_libreActual = false;
+			_mouseSuppress.Suprimir(activo: false);
+			ReleaseMouse();
+			(int, int)? tuple = PosicionCursorAlSuspender?.Invoke();
+			if (tuple.HasValue)
 			{
-				_mouse.Confinar(activo: true);
-				_mouseSuppress.Suprimir(activo: true);
-				_confinarActual = true;
-				_libreActual = false;
+				var (x, y) = tuple.GetValueOrDefault();
+				SetCursorPos(x, y);
 			}
-			else
-			{
-				_confinarActual = false;
-				_libreActual = false;
-				_mouseSuppress.Suprimir(activo: false);
-				// Anti-stuck: ForceReset garante que o analógico e câmera sejam liberados ao soltar o cursor
-				try
-				{
-					lock (_injLock)
-					{
-						_mapper.ForceReset();
-					}
-				}
-				catch { }
-				ReleaseAllInputs();
-			}
-			this.CapturaCambiada?.Invoke(activo);
-			this.ConfinamientoCambiado?.Invoke(_confinarActual);
+		}
+		CapturaCambiada?.Invoke(activo);
+		ConfinamientoCambiado?.Invoke(_confinarActual);
+	}
+
+	public void ForceReset()
+	{
+		lock (_injLock)
+		{
+			_mapper?.Liberar();
 		}
 	}
 
@@ -269,21 +297,34 @@ public sealed class MapeadorEngine : IDisposable
 					_mouse.Confinar(flag2);
 					_mouseSuppress.Suprimir(flag2);
 					_confinarActual = flag2;
-					this.ConfinamientoCambiado?.Invoke(flag2);
+					ConfinamientoCambiado?.Invoke(flag2);
 				}
 				if (num2)
 				{
 					_estado.TomarDeltaMouse();
 					if (!_libreActual)
 					{
-						ReleaseToquesActivos();
+						ReleaseMouse();
 					}
 					_libreActual = true;
+					if (Environment.TickCount64 >= _replantarDespuesDeMs)
+					{
+						Func<bool>? inyeccionSuspendidaPermitida = InyeccionSuspendidaPermitida;
+						if (inyeccionSuspendidaPermitida != null && inyeccionSuspendidaPermitida())
+						{
+							FrameSoloTeclado(stopwatch.ElapsedMilliseconds);
+						}
+					}
 				}
 				else
 				{
+					_ = _libreActual;
 					_libreActual = false;
-					if (_control.Conectado)
+					if (!_control.Conectado)
+					{
+						SetCaptura(activo: false);
+					}
+					else if (Environment.TickCount64 >= _replantarDespuesDeMs)
 					{
 						try
 						{
@@ -298,27 +339,155 @@ public sealed class MapeadorEngine : IDisposable
 							ReleaseAllInputs();
 						}
 					}
-					else
-					{
-						SetCaptura(activo: false);
-					}
 				}
 			}
+			else if (SesionActiva && _control.Conectado && Environment.TickCount64 >= _replantarDespuesDeMs)
+			{
+				Func<bool>? inyeccionSuspendidaPermitida2 = InyeccionSuspendidaPermitida;
+				if (inyeccionSuspendidaPermitida2 != null && inyeccionSuspendidaPermitida2())
+				{
+					FrameSoloTeclado(stopwatch.ElapsedMilliseconds);
+				}
+			}
+			_estado.ExpirarPulsos();
 			num += PeriodoLoopMs;
 			long num3 = num - stopwatch.ElapsedMilliseconds;
-			if (num3 > 1)
+			if (num3 > 0)
 			{
-				Thread.Sleep((int)(num3 - 1));
+				Thread.Sleep((int)num3);
 			}
-			while (stopwatch.ElapsedMilliseconds < num)
-			{
-				Thread.SpinWait(10);
-			}
-			if (stopwatch.ElapsedMilliseconds > num + 5)
+			else
 			{
 				num = stopwatch.ElapsedMilliseconds;
 			}
 		}
+	}
+
+	private void LoopCamara()
+	{
+		Stopwatch stopwatch = Stopwatch.StartNew();
+		using TemporizadorFino temporizadorFino = new TemporizadorFino();
+		double num = stopwatch.Elapsed.TotalMilliseconds;
+		while (_corriendo)
+		{
+			int num2;
+			if (_capturando && !_libreActual && _control.Conectado && Environment.TickCount64 >= _replantarDespuesDeMs)
+			{
+				int? freeKeyVk = _freeKeyVk;
+				if (freeKeyVk.HasValue)
+				{
+					int valueOrDefault = freeKeyVk.GetValueOrDefault();
+					num2 = ((!_estado.Presionada(valueOrDefault)) ? 1 : 0);
+				}
+				else
+				{
+					num2 = 1;
+				}
+			}
+			else
+			{
+				num2 = 0;
+			}
+			bool flag = (byte)num2 != 0;
+			try
+			{
+				lock (_injLock)
+				{
+					_mapper.CamaraExterna = true;
+					if (flag)
+					{
+						_mapper.CamaraTick(_estado, stopwatch.ElapsedMilliseconds);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				AppLogger.Error("MapeadorEngine: error en camara rapida", ex);
+			}
+			num += 1000.0 / (double)Math.Clamp(CamaraHz, 125, 1000);
+			double num3 = num - stopwatch.Elapsed.TotalMilliseconds;
+			if (num3 > 0.0)
+			{
+				temporizadorFino.Esperar(num3);
+			}
+			else
+			{
+				num = stopwatch.Elapsed.TotalMilliseconds;
+			}
+		}
+	}
+
+	private void FrameSoloTeclado(long nowMs)
+	{
+		if (!_control.Conectado)
+		{
+			return;
+		}
+		try
+		{
+			lock (_injLock)
+			{
+				_mapper.Frame(_estado, nowMs, soloTeclado: true);
+			}
+		}
+		catch (Exception ex)
+		{
+			AppLogger.Error("MapeadorEngine: error en frame de teclado", ex);
+			ReleaseAllInputs();
+		}
+	}
+
+	public void CambiarResolucion(int ancho, int alto)
+	{
+		lock (_injLock)
+		{
+			try
+			{
+				_mapper.Liberar();
+			}
+			catch
+			{
+			}
+			_inj.SoltarTodos();
+			_inj.EstablecerResolucion(ancho, alto);
+		}
+	}
+
+	public void CursorScroll(int x, int y, int delta)
+	{
+		if (!SesionActiva || !_control.Conectado || delta == 0)
+		{
+			return;
+		}
+		int num = ((delta > 0) ? 1 : (-1));
+		int distancia = Math.Max(120, _inj.Alto / 8) * num;
+		Task.Run(delegate
+		{
+			lock (_scrollGate)
+			{
+				if (!_control.Conectado)
+				{
+					return;
+				}
+				lock (_injLock)
+				{
+					_inj.Tocar("scroll", x, y);
+				}
+				for (int i = 1; i <= 6; i++)
+				{
+					Thread.Sleep(12);
+					lock (_injLock)
+					{
+						_inj.Tocar("scroll", x, y + distancia * i / 6);
+					}
+				}
+				Thread.Sleep(12);
+				lock (_injLock)
+				{
+					_inj.Soltar("scroll");
+				}
+			}
+		});
 	}
 
 	public void CursorTocar(int x, int y)
@@ -356,15 +525,6 @@ public sealed class MapeadorEngine : IDisposable
 			SetCaptura(activo: false);
 			return false;
 		}
-		// Tecla de atalho de efeitos DLSS 5 / ReShade
-		// Tecla End (VK 35): aciona a tecla F6 (VK 117)
-		if (esDown && vk == 35)
-		{
-			keybd_event(117, 0, 0u, UIntPtr.Zero);
-			keybd_event(117, 0, 2u, UIntPtr.Zero);
-			return true;
-		}
-
 		if (KeyNames.Coincide(vk, _exitVk))
 		{
 			if (_capturando)
@@ -402,11 +562,19 @@ public sealed class MapeadorEngine : IDisposable
 		{
 			_estado.TeclaArriba(vk);
 		}
-		if (_capturando)
+		if (!_teclasMapeadas.Contains(vk))
 		{
-			return _teclasMapeadas.Contains(vk);
+			return false;
 		}
-		return false;
+		if (!_capturando)
+		{
+			if (SesionActiva)
+			{
+				return InyeccionSuspendidaPermitida?.Invoke() ?? false;
+			}
+			return false;
+		}
+		return true;
 	}
 
 	private void ReleaseAllInputs()
@@ -415,27 +583,41 @@ public sealed class MapeadorEngine : IDisposable
 		ReleaseToquesActivos();
 	}
 
+	private void ReleaseMouse()
+	{
+		lock (_injLock)
+		{
+			try
+			{
+				_mapper.LiberarMouse();
+			}
+			catch
+			{
+			}
+		}
+	}
+
 	private void ReleaseToquesActivos()
 	{
 		lock (_injLock)
 		{
 			try
 			{
-				_mapper.ForceReset();
+				_mapper.Liberar();
 			}
 			catch
 			{
 			}
 			_inj.SoltarTodos();
 		}
+		_replantarDespuesDeMs = Environment.TickCount64 + 60;
 	}
 
 	[DllImport("user32.dll")]
-	private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, nuint dwExtraInfo);
+	private static extern bool SetCursorPos(int x, int y);
 
 	[DllImport("winmm.dll")]
 	private static extern uint timeBeginPeriod(uint uPeriod);
-
 
 	[DllImport("winmm.dll")]
 	private static extern uint timeEndPeriod(uint uPeriod);
@@ -455,6 +637,3 @@ public sealed class MapeadorEngine : IDisposable
 		_control.Dispose();
 	}
 }
-
-
-

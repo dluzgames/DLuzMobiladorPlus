@@ -16,7 +16,7 @@ public sealed class CameraConfig
 
 	public string? FreeMouseKey { get; set; } = "Alt";
 
-	public double Smoothing { get; set; } = 0.0;
+	public double Smoothing { get; set; } = 0.1;
 
 	public bool InvertX { get; set; }
 
@@ -24,8 +24,7 @@ public sealed class CameraConfig
 
 	public double ZoneSize { get; set; } = 0.18;
 
-	public double Acceleration { get; set; } = 0.15;
+	public double Acceleration { get; set; } = 0.0;
 
-	public double ExponentY { get; set; } = 1.25;
+	public double ExponentY { get; set; } = 1.0;
 }
-

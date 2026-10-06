@@ -1,4 +1,4 @@
-﻿namespace DLuz.Mapper;
+namespace DLuz.Mapper;
 
 public sealed class ButtonConfig
 {
@@ -15,5 +15,14 @@ public sealed class ButtonConfig
 	public double Size { get; set; }
 
 	public int RepeatMs { get; set; }
-}
 
+	public int X2 { get; set; }
+
+	public int Y2 { get; set; }
+
+	public int DurationMs { get; set; }
+
+	public int AngleDeg { get; set; }
+
+	public string? Script { get; set; }
+}

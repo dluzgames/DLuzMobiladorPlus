@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace DLuz.Mapper.Profile;
 
@@ -12,4 +12,3 @@ public sealed class NJoystick
 
 	public Dictionary<string, int[]> Keys { get; set; } = new Dictionary<string, int[]>();
 }
-

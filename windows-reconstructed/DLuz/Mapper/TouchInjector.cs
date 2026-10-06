@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace DLuz.Mapper;
@@ -24,6 +24,8 @@ public sealed class TouchInjector
 
 	private long _siguienteId = 10L;
 
+	public int Escala { get; set; } = 1;
+
 	public int Ancho { get; private set; } = 1080;
 
 	public int Alto { get; private set; } = 2400;
@@ -48,10 +50,15 @@ public sealed class TouchInjector
 
 	public void Tocar(string dedo, int x, int y)
 	{
-		TocarInterno(dedo, Math.Clamp(x, 0, Ancho - 1), Math.Clamp(y, 0, Alto - 1));
+		TocarInterno(dedo, Math.Clamp(x, 0, Ancho - 1) * Escala, Math.Clamp(y, 0, Alto - 1) * Escala);
 	}
 
 	public void TocarLibre(string dedo, int x, int y)
+	{
+		TocarInterno(dedo, x * Escala, y * Escala);
+	}
+
+	public void TocarCrudo(string dedo, int x, int y)
 	{
 		TocarInterno(dedo, x, y);
 	}
@@ -61,8 +68,8 @@ public sealed class TouchInjector
 		long num = ObtenerId(dedo);
 		bool flag = _abajo.Contains(dedo);
 		byte action = (byte)(flag ? 2 : 0);
-		bool flag2 = _control.EnviarTouch(action, num, x, y, Ancho, Alto, 1f);
-		MapperDiag.Log($"{(flag ? "MOVE" : "DOWN")} dedo={dedo} id={num} xy=({x},{y}) res={Ancho}x{Alto} enviado={flag2}");
+		bool flag2 = _control.EnviarTouch(action, num, x, y, Ancho * Escala, Alto * Escala, 1f);
+		MapperDiag.Log($"{(flag ? "MOVE" : "DOWN")} dedo={dedo} id={num} xy=({(double)x / (double)Escala:0.##},{(double)y / (double)Escala:0.##}) res={Ancho}x{Alto} enviado={flag2}");
 		if (flag2)
 		{
 			_abajo.Add(dedo);
@@ -83,13 +90,13 @@ public sealed class TouchInjector
 			}
 			else
 			{
-				int num4 = Ancho / 2;
-				int num5 = Alto / 2;
+				int num4 = Ancho / 2 * Escala;
+				int num5 = Alto / 2 * Escala;
 				num3 = num5;
 				num2 = num4;
 			}
-			bool value2 = _control.EnviarTouch(1, num, num2, num3, Ancho, Alto, 0f);
-			MapperDiag.Log($"UP   dedo={dedo} id={num} xy=({num2},{num3}) res={Ancho}x{Alto} enviado={value2}");
+			bool value2 = _control.EnviarTouch(1, num, num2, num3, Ancho * Escala, Alto * Escala, 0f);
+			MapperDiag.Log($"UP   dedo={dedo} id={num} xy=({(double)num2 / (double)Escala:0.##},{(double)num3 / (double)Escala:0.##}) res={Ancho}x{Alto} enviado={value2}");
 			_abajo.Remove(dedo);
 			_ultima.Remove(dedo);
 		}
@@ -106,7 +113,7 @@ public sealed class TouchInjector
 		{
 			return (x: Ancho / 2, y: Alto / 2);
 		}
-		return value;
+		return (x: value.Item1 / Escala, y: value.Item2 / Escala);
 	}
 
 	public void SoltarTodos()
@@ -115,6 +122,12 @@ public sealed class TouchInjector
 		{
 			Soltar(item);
 		}
+	}
+
+	public void ReiniciarEstado()
+	{
+		_abajo.Clear();
+		_ultima.Clear();
 	}
 
 	private long ObtenerId(string dedo)
@@ -127,4 +140,3 @@ public sealed class TouchInjector
 		return value;
 	}
 }
-

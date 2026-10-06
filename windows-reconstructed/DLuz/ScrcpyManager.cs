@@ -410,7 +410,15 @@ public class ScrcpyManager
 			{
 				list.Add("--print-fps");
 			}
-			if (!string.IsNullOrEmpty(config.RenderDriver) && !AceleracionAplicable(config))
+			if (AceleracionAplicable(config))
+			{
+				list.Add("--hwdec=d3d11va");
+			}
+			else if (!config.AceleracionHardware)
+			{
+				list.Add("--hwdec=disabled");
+			}
+			if (!string.IsNullOrEmpty(config.RenderDriver))
 			{
 				list.Add("--render-driver=" + config.RenderDriver);
 			}
@@ -573,7 +581,15 @@ public class ScrcpyManager
 			{
 				list.Add("--print-fps");
 			}
-			if (!string.IsNullOrEmpty(config.RenderDriver) && !AceleracionAplicable(config))
+			if (AceleracionAplicable(config))
+			{
+				list.Add("--hwdec=d3d11va");
+			}
+			else if (!config.AceleracionHardware)
+			{
+				list.Add("--hwdec=disabled");
+			}
+			if (!string.IsNullOrEmpty(config.RenderDriver))
 			{
 				list.Add("--render-driver=" + config.RenderDriver);
 			}
@@ -1762,7 +1778,7 @@ public class ScrcpyManager
 
 	private static string ResumenConfig(ScrcpyConfig config, string modo)
 	{
-		string value = (AceleracionAplicable(config) ? "d3d11-directo" : (string.IsNullOrWhiteSpace(config.RenderDriver) ? "auto" : config.RenderDriver));
+		string value = (AceleracionAplicable(config) ? "d3d11va-hw" : (string.IsNullOrWhiteSpace(config.RenderDriver) ? "auto" : config.RenderDriver));
 		string value2 = ((config.UseAdvancedEncoder && !string.IsNullOrWhiteSpace(config.VideoEncoder)) ? config.VideoEncoder : "auto");
 		string value3 = (config.Audio ? $"on/{config.AudioBuffer}" : "off");
 		string value4 = (config.UsarWifi ? "wifi" : "usb");

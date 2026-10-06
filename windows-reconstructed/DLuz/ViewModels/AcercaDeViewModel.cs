@@ -28,7 +28,7 @@ public class AcercaDeViewModel : ObservableObject
 
 	public string Estado => "Beta";
 
-	public string BuildTexto => "Versão 3.0 Pro";
+	public string BuildTexto => "Versão 3.5 Pro";
 
 	public string DescripcionDescargas => "Versiones oficiales del launcher, incluyendo la más reciente y anteriores. Usa siempre la versión más reciente y descarga únicamente desde los enlaces oficiales.";
 

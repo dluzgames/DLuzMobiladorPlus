@@ -114,6 +114,7 @@ public sealed class MapeadorService : ObservableObject
 			_ => 8
 		};
 		_engine.PeriodoLoopMs = ms;
+		_engine.CamaraHz = hz;
 	}
 
 	public KeymapConfig Keymap { get; private set; }
@@ -409,7 +410,7 @@ public sealed class MapeadorService : ObservableObject
 		string versionScrcpy = await ScrcpyVersionService.ObtenerAsync();
 		if (versionScrcpy == null)
 		{
-			versionScrcpy = "4.1";
+			versionScrcpy = "5.0";
 			AppLogger.Warn("MapeadorService: no se detectó la versión de scrcpy; se asume " + versionScrcpy);
 		}
 		if (!(await Task.Run(() => _engine.ConectarServer(serial, ancho, alto, versionScrcpy, displayId))))

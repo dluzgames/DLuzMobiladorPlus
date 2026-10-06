@@ -1,4 +1,4 @@
-﻿namespace DLuz.Mapper.Profile;
+namespace DLuz.Mapper.Profile;
 
 public sealed class NButton
 {
@@ -15,5 +15,14 @@ public sealed class NButton
 	public double Size { get; set; }
 
 	public int RepeatMs { get; set; }
-}
 
+	public double X2 { get; set; }
+
+	public double Y2 { get; set; }
+
+	public int DurationMs { get; set; }
+
+	public int AngleDeg { get; set; }
+
+	public string? Script { get; set; }
+}
