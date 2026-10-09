@@ -9,7 +9,7 @@
         ExtendsContentIntoTitleBar="True"
         WindowBackdropType="None"
         ResizeMode="NoResize"
-        Background="#101426">
+        Background="{DynamicResource Stex.BgPrimaryBrush}">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
@@ -24,32 +24,32 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,16">
           <Image Source="pack://application:,,,/Assets/logo.png" Width="36" Height="36" Margin="0,0,10,0"/>
           <StackPanel VerticalAlignment="Center">
-            <TextBlock Text="DLuzMobiladorPlus" FontSize="18" FontWeight="Bold" Foreground="#FFFFFF"/>
-            <TextBlock Text="Sistema de Licenciamento &amp; HWID Lock" FontSize="11" Foreground="#FF2A3A"/>
+            <TextBlock Text="DLuzMobiladorPlus" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource Stex.TextPrimaryBrush}"/>
+            <TextBlock Text="Sistema de Licenciamento &amp; HWID Lock" FontSize="11" Foreground="{DynamicResource Stex.AccentLightBrush}"/>
           </StackPanel>
         </StackPanel>
 
         <!-- Status Card -->
-        <Border Background="#181D33" BorderBrush="#2A3052" BorderThickness="1" CornerRadius="8" Padding="14,12" Margin="0,0,0,14">
+        <Border Background="{DynamicResource Stex.BgSecondaryBrush}" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" CornerRadius="8" Padding="14,12" Margin="0,0,0,14">
           <StackPanel>
             <Grid>
               <TextBlock Text="Status do seu Acesso:" FontSize="11" Foreground="{DynamicResource Stex.TextSecondaryBrush}"/>
               <TextBlock HorizontalAlignment="Right" Text="{Binding StatusTexto, Source={x:Static services:LicenseService.Instance}}" FontWeight="Bold" FontSize="12" Foreground="{Binding StatusBrush, Source={x:Static services:LicenseService.Instance}}"/>
             </Grid>
             
-            <Separator Margin="0,8" Background="#2A3052"/>
+            <Separator Margin="0,8" Background="{DynamicResource Stex.BorderNeutralBrush}"/>
             
             <TextBlock Text="HWID deste Computador (Hardware Lock):" FontSize="11" Foreground="{DynamicResource Stex.TextSecondaryBrush}"/>
             <Grid Margin="0,4,0,0">
-              <TextBox Name="TxtHwid" IsReadOnly="True" Text="{Binding Hwid, Source={x:Static services:LicenseService.Instance}, Mode=OneTime}" FontFamily="Cascadia Mono, Consolas" FontSize="11" Padding="8,4" Background="#101426" Foreground="#38EF7D" BorderBrush="#2A3052"/>
+              <TextBox Name="TxtHwid" IsReadOnly="True" Text="{Binding Hwid, Source={x:Static services:LicenseService.Instance}, Mode=OneTime}" FontFamily="Cascadia Mono, Consolas" FontSize="11" Padding="8,4" Background="{DynamicResource Stex.BgDarkBrush}" Foreground="{DynamicResource Stex.SuccessBrush}" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}"/>
               <ui:Button HorizontalAlignment="Right" Content="Copiar" Padding="8,2" Margin="2" Click="BtnCopiarHwid_Click"/>
             </Grid>
           </StackPanel>
         </Border>
 
         <!-- Campo de Inserir Chave -->
-        <TextBlock Text="Possui uma Chave de Licença Pro?" FontWeight="SemiBold" FontSize="12" Foreground="#FFFFFF" Margin="0,0,0,6"/>
-        <TextBox Name="TxtChave" FontFamily="Cascadia Mono, Consolas" FontSize="13" Padding="10,8" Background="#181D33" Foreground="#FFFFFF" BorderBrush="#FF2A3A" TextChanged="TxtChave_TextChanged" />
+        <TextBlock Text="Possui uma Chave de Licença Pro?" FontWeight="SemiBold" FontSize="12" Foreground="{DynamicResource Stex.TextPrimaryBrush}" Margin="0,0,0,6"/>
+        <TextBox Name="TxtChave" FontFamily="Cascadia Mono, Consolas" FontSize="13" Padding="10,8" Background="{DynamicResource Stex.BgSecondaryBrush}" Foreground="{DynamicResource Stex.TextPrimaryBrush}" BorderBrush="{DynamicResource Stex.AccentLightBrush}" TextChanged="TxtChave_TextChanged" />
 
         <TextBlock Name="TxtMsgResultado" Margin="0,6,0,0" FontSize="11.5" FontWeight="SemiBold" TextWrapping="Wrap" Visibility="Collapsed"/>
 

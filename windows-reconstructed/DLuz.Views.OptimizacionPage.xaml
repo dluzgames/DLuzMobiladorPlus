@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Page x:Class="DLuz.Views.OptimizacionPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:vm="clr-namespace:DLuz.ViewModels" xmlns:ctl="clr-namespace:DLuz.Controls" xmlns:helpers="clr-namespace:DLuz.Helpers" Title="Otimização" xmlns:views="clr-namespace:DLuz.Views">
   <FrameworkElement.Resources>
     <ResourceDictionary>
@@ -87,7 +87,7 @@
         <ui:InfoBar Severity="Warning" IsOpen="True" IsClosable="False" Margin="0,0,0,8" Message="Há otimizações ativas. Conecte o celular para revertê-las." Visibility="{Binding AdvertenciaVisible, Converter={StaticResource BoolToVis}}" />
         <ui:InfoBar Severity="Warning" IsOpen="True" IsClosable="False" Margin="0,0,0,12" Message="Nenhum aparelho foi detectado. Verifique a conexão USB e a depuração USB." Visibility="{Binding NoDispositivoVisible, Converter={StaticResource BoolToVis}}" />
       <!-- Modo Latência Ultra USB & Benchmark de Encoders -->
-      <ui:Card Margin="0,0,0,16" Padding="20,18" Background="#4A121A" BorderBrush="{DynamicResource Stex.AccentLightBrush}" BorderThickness="1">
+      <ui:Card Margin="0,0,0,16" Padding="20,18" Background="{DynamicResource Stex.AccentPaleBrush}" BorderBrush="{DynamicResource Stex.BorderSecondary2Brush}" BorderThickness="1">
         <StackPanel>
           <StackPanel Orientation="Horizontal">
             <ui:SymbolIcon Symbol="Flash24" VerticalAlignment="Center" Foreground="{DynamicResource Stex.AccentLightBrush}" />

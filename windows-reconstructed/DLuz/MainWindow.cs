@@ -40,6 +40,15 @@ public partial class MainWindow : FluentWindow, IComponentConnector
 		RootNav.Navigated += OnNavViewNavigated;
 		RootNav.Navigating += OnNavViewNavigating;
 		ConstruirRail();
+		AtualizarIconeTema(ThemeService.Instance.IsDarkTheme);
+		ThemeService.Instance.ThemeChanged += isDark =>
+		{
+			Dispatcher.Invoke(() =>
+			{
+				AtualizarIconeTema(isDark);
+				ConstruirRail();
+			});
+		};
 		RailScroll.PreviewMouseWheel += delegate(object _, MouseWheelEventArgs e)
 		{
 			RailScroll.ScrollToHorizontalOffset(RailScroll.HorizontalOffset - (double)e.Delta);
@@ -105,11 +114,7 @@ public partial class MainWindow : FluentWindow, IComponentConnector
 			(null, typeof(PantallaPage), "Tela do celular", SymbolRegular.Desktop24),
 			(null, typeof(ConexionPage), "Conexão USB / Wi-Fi", SymbolRegular.Wifi124),
 			(null, typeof(ControlesPage), "Controles", SymbolRegular.Games24),
-			(null, typeof(ExtrasPage), "Opções extras", SymbolRegular.Options24),
-
-			("AJUDA & SUPORTE", null, null, SymbolRegular.Empty),
-			(null, typeof(TutoriaisPage), "🎓 Tutoriais em Vídeo", SymbolRegular.VideoClip24),
-			(null, typeof(AcercaDePage), "Informações & Suporte", SymbolRegular.Info24)
+			(null, typeof(ExtrasPage), "Opções extras", SymbolRegular.Options24)
 		};
 
 		Style style = (Style)base.Resources["RailButton"];
@@ -134,7 +139,7 @@ public partial class MainWindow : FluentWindow, IComponentConnector
 					headerContainer.Children.Add(new Border
 					{
 						Height = 1,
-						Background = new SolidColorBrush(Color.FromArgb(40, 255, 255, 255)),
+						Background = (Brush)FindResource("Stex.BorderNeutralBrush"),
 						Margin = new Thickness(4, 0, 4, 10)
 					});
 				}
@@ -470,6 +475,22 @@ public partial class MainWindow : FluentWindow, IComponentConnector
 		}
 	}
 
+	private void BtnToggleTema_Click(object sender, RoutedEventArgs e)
+	{
+		ThemeService.Instance.ToggleTheme();
+	}
+
+	private void AtualizarIconeTema(bool isDark)
+	{
+		if (IconToggleTema != null)
+		{
+			IconToggleTema.Symbol = isDark ? SymbolRegular.WeatherSunny24 : SymbolRegular.WeatherMoon24;
+		}
+		if (BtnToggleTema != null)
+		{
+			BtnToggleTema.ToolTip = isDark ? "Alternar para Modo Claro" : "Alternar para Modo Escuro";
+		}
+	}
 }
 
 

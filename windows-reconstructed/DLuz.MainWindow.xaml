@@ -62,13 +62,13 @@
     </ui:TitleBar>
 
     <!-- Banner de Notificação de Auto-Update (1-Clique) -->
-    <Border Grid.Row="1" Background="#141E38" BorderBrush="{DynamicResource Stex.AccentLightBrush}" BorderThickness="0,0,0,1" Padding="14,8"
+    <Border Grid.Row="1" Background="{DynamicResource Stex.InfoSubtleBrush}" BorderBrush="{DynamicResource Stex.InfoBorderBrush}" BorderThickness="0,0,0,1" Padding="14,8"
             Visibility="{Binding IsUpdateAvailable, Source={x:Static services:UpdateService.Instance}, Converter={StaticResource BoolToVis}}">
       <Grid>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
           <ui:SymbolIcon Symbol="ArrowDownload24" Foreground="{DynamicResource Stex.AccentLightBrush}" Margin="0,0,10,0"/>
-          <TextBlock Text="🚀 Nova versão disponível: " FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
-          <TextBlock Text="{Binding NewVersion, Source={x:Static services:UpdateService.Instance}}" FontWeight="Bold" Foreground="#38EF7D" VerticalAlignment="Center"/>
+          <TextBlock Text="🚀 Nova versão disponível: " FontWeight="Bold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" VerticalAlignment="Center"/>
+          <TextBlock Text="{Binding NewVersion, Source={x:Static services:UpdateService.Instance}}" FontWeight="Bold" Foreground="{DynamicResource Stex.SuccessBrush}" VerticalAlignment="Center"/>
           <TextBlock Text=" • " Foreground="{DynamicResource Stex.TextMutedBrush}" VerticalAlignment="Center" Margin="6,0"/>
           <TextBlock Text="{Binding Changelog, Source={x:Static services:UpdateService.Instance}}" FontSize="11.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" VerticalAlignment="Center"/>
         </StackPanel>
@@ -89,10 +89,21 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
-          <StackPanel Margin="8,0,0,18">
-            <TextBlock Text="DLuz Mobilador" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
-            <TextBlock Text="Painel de Controle" Margin="0,2,0,0" FontSize="11.5" FontWeight="SemiBold" Foreground="{DynamicResource Stex.AccentLightBrush}" />
-          </StackPanel>
+          <Grid Margin="6,0,0,18">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+              <TextBlock Text="DLuz Mobilador" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+              <TextBlock Text="Painel de Controle" Margin="0,2,0,0" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource Stex.AccentLightBrush}" />
+            </StackPanel>
+            <ui:Button x:Name="BtnToggleTema" Grid.Column="1" VerticalAlignment="Center" Padding="6,6" CornerRadius="8"
+                       ToolTip="Alternar Modo Claro / Escuro" Appearance="Secondary" Background="{DynamicResource Stex.BgSecondaryBrush}"
+                       BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" Click="BtnToggleTema_Click">
+              <ui:SymbolIcon x:Name="IconToggleTema" Symbol="WeatherSunny24" FontSize="16" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+            </ui:Button>
+          </Grid>
           <ScrollViewer Name="RailScroll" Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Focusable="False">
             <Grid Name="RailContent">
               <StackPanel Name="RailItems" Orientation="Vertical" />
@@ -102,15 +113,15 @@
             </Grid>
           </ScrollViewer>
           <StackPanel Grid.Row="2" Margin="0,14,0,0">
-            <Border Height="200" CornerRadius="8" ClipToBounds="True" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" Background="#050B1B">
+            <Border Height="200" CornerRadius="8" ClipToBounds="True" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" Background="{DynamicResource Stex.BgDarkBrush}">
               <Image Source="pack://application:,,,/Assets/dluzmobi-sidebar.png" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality" />
             </Border>
 
             <!-- Badge de Licença & Teste de 3 Dias -->
-            <Border Margin="0,8,0,0" Padding="8,6" Background="#101426" BorderBrush="#2A3052" BorderThickness="1" CornerRadius="6">
+            <Border Margin="0,8,0,0" Padding="8,6" Background="{DynamicResource Stex.BgSecondaryBrush}" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" CornerRadius="6">
               <StackPanel>
                 <TextBlock Text="{Binding StatusTexto, Source={x:Static services:LicenseService.Instance}}" FontSize="10.5" FontWeight="Bold" Foreground="{Binding StatusBrush, Source={x:Static services:LicenseService.Instance}}" TextWrapping="Wrap" />
-                <ui:Button Margin="0,6,0,0" Content="🔑 Ativar Licença Pro" Padding="4,3" FontSize="10.5" HorizontalAlignment="Stretch" Click="AbrirModalAtivacao_Click" />
+                <ui:Button Margin="0,6,0,0" Content="🔑 Ativar Licença Pro" Appearance="Primary" Padding="4,3" FontSize="10.5" HorizontalAlignment="Stretch" Click="AbrirModalAtivacao_Click" />
               </StackPanel>
             </Border>
             <TextBlock Text="Plus • Windows" Margin="8,6,0,0" FontSize="11" Foreground="{DynamicResource Stex.TextMutedBrush}" />

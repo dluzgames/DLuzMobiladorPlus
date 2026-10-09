@@ -1,4 +1,4 @@
-﻿using DLuz.Helpers;
+using DLuz.Helpers;
 using System.Collections.Generic;
 using System;
 using System.CodeDom.Compiler;
@@ -678,6 +678,7 @@ public class MapeadorViewModel : ObservableObject, IDisposable
 			_s.Fps = 120;
 			_s.Bitrate = 10;
 			_s.MaxSize = 1280;
+			_s.AceleracionHardware = true;
 			_s.PerfilSeleccionado = "Competitivo USB";
 			_s.GuardarConfig();
 
@@ -692,7 +693,7 @@ public class MapeadorViewModel : ObservableObject, IDisposable
 			});
 
 			NotificarDetalhesUI();
-			ToastService.Mostrar("⚡ Modo Latência Ultra USB ativado! H.264, Buffer 0, 120 FPS e Zero Delay configurados.", ToastTipo.Exito, 4500);
+			ToastService.Mostrar("⚡ Modo Latência Ultra USB ativado! 120 FPS, GPU D3D11VA (Scrcpy 5.0.1), Buffer 0 e Zero Delay configurados.", ToastTipo.Exito, 4500);
 		}
 		catch (Exception ex)
 		{

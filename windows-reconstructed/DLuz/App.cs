@@ -47,7 +47,7 @@ public partial class App : Application
 		};
 
 		Program.InicializarJob();
-		ApplicationAccentColorManager.Apply(Color.FromRgb(229, 9, 20), ApplicationTheme.Dark);
+		ThemeService.Instance.Initialize();
 		WheelGuard.Register();
 
 		AppDomain.CurrentDomain.UnhandledException += delegate(object s, UnhandledExceptionEventArgs args)

@@ -23,10 +23,10 @@
           <StackPanel Grid.Column="0" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
               <TextBlock Text="DluzMobiladorPlus" FontSize="30" FontWeight="Bold" Foreground="#FFFFFFFF" />
-              <Border Background="#141E38" BorderBrush="#00E676" BorderThickness="1" CornerRadius="6" Padding="8,3" Margin="12,0,0,0" VerticalAlignment="Center">
+              <Border Background="#20FFFFFF" BorderBrush="#80FFFFFF" BorderThickness="1" CornerRadius="6" Padding="8,3" Margin="12,0,0,0" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
-                  <ui:SymbolIcon Symbol="Flash24" FontSize="12" Foreground="#00E676" VerticalAlignment="Center" Margin="0,0,4,0" />
-                  <TextBlock Text="Latência Mínima: ~8ms a 12ms (Vídeo 120 FPS USB)" FontSize="11" FontWeight="Bold" Foreground="#00E676" />
+                  <ui:SymbolIcon Symbol="Flash24" FontSize="12" Foreground="White" VerticalAlignment="Center" Margin="0,0,4,0" />
+                  <TextBlock Text="Latência Mínima: ~8ms a 12ms (Vídeo 120 FPS USB)" FontSize="11" FontWeight="Bold" Foreground="White" />
                 </StackPanel>
               </Border>
             </StackPanel>
@@ -49,7 +49,7 @@
         </Grid>
       </Border>
       <!-- Card: Auto Configuração Inteligente (1-Clique) -->
-      <Border Margin="0,0,0,16" Padding="18,14" CornerRadius="8" Background="#161E38" BorderBrush="#00E676" BorderThickness="1">
+      <Border Margin="0,0,0,16" Padding="18,14" CornerRadius="8" Background="{DynamicResource Stex.SuccessSubtleBrush}" BorderBrush="{DynamicResource Stex.SuccessBorderBrush}" BorderThickness="1">
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -57,30 +57,12 @@
           </Grid.ColumnDefinitions>
           <StackPanel Grid.Column="0" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
-              <ui:SymbolIcon Symbol="Flash24" FontSize="18" Foreground="#00E676" VerticalAlignment="Center" Margin="0,0,8,0" />
-              <TextBlock Text="Calibração Automática de Desempenho (Auto-Tuning)" FontSize="15" FontWeight="Bold" Foreground="#FFFFFF" />
+              <ui:SymbolIcon Symbol="Flash24" FontSize="18" Foreground="{DynamicResource Stex.SuccessBrush}" VerticalAlignment="Center" Margin="0,0,8,0" />
+              <TextBlock Text="Calibração Automática de Desempenho (Auto-Tuning)" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource Stex.SuccessBrush}" />
             </StackPanel>
-            <TextBlock Text="Detecta o modelo do celular, processador, resolução e taxa de Hz da tela, aplicando a melhor configuração para 120 FPS e Zero Delay automaticamente." FontSize="12" Foreground="#AEB8DE" TextWrapping="Wrap" />
+            <TextBlock Text="Detecta o modelo do celular, processador, resolução e taxa de Hz da tela, aplicando a melhor configuração para 120 FPS e Zero Delay automaticamente." FontSize="12" Foreground="{DynamicResource Stex.SuccessBrush}" TextWrapping="Wrap" />
           </StackPanel>
           <ui:Button Grid.Column="1" Content="⚡ Auto Configurar Celular" Appearance="Primary" Height="40" Padding="16,0" FontWeight="Bold" Command="{Binding AutoConfigurarCommand}" Margin="16,0,0,0" VerticalAlignment="Center" />
-        </Grid>
-      </Border>
-
-      <!-- Card: Central de Tutoriais & Aulas em Vídeo -->
-      <Border Margin="0,0,0,16" Padding="18,12" CornerRadius="8" Background="#131B33" BorderBrush="#2F4278" BorderThickness="1">
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-          </Grid.ColumnDefinitions>
-          <StackPanel Grid.Column="0" VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
-              <ui:SymbolIcon Symbol="VideoClip24" FontSize="16" Foreground="#FF3D71" VerticalAlignment="Center" Margin="0,0,8,0" />
-              <TextBlock Text="Aprenda em 2 minutos: Tutoriais &amp; Aulas Práticas" FontSize="14" FontWeight="Bold" Foreground="#FFFFFF" />
-            </StackPanel>
-            <TextBlock Text="Assista aos vídeos rápidos de como ativar a depuração, calibrar a melhor sensibilidade e mapear o Free Fire / FPS." FontSize="12" Foreground="#8FA0D1" TextWrapping="Wrap" />
-          </StackPanel>
-          <ui:Button Grid.Column="1" Content="🎓 Ver Tutoriais" Appearance="Secondary" Height="36" Padding="14,0" FontWeight="SemiBold" Command="{Binding AbrirTutoriaisCommand}" Margin="16,0,0,0" VerticalAlignment="Center" />
         </Grid>
       </Border>
 

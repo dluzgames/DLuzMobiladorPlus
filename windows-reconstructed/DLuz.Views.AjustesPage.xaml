@@ -69,41 +69,41 @@
               <TextBlock Text="Aceleração &amp; Puxada de Capa (Eixo Y)" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" VerticalAlignment="Center" />
             </StackPanel>
             <!-- Botão de Ajuda ? -->
-            <Border HorizontalAlignment="Right" Width="26" Height="26" CornerRadius="13" Background="#354064" BorderBrush="{DynamicResource Stex.AccentLightBrush}" BorderThickness="1" Cursor="Hand" ToolTipService.ShowDuration="30000">
+            <Border HorizontalAlignment="Right" Width="26" Height="26" CornerRadius="13" Background="{DynamicResource Stex.BtnSecondaryBrush}" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" Cursor="Hand" ToolTipService.ShowDuration="30000">
               <Border.ToolTip>
-                <ToolTip Background="#0D1122" BorderBrush="{DynamicResource Stex.AccentLightBrush}" BorderThickness="1" Padding="16,14" MaxWidth="440">
+                <ToolTip Background="{DynamicResource Stex.BgSecondaryBrush}" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" Padding="16,14" MaxWidth="440">
                   <StackPanel>
-                    <TextBlock Text="🎯 GUIA DE SENSIBILIDADE AVANÇADA &amp; CAPA" FontWeight="Bold" FontSize="13" Foreground="#38EF7D" Margin="0,0,0,8"/>
+                    <TextBlock Text="🎯 GUIA DE SENSIBILIDADE AVANÇADA &amp; CAPA" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource Stex.SuccessBrush}" Margin="0,0,0,8"/>
                     
-                    <TextBlock Text="1. 🎯 Puxada de Capa (Eixo Y):" FontWeight="Bold" FontSize="11.5" Foreground="#FF2A3A"/>
-                    <TextBlock Text="• Multiplicador vertical inteligente ativo ao arrastar o mouse para cima." FontSize="11" TextWrapping="Wrap" Foreground="#D0D6EC"/>
-                    <TextBlock Text="• Sobe a mira direto na cabeça no Free Fire sem afetar a mira lateral." FontSize="11" TextWrapping="Wrap" Foreground="#A2ACCB"/>
-                    <TextBlock Text="• Valores: 1.0 (1:1 Normal) | 1.30 a 1.40 (Equilibrado) | 1.80+ (Extrema / Rush)" FontSize="10.5" Foreground="#38EF7D" Margin="0,1,0,8"/>
+                    <TextBlock Text="1. 🎯 Puxada de Capa (Eixo Y):" FontWeight="Bold" FontSize="11.5" Foreground="{DynamicResource Stex.AccentLightBrush}"/>
+                    <TextBlock Text="• Multiplicador vertical inteligente ativo ao arrastar o mouse para cima." FontSize="11" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextPrimaryBrush}"/>
+                    <TextBlock Text="• Sobe a mira direto na cabeça no Free Fire sem afetar a mira lateral." FontSize="11" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}"/>
+                    <TextBlock Text="• Valores: 1.0 (1:1 Normal) | 1.30 a 1.40 (Equilibrado) | 1.80+ (Extrema / Rush)" FontSize="10.5" Foreground="{DynamicResource Stex.SuccessBrush}" Margin="0,1,0,8"/>
 
-                    <TextBlock Text="2. ⚡ Aceleração Câmera:" FontWeight="Bold" FontSize="11.5" Foreground="#58A6FF"/>
-                    <TextBlock Text="• Ajusta a velocidade de giro pela rapidez do movimento da sua mão." FontSize="11" TextWrapping="Wrap" Foreground="#D0D6EC"/>
-                    <TextBlock Text="• Lento = mira precisa de longe. Rápido = giro ágil de 180°/360°." FontSize="11" TextWrapping="Wrap" Foreground="#A2ACCB"/>
-                    <TextBlock Text="• Valores: 0.0 (RAW mecânico) | 0.6 a 1.1 (Free Fire / Gelo rápido)" FontSize="10.5" Foreground="#38EF7D" Margin="0,1,0,8"/>
+                    <TextBlock Text="2. ⚡ Aceleração Câmera:" FontWeight="Bold" FontSize="11.5" Foreground="{DynamicResource Stex.InfoBrush}"/>
+                    <TextBlock Text="• Ajusta a velocidade de giro pela rapidez do movimento da sua mão." FontSize="11" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextPrimaryBrush}"/>
+                    <TextBlock Text="• Lento = mira precisa de longe. Rápido = giro ágil de 180°/360°." FontSize="11" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}"/>
+                    <TextBlock Text="• Valores: 0.0 (RAW mecânico) | 0.6 a 1.1 (Free Fire / Gelo rápido)" FontSize="10.5" Foreground="{DynamicResource Stex.SuccessBrush}" Margin="0,1,0,8"/>
 
-                    <TextBlock Text="3. 🛡️ Suavização (Anti-Tremor / Anti-Jitter):" FontWeight="Bold" FontSize="11.5" Foreground="#FFC107"/>
-                    <TextBlock Text="• Filtro que remove micro-tremores e ruídos do sensor do mouse." FontSize="11" TextWrapping="Wrap" Foreground="#D0D6EC"/>
-                    <TextBlock Text="• Deixa a mira cravada e firme no adversário sem adicionar delay." FontSize="11" TextWrapping="Wrap" Foreground="#A2ACCB"/>
-                    <TextBlock Text="• Valores: 0.0 (Desligado) | 0.10 a 0.30 (Mira Lisa e Firme)" FontSize="10.5" Foreground="#38EF7D" Margin="0,1,0,8"/>
+                    <TextBlock Text="3. 🛡️ Suavização (Anti-Tremor / Anti-Jitter):" FontWeight="Bold" FontSize="11.5" Foreground="{DynamicResource Stex.WarningBrush}"/>
+                    <TextBlock Text="• Filtro que remove micro-tremores e ruídos do sensor do mouse." FontSize="11" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextPrimaryBrush}"/>
+                    <TextBlock Text="• Deixa a mira cravada e firme no adversário sem adicionar delay." FontSize="11" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}"/>
+                    <TextBlock Text="• Valores: 0.0 (Desligado) | 0.10 a 0.30 (Mira Lisa e Firme)" FontSize="10.5" Foreground="{DynamicResource Stex.SuccessBrush}" Margin="0,1,0,8"/>
 
-                    <TextBlock Text="4. ⚡ Polling 1000Hz (1ms) Ativo:" FontWeight="Bold" FontSize="11.5" Foreground="#38EF7D"/>
-                    <TextBlock Text="• Lê o mouse 1.000 vezes por segundo (1ms) via Windows Raw Input." FontSize="11" TextWrapping="Wrap" Foreground="#D0D6EC"/>
-                    <TextBlock Text="• Latência zero, cliques instantâneos e máxima responsividade." FontSize="11" TextWrapping="Wrap" Foreground="#A2ACCB"/>
+                    <TextBlock Text="4. ⚡ Polling 1000Hz (1ms) Ativo:" FontWeight="Bold" FontSize="11.5" Foreground="{DynamicResource Stex.SuccessBrush}"/>
+                    <TextBlock Text="• Lê o mouse 1.000 vezes por segundo (1ms) via Windows Raw Input." FontSize="11" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextPrimaryBrush}"/>
+                    <TextBlock Text="• Latência zero, cliques instantâneos e máxima responsividade." FontSize="11" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}"/>
                   </StackPanel>
                 </ToolTip>
               </Border.ToolTip>
-              <TextBlock Text="?" FontWeight="Bold" FontSize="13" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-1,0,0"/>
+              <TextBlock Text="?" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource Stex.TextPrimaryBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-1,0,0"/>
             </Border>
           </Grid>
           <TextBlock Text="Cálculo exponencial no CameraMapper.cs para subida de mira facilitada no Free Fire e FPS. Quanto maior o valor, mais fácil e leve fica a puxada de capa vertical sem perder o controle horizontal."
                      FontSize="12" Margin="0,6,0,14" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
 
           <!-- Presets Rápidos de Sensibilidade -->
-          <Border Background="{DynamicResource Stex.BgDarkMid2Brush}" BorderBrush="#252F48" BorderThickness="1" CornerRadius="8" Padding="12,10" Margin="0,0,0,16">
+          <Border Background="{DynamicResource Stex.BgSecondaryBrush}" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" CornerRadius="8" Padding="12,10" Margin="0,0,0,16">
             <StackPanel>
               <TextBlock Text="⚡ Presets Rápidos de Mira &amp; Puxada:" FontWeight="SemiBold" FontSize="12.5" Foreground="{DynamicResource Stex.AccentLightBrush}" Margin="0,0,0,8" />
               <WrapPanel>
@@ -206,6 +206,30 @@
         </StackPanel>
       </ui:Card>
 
+      <!-- Card: Aparência & Tema da Interface -->
+      <ui:Card Margin="0,0,0,16" Padding="20,18">
+        <StackPanel>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+              <StackPanel Orientation="Horizontal">
+                <ui:SymbolIcon Symbol="WeatherMoon24" Foreground="{DynamicResource Stex.AccentLightBrush}" VerticalAlignment="Center" Margin="0,0,8,0" />
+                <TextBlock Text="Aparência &amp; Tema da Interface" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
+              </StackPanel>
+              <TextBlock Text="Escolha entre o Tema Escuro (Modern Studio — Obsidian Slate) e o Tema Claro (Soft Light — Confortável para os olhos)."
+                         Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+              <ui:Button x:Name="BtnTemaEscuro" Content="🌙 Modo Escuro" Appearance="Secondary" Margin="0,0,8,0" Padding="14,8" FontWeight="SemiBold" Click="BtnTemaEscuro_Click" />
+              <ui:Button x:Name="BtnTemaClaro" Content="☀️ Modo Claro" Appearance="Secondary" Padding="14,8" FontWeight="SemiBold" Click="BtnTemaClaro_Click" />
+            </StackPanel>
+          </Grid>
+        </StackPanel>
+      </ui:Card>
+
       <!-- Card 3: Testador de Taxa de Frequência do Mouse em Tempo Real -->
       <ui:Card Margin="0,0,0,20" Padding="20,18">
         <StackPanel>
@@ -218,9 +242,9 @@
               <TextBlock Text="Monitor de Polling Rate em Tempo Real" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
               <TextBlock Text="{Binding TestadorStatus}" Margin="0,4,0,0" FontSize="12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
             </StackPanel>
-            <Border Grid.Column="1" Background="#141E38" BorderBrush="#38EF7D" BorderThickness="1" CornerRadius="8" Padding="16,8">
+            <Border Grid.Column="1" Background="{DynamicResource Stex.SuccessSubtleBrush}" BorderBrush="{DynamicResource Stex.SuccessBorderBrush}" BorderThickness="1" CornerRadius="8" Padding="16,8">
               <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding HzAtual, StringFormat={}{0:F0}}" FontSize="22" FontWeight="Bold" Foreground="#38EF7D" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding HzAtual, StringFormat={}{0:F0}}" FontSize="22" FontWeight="Bold" Foreground="{DynamicResource Stex.SuccessBrush}" VerticalAlignment="Center" />
                 <TextBlock Text=" Hz" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextSecondaryBrush}" VerticalAlignment="Center" Margin="4,2,0,0" />
               </StackPanel>
             </Border>

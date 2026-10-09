@@ -15,10 +15,10 @@
             <Border Background="{DynamicResource Stex.AccentBrush}" CornerRadius="12" Padding="9,3" Margin="12,7,0,0" VerticalAlignment="Top">
               <TextBlock Text="BETA" FontSize="11" FontWeight="Bold" Foreground="White" />
             </Border>
-            <Border Background="#141E38" BorderBrush="#38EF7D" BorderThickness="1" CornerRadius="6" Padding="8,3" Margin="12,6,0,0" VerticalAlignment="Top">
+            <Border Background="{DynamicResource Stex.SuccessSubtleBrush}" BorderBrush="{DynamicResource Stex.SuccessBorderBrush}" BorderThickness="1" CornerRadius="6" Padding="8,3" Margin="12,6,0,0" VerticalAlignment="Top">
               <StackPanel Orientation="Horizontal">
-                <ui:SymbolIcon Symbol="Flash24" FontSize="12" Foreground="#38EF7D" VerticalAlignment="Center" Margin="0,0,4,0" />
-                <TextBlock Text="Latência Mínima: 1ms Input (1000Hz) • &lt; 15ms Total" FontSize="11" FontWeight="Bold" Foreground="#38EF7D" />
+                <ui:SymbolIcon Symbol="Flash24" FontSize="12" Foreground="{DynamicResource Stex.SuccessBrush}" VerticalAlignment="Center" Margin="0,0,4,0" />
+                <TextBlock Text="Latência Mínima: 1ms Input (1000Hz) • &lt; 15ms Total" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource Stex.SuccessBrush}" />
               </StackPanel>
             </Border>
           </StackPanel>
@@ -28,10 +28,10 @@
           <StackPanel Orientation="Horizontal"><ui:SymbolIcon Symbol="Desktop24" Foreground="{DynamicResource Stex.AccentLightBrush}" /><TextBlock Text=" Teclado + mouse" Margin="6,0,0,0" FontSize="12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" /></StackPanel>
         </Border>
       </Grid>
-      <Border Margin="0,0,0,14" Padding="15,12" CornerRadius="8" Background="#4A3510" BorderBrush="#6D5017" BorderThickness="1">
+      <Border Margin="0,0,0,14" Padding="15,12" CornerRadius="8" Background="{DynamicResource Stex.WarningSubtleBrush}" BorderBrush="{DynamicResource Stex.WarningBorderBrush}" BorderThickness="1">
         <Grid>
           <Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
-          <ui:SymbolIcon Symbol="Warning24" VerticalAlignment="Top" Foreground="#FFD84D" />
+          <ui:SymbolIcon Symbol="Warning24" VerticalAlignment="Top" Foreground="{DynamicResource Stex.WarningBrush}" />
           <StackPanel Grid.Column="1" Margin="10,0,0,0">
             <TextBlock Text="Função em fase beta" FontWeight="SemiBold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
             <TextBlock Text="O editor abre sem capturar teclado e mouse. Pressione Iniciar ou F1 para ativar o HID e ajuste os controles conforme o jogo." Margin="0,3,0,0" TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
@@ -45,8 +45,8 @@
         <StackPanel>
           <TextBlock Text="Aparelho USB:" FontWeight="SemiBold" FontSize="13" Foreground="{DynamicResource Stex.TextPrimaryBrush}" Margin="0,0,0,6" />
           <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Seriales}" SelectedItem="{Binding SelectedSerial, Mode=TwoWay}" />
-          <Border Background="{DynamicResource Stex.BgDarkMidBrush}" CornerRadius="6" Padding="10,8" Margin="0,8,0,10">
-            <TextBlock TextWrapping="Wrap" FontFamily="Cascadia Mono, Consolas" FontSize="12" Foreground="{DynamicResource Stex.SuccessBrightBrush}" Text="{Binding ConsolaAparelhoTexto}" />
+          <Border Background="{DynamicResource Stex.BgDarkBrush}" CornerRadius="6" Padding="10,8" Margin="0,8,0,10">
+            <TextBlock TextWrapping="Wrap" FontFamily="Cascadia Mono, Consolas" FontSize="12" Foreground="{DynamicResource Stex.SuccessBrush}" Text="{Binding ConsolaAparelhoTexto}" />
           </Border>
           <Grid Margin="0,4,0,0">
             <Grid.ColumnDefinitions>
@@ -61,7 +61,7 @@
       </ui:Card>
 
       <!-- Card: Setup Rápido (Perfis, Encoder & Presets) -->
-      <ui:Card Margin="0,0,0,16" Padding="20,18" Background="#221016" BorderBrush="{DynamicResource Stex.BorderSecondaryBrush}" BorderThickness="1">
+      <ui:Card Margin="0,0,0,16" Padding="20,18">
         <StackPanel>
           <Grid Margin="0,0,0,12">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -89,7 +89,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- Coluna 1: Preset de Mapeamento do Jogo -->
-            <Border Grid.Column="0" Background="#181D33" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" CornerRadius="10" Padding="14,12">
+            <Border Grid.Column="0" Background="{DynamicResource Stex.BgDarkBrush}" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" CornerRadius="10" Padding="14,12">
               <StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                   <ui:SymbolIcon Symbol="Games24" Foreground="{DynamicResource Stex.AccentLightBrush}" VerticalAlignment="Center" />
@@ -99,14 +99,14 @@
                 <ui:Button Content="Carregar Mapeamento" HorizontalAlignment="Stretch" Appearance="Secondary" Icon="{ui:SymbolIcon ArrowDownload24}" Command="{Binding AplicarPresetCommand}" Margin="0,0,0,8" />
                 
                 <!-- Detalhes do Preset -->
-                <Border Background="#101426" CornerRadius="6" Padding="10,8" BorderBrush="#2A3052" BorderThickness="1">
-                  <TextBlock Text="{Binding PresetDetalhesTexto}" FontSize="11" Foreground="#FFCAD4E8" TextWrapping="Wrap" />
+                <Border Background="{DynamicResource Stex.BgSecondaryBrush}" CornerRadius="6" Padding="10,8" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1">
+                  <TextBlock Text="{Binding PresetDetalhesTexto}" FontSize="11" Foreground="{DynamicResource Stex.TextSecondaryBrush}" TextWrapping="Wrap" />
                 </Border>
               </StackPanel>
             </Border>
 
             <!-- Coluna 2: Perfil de Conexão USB (FPS e Resolução) -->
-            <Border Grid.Column="2" Background="#181D33" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" CornerRadius="10" Padding="14,12">
+            <Border Grid.Column="2" Background="{DynamicResource Stex.BgDarkBrush}" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" CornerRadius="10" Padding="14,12">
               <StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                   <ui:SymbolIcon Symbol="DesktopPulse24" Foreground="{DynamicResource Stex.AccentLightBrush}" VerticalAlignment="Center" />
@@ -129,7 +129,7 @@
                 </Grid>
                 
                 <!-- Detalhes do Perfil Selecionado -->
-                <Border Background="#101426" CornerRadius="6" Padding="10,6" BorderBrush="#2A3052" BorderThickness="1">
+                <Border Background="{DynamicResource Stex.BgSecondaryBrush}" CornerRadius="6" Padding="10,6" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1">
                   <Grid>
                     <Grid.RowDefinitions>
                       <RowDefinition Height="Auto" />
@@ -142,22 +142,22 @@
                     
                     <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
                       <TextBlock Text="FPS: " FontSize="10.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
-                      <TextBlock Text="{Binding PerfilFpsTexto}" FontSize="10.5" FontWeight="Bold" Foreground="#38EF7D" />
+                      <TextBlock Text="{Binding PerfilFpsTexto}" FontSize="10.5" FontWeight="Bold" Foreground="{DynamicResource Stex.SuccessBrush}" />
                     </StackPanel>
                     
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                       <TextBlock Text="Res: " FontSize="10.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
-                      <TextBlock Text="{Binding PerfilResolucaoTexto}" FontSize="10.5" FontWeight="Bold" Foreground="#58A6FF" />
+                      <TextBlock Text="{Binding PerfilResolucaoTexto}" FontSize="10.5" FontWeight="Bold" Foreground="{DynamicResource Stex.InfoBrush}" />
                     </StackPanel>
                     
                     <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,3,0,0" Orientation="Horizontal">
                       <TextBlock Text="Bitrate: " FontSize="10.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
-                      <TextBlock Text="{Binding PerfilBitrateTexto}" FontSize="10.5" FontWeight="Bold" Foreground="#FFA657" />
+                      <TextBlock Text="{Binding PerfilBitrateTexto}" FontSize="10.5" FontWeight="Bold" Foreground="{DynamicResource Stex.WarningBrush}" />
                     </StackPanel>
                     
                     <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,3,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
                       <TextBlock Text="Buf: " FontSize="10.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" />
-                      <TextBlock Text="{Binding PerfilBufferTexto}" FontSize="10.5" FontWeight="Bold" Foreground="#FF7B72" />
+                      <TextBlock Text="{Binding PerfilBufferTexto}" FontSize="10.5" FontWeight="Bold" Foreground="{DynamicResource Stex.AccentBrush}" />
                     </StackPanel>
                   </Grid>
                 </Border>
@@ -165,7 +165,7 @@
             </Border>
 
             <!-- Coluna 3: Encoder do Processador (Zero Delay) -->
-            <Border Grid.Column="4" Background="#181D33" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" CornerRadius="10" Padding="14,12">
+            <Border Grid.Column="4" Background="{DynamicResource Stex.BgDarkBrush}" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1" CornerRadius="10" Padding="14,12">
               <StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                   <ui:SymbolIcon Symbol="DeveloperBoard24" Foreground="{DynamicResource Stex.AccentLightBrush}" VerticalAlignment="Center" />
@@ -182,11 +182,11 @@
                 </UniformGrid>
                 
                 <!-- Detalhes do Encoder Ativo -->
-                <Border Background="#101426" CornerRadius="6" Padding="10,6" BorderBrush="#2A3052" BorderThickness="1">
+                <Border Background="{DynamicResource Stex.BgSecondaryBrush}" CornerRadius="6" Padding="10,6" BorderBrush="{DynamicResource Stex.BorderNeutralBrush}" BorderThickness="1">
                   <StackPanel>
-                    <TextBlock Text="{Binding EncoderChipNome}" FontWeight="Bold" FontSize="11" Foreground="#38EF7D" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Text="{Binding EncoderChipNome}" FontWeight="Bold" FontSize="11" Foreground="{DynamicResource Stex.SuccessBrush}" TextTrimming="CharacterEllipsis" />
                     <TextBlock Text="{Binding EncoderCodigoTexto}" FontSize="9.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Margin="0,1,0,1" TextTrimming="CharacterEllipsis" />
-                    <TextBlock Text="{Binding EncoderStatusBadge}" FontSize="10" FontWeight="SemiBold" Foreground="#FFA657" />
+                    <TextBlock Text="{Binding EncoderStatusBadge}" FontSize="10" FontWeight="SemiBold" Foreground="{DynamicResource Stex.WarningBrush}" />
                   </StackPanel>
                 </Border>
               </StackPanel>
@@ -195,8 +195,8 @@
         </StackPanel>
       </ui:Card>
 
-            <!-- Card: Sensibilidade Avançada & Puxada de Capa (Eixo Y) -->
-      <ui:Card Margin="0,0,0,16" Padding="20,18" Background="#1B2141" BorderBrush="{DynamicResource Stex.BorderSecondaryBrush}" BorderThickness="1">
+      <!-- Card: Sensibilidade Avançada & Puxada de Capa (Eixo Y) -->
+      <ui:Card Margin="0,0,0,16" Padding="20,18">
         <StackPanel>
           <Grid>
             <Grid.ColumnDefinitions>
@@ -205,15 +205,15 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
               <StackPanel Orientation="Horizontal">
-                <ui:SymbolIcon Symbol="Target24" Foreground="#FF2A3A" VerticalAlignment="Center" Margin="0,0,8,0" />
+                <ui:SymbolIcon Symbol="Target24" Foreground="{DynamicResource Stex.AccentLightBrush}" VerticalAlignment="Center" Margin="0,0,8,0" />
                 <TextBlock Text="Sensibilidade Avançada &amp; Puxada de Capa (Eixo Y)" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource Stex.TextPrimaryBrush}" />
               </StackPanel>
               <TextBlock Text="Ajuste o multiplicador de capa no Free Fire / FPS e a curva de aceleração sem poluição visual." FontSize="11.5" Foreground="{DynamicResource Stex.TextSecondaryBrush}" Margin="0,4,0,0" />
             </StackPanel>
-            <Border Grid.Column="1" Background="#141E38" BorderBrush="#38EF7D" BorderThickness="1" CornerRadius="6" Padding="10,4" VerticalAlignment="Center">
+            <Border Grid.Column="1" Background="{DynamicResource Stex.SuccessSubtleBrush}" BorderBrush="{DynamicResource Stex.SuccessBorderBrush}" BorderThickness="1" CornerRadius="6" Padding="10,4" VerticalAlignment="Center">
               <StackPanel Orientation="Horizontal">
-                <ui:SymbolIcon Symbol="Flash24" FontSize="13" Foreground="#38EF7D" VerticalAlignment="Center" Margin="0,0,6,0" />
-                <TextBlock Text="1000Hz (1ms) Ativo" FontSize="11" FontWeight="Bold" Foreground="#38EF7D" VerticalAlignment="Center" />
+                <ui:SymbolIcon Symbol="Flash24" FontSize="13" Foreground="{DynamicResource Stex.SuccessBrush}" VerticalAlignment="Center" Margin="0,0,6,0" />
+                <TextBlock Text="1000Hz (1ms) Ativo" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource Stex.SuccessBrush}" VerticalAlignment="Center" />
               </StackPanel>
             </Border>
           </Grid>
@@ -254,7 +254,7 @@
       </ui:Card>
 
       <!-- Card: Modo Latência Ultra USB (Zero Delay) -->
-      <ui:Card Margin="0,0,0,16" Padding="20,18" Background="#4A121A" BorderBrush="{DynamicResource Stex.AccentLightBrush}" BorderThickness="1">
+      <ui:Card Margin="0,0,0,16" Padding="20,18" Background="{DynamicResource Stex.AccentPaleBrush}" BorderBrush="{DynamicResource Stex.BorderSecondary2Brush}" BorderThickness="1">
         <StackPanel>
           <StackPanel Orientation="Horizontal">
             <ui:SymbolIcon Symbol="Flash24" VerticalAlignment="Center" Foreground="{DynamicResource Stex.AccentLightBrush}" />
@@ -272,7 +272,7 @@
         </StackPanel>
       </ui:Card>
 
-      <Border Margin="0,0,0,16" Padding="24,20" CornerRadius="12" Background="#660007" BorderBrush="#FF2A3A" BorderThickness="1">
+      <Border Margin="0,0,0,16" Padding="24,20" CornerRadius="12" Background="{DynamicResource Stex.AccentBrush}">
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -282,13 +282,13 @@
             <StackPanel Orientation="Horizontal">
               <Ellipse Width="11" Height="11" VerticalAlignment="Center" Fill="{Binding IndicadorBrush}" />
               <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" FontSize="17" FontWeight="SemiBold" Foreground="White" Text="{Binding EstadoSesionTexto}" />
-              <Border Background="#4A121A" CornerRadius="10" Padding="9,3" Margin="12,0,0,0" VerticalAlignment="Center" Visibility="{Binding SesionActiva, Converter={StaticResource BoolToVis}}">
-                <TextBlock FontSize="11" Foreground="#FFD8DC" Text="{Binding ResolucionTexto}" />
+              <Border Background="#33000000" CornerRadius="10" Padding="9,3" Margin="12,0,0,0" VerticalAlignment="Center" Visibility="{Binding SesionActiva, Converter={StaticResource BoolToVis}}">
+                <TextBlock FontSize="11" Foreground="White" Text="{Binding ResolucionTexto}" />
               </Border>
             </StackPanel>
-            <TextBlock Text="Abra a sessão, edite o mapeamento e pressione F1 quando estiver pronto para jogar." Margin="0,7,0,0" FontSize="12" TextWrapping="Wrap" Foreground="#FFD3D7" />
+            <TextBlock Text="Abra a sessão, edite o mapeamento e pressione F1 quando estiver pronto para jogar." Margin="0,7,0,0" FontSize="12" TextWrapping="Wrap" Foreground="#FFFEE2" />
           </StackPanel>
-          <Button Grid.Column="1" Style="{StaticResource Stex.ActionButton}" Height="48" MinWidth="160" VerticalAlignment="Center" Command="{Binding PrincipalCommand}" IsEnabled="{Binding PuedePrincipal}" Background="#FFE50914" Foreground="White">
+          <Button Grid.Column="1" Style="{StaticResource Stex.ActionButton}" Height="48" MinWidth="160" VerticalAlignment="Center" Command="{Binding PrincipalCommand}" IsEnabled="{Binding PuedePrincipal}" Background="#0F172A" Foreground="White">
             <StackPanel Orientation="Horizontal" TextElement.Foreground="{Binding PrincipalFore}">
               <ui:SymbolIcon Symbol="Play24" VerticalAlignment="Center" />
               <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" FontSize="15" Text="{Binding PrincipalTexto}" />

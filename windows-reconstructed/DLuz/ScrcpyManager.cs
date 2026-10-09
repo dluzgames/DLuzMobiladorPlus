@@ -412,7 +412,11 @@ public class ScrcpyManager
 			}
 			if (AceleracionAplicable(config))
 			{
-				list.Add("--hwdec=d3d11va");
+				list.Add("--hwdec=auto");
+				if (string.IsNullOrEmpty(config.RenderDriver))
+				{
+					list.Add("--render-driver=direct3d11");
+				}
 			}
 			else if (!config.AceleracionHardware)
 			{
@@ -583,7 +587,11 @@ public class ScrcpyManager
 			}
 			if (AceleracionAplicable(config))
 			{
-				list.Add("--hwdec=d3d11va");
+				list.Add("--hwdec=auto");
+				if (string.IsNullOrEmpty(config.RenderDriver))
+				{
+					list.Add("--render-driver=direct3d11");
+				}
 			}
 			else if (!config.AceleracionHardware)
 			{
@@ -1739,6 +1747,10 @@ public class ScrcpyManager
 		{
 			startInfo.Environment["SC_GPU"] = "d3d11";
 			startInfo.Environment["SC_GPU_DIRECT"] = "1";
+		}
+		if (config.ModoOtg && !string.IsNullOrWhiteSpace(config.OtgSerial))
+		{
+			startInfo.Environment["ANDROID_SERIAL"] = config.OtgSerial;
 		}
 	}
 

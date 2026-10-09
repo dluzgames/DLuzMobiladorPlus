@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -160,15 +160,15 @@ public class VideoViewModel : SeccionViewModel, IDisposable
 		get
 		{
 			string videoCodec = base.S.VideoCodec;
-			if (!(videoCodec == "h265"))
+			if (videoCodec == "h265")
 			{
-				if (videoCodec == "av1")
-				{
-					return "Menos común, pruébalo si tu equipo lo soporta";
-				}
-				return "Menor latência e maior compatibilidade";
+				return "⚡ Recomendado GPU: alta eficiência, 40% menor consumo de banda e decode D3D11VA sem falhas (Scrcpy 5.0.1)";
 			}
-			return "Melhor qualidade; depende do aparelho";
+			if (videoCodec == "av1")
+			{
+				return "Nova geração AV1: altíssima compressão em aparelhos e GPUs compatíveis";
+			}
+			return "Padrão universal: menor latência e máxima compatibilidade com todos os aparelhos";
 		}
 	}
 
@@ -178,7 +178,7 @@ public class VideoViewModel : SeccionViewModel, IDisposable
 		{
 			if (base.S.AceleracionHardware)
 			{
-				return "Controlado pela aceleração por hardware: DirectX 11 conectado diretamente ao decodificador.";
+				return "DirectX 11 conectado diretamente ao decodificador por hardware D3D11VA (Scrcpy 5.0.1 com decodificação na GPU).";
 			}
 			return base.S.RenderDriver switch
 			{
